@@ -1,0 +1,206 @@
+.palindrome-landing {
+  .landing-sections { border-top: 1px solid var(--line); }
+  .section-inner { padding-block: 76px 58px; }
+  .section-heading { max-width: 580px; margin-inline: auto; text-align: center; }
+
+  .section-eyebrow {
+    margin: 0 0 14px;
+    color: var(--action);
+    font-size: 10px;
+    font-weight: 650;
+    line-height: 1.5;
+    letter-spacing: 1.6px;
+  }
+
+  .section-title {
+    margin: 0;
+    font-size: clamp(26px, 3vw, 34px);
+    font-weight: 600;
+    line-height: 1.22;
+    letter-spacing: -1.1px;
+  }
+
+  .section-copy { margin: 17px 0 0; color: var(--muted); font-size: 13px; line-height: 1.85; }
+  .about-section { background: var(--soft); }
+
+  .palindrome-steps {
+    display: grid;
+    gap: 38px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    max-width: 950px;
+    margin: 43px auto 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .palindrome-step { min-width: 0; }
+
+  .step-number {
+    display: inline-flex;
+    width: 34px;
+    height: 34px;
+    align-items: center;
+    justify-content: center;
+    color: var(--leaf);
+    background: var(--card);
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: 650;
+  }
+
+  .step-title { margin: 16px 0 0; font-size: 15px; font-weight: 600; line-height: 1.45; }
+  .step-copy { margin: 9px 0 0; color: var(--leaf); font-size: 12px; line-height: 1.8; }
+
+  .palindrome-example {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 43px;
+    color: var(--leaf);
+  }
+
+  .example-word { color: var(--action); font-size: 22px; font-weight: 550; letter-spacing: 4px; }
+
+  .palindrome-guide-links {
+    display: flex;
+    gap: 12px 25px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 12px;
+  }
+
+  .api-inner {
+    display: grid;
+    gap: 72px;
+    grid-template-columns: 1fr .95fr;
+    align-items: center;
+    padding-block: 84px;
+  }
+
+  .api-content { max-width: 450px; }
+
+  .text-action {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    margin-top: 23px;
+    padding-block: 7px;
+    color: var(--action);
+    font-size: 12px;
+
+    &:hover svg { transform: translateX(3px); }
+  }
+
+  .api-preview {
+    overflow: hidden;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+  }
+
+  .api-preview-header {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 17px 22px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .api-preview-label { display: inline-flex; gap: 8px; align-items: center; color: var(--muted); font-size: 11px; }
+  .coming-soon-badge { padding: 4px 8px; color: var(--leaf); background: var(--soft); border-radius: 4px; font-size: 10px; }
+
+  .api-preview-code {
+    overflow-x: auto;
+    margin: 0;
+    padding: 25px;
+    color: var(--action);
+    font-size: 13px;
+    line-height: 1.8;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+
+  .api-preview-note { margin: 0; padding: 0 25px 19px; color: var(--muted); font-size: 10px; line-height: 1.65; }
+  .faq-section { border-top: 1px solid var(--line); }
+  .faq-inner { padding-block: 72px 77px; }
+  .faq-list { max-width: 680px; margin: 33px auto 0; }
+  .faq-item { border-bottom: 1px solid var(--line); }
+
+  .faq-question {
+    display: flex;
+    gap: 20px;
+    min-height: 63px;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: 19px;
+    font-size: 13px;
+    font-weight: 550;
+    line-height: 1.6;
+    list-style: none;
+
+    &::-webkit-details-marker { display: none; }
+    &:hover { color: var(--action); }
+    svg { transition: transform 180ms ease; }
+  }
+
+  .faq-item[open] .faq-question svg { transform: rotate(180deg); }
+  .faq-answer { max-width: 620px; margin: 0; padding: 0 29px 23px 0; color: var(--muted); font-size: 12px; line-height: 1.85; }
+  .contact-section { background: var(--soft); border-top: 1px solid var(--line); }
+
+  .contact-inner {
+    display: flex;
+    gap: 35px;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: 51px;
+  }
+
+  .contact-heading .section-copy { margin-top: 12px; }
+  .contact-heading .section-title { font-size: 27px; }
+
+  .contact-button {
+    display: inline-flex;
+    gap: 9px;
+    min-height: 46px;
+    align-items: center;
+    padding: 13px 18px;
+    flex: 0 0 auto;
+    color: var(--search-ink);
+    background: var(--lime);
+    border: 1px solid var(--lime);
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 550;
+
+    &:hover { opacity: .85; }
+  }
+
+  @media (max-width: 960px) {
+    .api-inner { gap: 40px; }
+    .palindrome-steps { gap: 26px; }
+  }
+
+  @media (max-width: 720px) {
+    .section-inner { padding-block: 57px 45px; }
+    .api-inner { gap: 35px; grid-template-columns: 1fr; padding-block: 58px; }
+    .api-content { max-width: 540px; }
+    .faq-inner { padding-block: 55px; }
+    .contact-inner { gap: 25px; align-items: flex-start; flex-direction: column; padding-block: 40px; }
+    .palindrome-steps { gap: 28px; grid-template-columns: 1fr; max-width: 420px; }
+    .palindrome-step { display: grid; gap: 0 16px; grid-template-columns: 34px 1fr; }
+    .step-number { grid-row: span 2; }
+    .step-title { margin-top: 2px; }
+    .step-copy { grid-column: 2; }
+  }
+
+  @media (max-width: 520px) {
+    .section-title { font-size: 28px; letter-spacing: -.8px; }
+    .section-eyebrow { font-size: 9px; letter-spacing: 1.3px; }
+    .api-preview-header { padding-inline: 18px; }
+    .api-preview-code { padding: 20px; }
+    .api-preview-note { padding-inline: 20px; }
+    .faq-question { font-size: 13px; }
+    .contact-heading .section-title { font-size: 26px; }
+  }
+}

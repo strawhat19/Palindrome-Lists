@@ -1,0 +1,31 @@
+<svg
+  role="img"
+  viewBox="0 0 320 320"
+  xmlns="http://www.w3.org/2000/svg"
+  aria-labelledby="shared-spine-title shared-spine-description"
+>
+  <title id="shared-spine-title">Palindrome Lists — Shared Spine</title>
+  <desc id="shared-spine-description">An interconnected PL and its upside-down reflection share one central horizontal stroke. Rounded P counters contrast with the solid shared spine.</desc>
+  <defs>
+    <g id="shared-spine-pair" fill="#171717">
+      <path
+        id="shared-spine-letter-p"
+        fill-rule="evenodd"
+        d="M56 52H112C139 52 154 68 154 92C154 116 139 132 112 132H84V174H56ZM84 78V106H112C122 106 126 100 126 92C126 84 122 78 112 78Z"
+      />
+      <path
+        id="shared-spine-letter-l"
+        d="M176 52H204V146H264V174H56V146H176Z"
+      />
+    </g>
+  </defs>
+  <use
+    id="shared-spine-upper-pair"
+    href="#shared-spine-pair"
+  />
+  <use
+    id="shared-spine-lower-pair"
+    href="#shared-spine-pair"
+    transform="matrix(1 0 0 -1 0 320)"
+  />
+</svg>

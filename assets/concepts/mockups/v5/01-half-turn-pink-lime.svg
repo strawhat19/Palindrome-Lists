@@ -1,0 +1,33 @@
+<svg
+  role="img"
+  viewBox="0 0 320 320"
+  xmlns="http://www.w3.org/2000/svg"
+  aria-labelledby="half-turn-title half-turn-description"
+>
+  <title id="half-turn-title">Palindrome Lists — Pink and Lime Half Turn</title>
+  <desc id="half-turn-description">The unchanged Half Turn monogram: both square P letterforms are pink, and both L letterforms are lime. The lower PL pair is turned 180 degrees.</desc>
+  <defs>
+    <g id="half-turn-pair">
+      <path
+        fill="#D64E8B"
+        id="half-turn-letter-p"
+        fill-rule="evenodd"
+        d="M58 48H150V118H82V146H58ZM82 72V94H126V72Z"
+      />
+      <path
+        fill="#B6D94C"
+        id="half-turn-letter-l"
+        d="M174 48H198V122H262V146H174Z"
+      />
+    </g>
+  </defs>
+  <use
+    id="half-turn-upper-pair"
+    href="#half-turn-pair"
+  />
+  <use
+    id="half-turn-lower-pair"
+    href="#half-turn-pair"
+    transform="matrix(-1 0 0 -1 320 320)"
+  />
+</svg>

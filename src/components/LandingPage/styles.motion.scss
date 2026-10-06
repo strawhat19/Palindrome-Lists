@@ -1,0 +1,19 @@
+.palindrome-landing {
+  #header-logo-orbit,
+  #footer-logo-orbit {
+    display: inline-flex;
+    flex: 0 0 auto;
+    transform-origin: center;
+  }
+
+  .motion-char,
+  .motion-word {
+    display: inline-block;
+    transform-origin: center bottom;
+  }
+
+  .motion-line-mask {
+    padding-block: .08em;
+    margin-block: -.08em;
+  }
+}

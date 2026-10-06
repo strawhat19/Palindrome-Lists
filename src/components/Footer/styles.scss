@@ -1,0 +1,37 @@
+.palindrome-landing {
+  .site-footer { padding: 25px 0 22px; border-top: 1px solid var(--line); }
+  .footer-top { display: flex; gap: 25px; align-items: center; justify-content: space-between; }
+  .footer-brand { display: inline-flex; gap: 8px; align-items: center; font-size: 12px; font-weight: 550; }
+  .footer-logo-orbit { display: inline-flex; width: 28px; height: 28px; flex: 0 0 auto; transform-origin: center; }
+  .footer-navigation { display: flex; gap: 22px; align-items: center; color: var(--muted); font-size: 11px; }
+
+  .footer-navigation button {
+    margin: 0;
+    padding: 6px 0;
+    color: inherit;
+    background: transparent;
+    border: 0;
+    font-size: inherit;
+  }
+
+  .footer-navigation a { padding-block: 6px; }
+  .footer-navigation a:hover,
+  .footer-navigation button:hover { color: var(--action); }
+  .footer-bottom { display: flex; gap: 25px; align-items: center; justify-content: space-between; margin-top: 20px; color: var(--muted); font-size: 10px; }
+  .copyright { margin: 0; }
+  .piratechs-link { display: inline-flex; gap: 5px; align-items: center; padding-block: 6px; }
+  .piratechs-link:hover { color: var(--action); }
+
+  @media (max-width: 600px) {
+    .footer-top { gap: 17px; align-items: flex-start; flex-direction: column; }
+    .footer-navigation { gap: 22px; flex-wrap: wrap; }
+    .footer-bottom { gap: 14px; align-items: flex-start; }
+  }
+
+  @media (max-width: 390px) {
+    .footer-navigation { gap: 17px; }
+    .footer-bottom { gap: 7px; font-size: 9px; }
+    .copyright { max-width: 180px; line-height: 1.65; }
+    .piratechs-link { white-space: nowrap; }
+  }
+}

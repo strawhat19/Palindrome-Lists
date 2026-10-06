@@ -1,0 +1,24 @@
+{
+  "expo": {
+    "slug": "palindrome-lists",
+    "name": "Palindrome Lists",
+    "scheme": "palindromelists",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "platforms": ["web", "ios", "android"],
+    "plugins": ["expo-router"],
+    "web": {
+      "output": "static",
+      "bundler": "metro",
+      "favicon": "./public/favicon.svg"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.piratechs.palindromelists"
+    },
+    "android": {
+      "package": "com.piratechs.palindromelists"
+    }
+  }
+}

@@ -1,0 +1,192 @@
+.palindrome-landing {
+  min-height: 100vh;
+  color: var(--ink);
+  background: var(--page);
+  transition: color 220ms ease, background-color 220ms ease;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+
+  *,
+  *::before,
+  *::after { box-sizing: border-box; }
+
+  * { transition: color 220ms ease, background-color 220ms ease, border-color 220ms ease; }
+
+  a { color: inherit; text-decoration: none; }
+  button, input, select { font: inherit; }
+  button, a, input, select, summary { -webkit-tap-highlight-color: transparent; }
+  button, select, summary { cursor: pointer; }
+  button:disabled { cursor: default; }
+
+  button,
+  a,
+  summary,
+  svg {
+    transition: color 180ms ease, background 180ms ease, border-color 180ms ease, opacity 180ms ease, transform 180ms ease;
+  }
+
+  svg { flex: 0 0 auto; }
+  :focus-visible { outline: 3px solid var(--action); outline-offset: 4px; }
+  ::selection { color: var(--card); background: var(--action); }
+  section[id],
+  .palindrome-card { scroll-margin-top: 100px; }
+  [hidden] { display: none; }
+  .landing-container { width: min(1200px, calc(100% - 80px)); margin-inline: auto; }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+
+  .skip-link {
+    position: fixed;
+    z-index: 50;
+    top: 10px;
+    left: 14px;
+    padding: 12px 16px;
+    color: var(--card);
+    background: var(--action);
+    border-radius: 5px;
+    transform: translateY(-150%);
+
+    &:focus { transform: translateY(0); }
+  }
+
+  .collection { width: min(1120px, calc(100% - 80px)); padding-top: 40px; padding-bottom: 66px; }
+  .collection-heading { display: flex; gap: 22px; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+  .collection-title { margin: 0; font-size: 23px; font-weight: 600; letter-spacing: -.7px; }
+  .sample-label { margin: 8px 0 0; color: var(--muted); font-size: 11px; }
+  .collection-controls { display: flex; gap: 25px; align-items: center; }
+  .collection-filters { display: flex; gap: 4px; align-items: center; }
+
+  .filter-button {
+    display: inline-flex;
+    min-height: 38px;
+    align-items: center;
+    justify-content: center;
+    padding: 7px 15px;
+    color: var(--muted);
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    font-size: 11px;
+
+    &[aria-pressed='true'] { color: var(--leaf); background: var(--soft); }
+    &:hover { color: var(--action); }
+  }
+
+  .sort-control { position: relative; display: flex; align-items: center; color: var(--muted); }
+
+  .sort-select {
+    min-height: 38px;
+    padding: 7px 30px 7px 12px;
+    color: var(--muted);
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    font-size: 11px;
+    appearance: none;
+  }
+
+  .sort-control svg { position: absolute; right: 10px; color: var(--action); pointer-events: none; }
+  .palindrome-grid { display: grid; gap: 20px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .palindrome-grid.is-preview {
+    align-items: center;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.22fr) minmax(0, 1fr);
+
+    > .palindrome-card {
+      display: flex;
+      min-height: 300px;
+      flex-direction: column;
+
+      .card-content { flex: 1; }
+    }
+
+    > .palindrome-card[data-type='name'] {
+      min-height: 356px;
+
+      .card-title { min-height: 108px; font-size: 40px; text-align: center; justify-content: center; }
+      .card-content { padding-top: 30px; padding-bottom: 24px; }
+    }
+  }
+  .collection-result-count { margin: -5px 0 18px; color: var(--muted); font-size: 11px; }
+  .collection-bottom { display: flex; justify-content: center; margin-top: 27px; }
+
+  .browse-link {
+    display: inline-flex;
+    gap: 7px;
+    min-height: 40px;
+    align-items: center;
+    padding: 7px;
+    color: var(--action);
+    background: transparent;
+    border: 0;
+    border-radius: 5px;
+    font-size: 12px;
+
+    &:hover svg { transform: translateX(3px); }
+  }
+
+  .collection-empty { padding: 44px 20px; color: var(--muted); background: var(--card); border: 1px solid var(--line); border-radius: 10px; text-align: center; }
+  .empty-title { margin: 15px 0 0; color: var(--ink); font-size: 19px; font-weight: 550; }
+  .empty-copy { margin: 12px 0 0; font-size: 12px; line-height: 1.7; }
+  .collection-empty .text-action { margin-top: 15px; background: transparent; border: 0; border-radius: 4px; }
+
+  .landing-notice-region { position: fixed; z-index: 40; top: 95px; right: 24px; width: min(370px, calc(100vw - 40px)); }
+  .landing-notice { display: flex; gap: 13px; align-items: flex-start; padding: 19px; background: var(--card); border: 1px solid var(--line); border-radius: 10px; box-shadow: 0 8px 30px rgba(35, 38, 41, .1); }
+  .landing-notice-content { min-width: 0; }
+  .landing-notice-title { margin: 0; color: var(--action); font-size: 14px; font-weight: 650; line-height: 1.5; }
+  .landing-notice-message { margin: 8px 0 0; color: var(--muted); font-size: 12px; line-height: 1.8; }
+  .notice-dismiss { display: inline-flex; width: 30px; min-height: 30px; align-items: center; justify-content: center; padding: 5px; flex: 0 0 auto; color: var(--muted); background: transparent; border: 0; border-radius: 5px; }
+  .notice-dismiss:hover { color: var(--action); background: var(--soft); }
+
+  @media (max-width: 960px) {
+    .landing-container,
+    .collection { width: calc(100% - 48px); }
+
+    .collection-heading { gap: 20px; align-items: flex-start; flex-direction: column; }
+    .collection-controls { width: 100%; justify-content: space-between; }
+    .palindrome-grid.is-preview {
+      grid-template-columns: 1fr;
+
+      > .palindrome-card { width: min(540px, 100%); justify-self: center; }
+      > .palindrome-card[data-type='name'] { width: min(600px, 100%); }
+    }
+  }
+
+  @media (max-width: 600px) {
+    .palindrome-grid { gap: 16px; grid-template-columns: 1fr; }
+    .palindrome-grid.is-preview {
+      grid-template-columns: 1fr;
+
+      > .palindrome-card { width: 100%; }
+      > .palindrome-card[data-type='name'] { width: 100%; }
+    }
+    .collection { padding-top: 28px; padding-bottom: 48px; }
+  }
+
+  @media (max-width: 520px) {
+    .landing-container,
+    .collection { width: calc(100% - 36px); }
+
+    .collection-heading { gap: 19px; }
+    .collection-title { font-size: 22px; letter-spacing: -.6px; }
+    .collection-controls { gap: 12px; flex-wrap: wrap; }
+    .filter-button { padding-inline: 12px; }
+    .landing-notice-region { top: 85px; right: 18px; }
+    section[id],
+    .palindrome-card { scroll-margin-top: 88px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &,
+    *,
+    *::before,
+    *::after { transition: none !important; animation: none !important; }
+  }
+}

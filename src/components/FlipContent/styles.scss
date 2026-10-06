@@ -1,0 +1,37 @@
+.palindrome-landing {
+  .flip-content {
+    display: inline-flex;
+    gap: inherit;
+    max-width: 100%;
+    align-items: center;
+    perspective: 600px;
+    vertical-align: middle;
+  }
+
+  .flip-rotor {
+    display: inline-grid;
+    gap: inherit;
+    max-width: 100%;
+    transition: none;
+    transform-origin: center;
+    transform-style: preserve-3d;
+  }
+
+  .flip-face {
+    display: inline-flex;
+    gap: inherit;
+    grid-area: 1 / 1;
+    align-items: center;
+    justify-content: center;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+
+  .flip-back { transform: rotateX(180deg); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .flip-content { perspective: none; }
+    .flip-rotor { transform: none !important; }
+    .flip-back { display: none; }
+  }
+}

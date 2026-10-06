@@ -1,0 +1,28 @@
+html {
+  scroll-behavior: smooth;
+  background: var(--page, #fffbfd);
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  color: var(--ink, #232629);
+  background: var(--page, #fffbfd);
+  -webkit-font-smoothing: antialiased;
+}
+
+html,
+body {
+  transition: color 220ms ease, background-color 220ms ease;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  html, body { transition: none; }
+}

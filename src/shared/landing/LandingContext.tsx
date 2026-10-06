@@ -1,0 +1,95 @@
+import { palindromes, normalizePalindrome } from './data';
+import type { Sort, Notice, Category, Palindrome } from './types';
+import type { Dispatch, ReactNode, SetStateAction } from 'react';
+import { useMemo, useState, useEffect, useContext, createContext } from 'react';
+
+export type LandingContextValue = {
+  sort: Sort;
+  query: string;
+  showAll: boolean;
+  category: Category;
+  notice: Notice | null;
+  filteredCount: number;
+  visibleEntries: Palindrome[];
+  setSort: Dispatch<SetStateAction<Sort>>;
+  setQuery: Dispatch<SetStateAction<string>>;
+  setShowAll: Dispatch<SetStateAction<boolean>>;
+  setCategory: Dispatch<SetStateAction<Category>>;
+  setNotice: Dispatch<SetStateAction<Notice | null>>;
+};
+
+const LandingContext = createContext<LandingContextValue | null>(null);
+const previewTypes = [`word`, `name`, `phrase`] as const;
+
+export const LandingProvider = ({ children }: { children: ReactNode }) => {
+  const [query, setQuery] = useState(``);
+  const [showAll, setShowAll] = useState(false);
+  const [sort, setSort] = useState<Sort>(`featured`);
+  const [notice, setNotice] = useState<Notice | null>(null);
+  const [category, setCategory] = useState<Category>(`all`);
+
+  useEffect(() => {
+    setShowAll(false);
+  }, [sort, query, category]);
+
+  const filteredEntries = useMemo(() => {
+    const search = normalizePalindrome(query.trim());
+    const entries = palindromes
+      .map((entry, index) => ({ entry, index }))
+      .filter(({ entry }) =>
+        (category === `all` || entry.type === category) &&
+        normalizePalindrome(entry.text).includes(search),
+      );
+
+    if (sort === `popular`) {
+      entries.sort((left, right) =>
+        right.entry.votes - left.entry.votes || left.index - right.index,
+      );
+    }
+
+    if (sort === `newest`) {
+      entries.sort((left, right) =>
+        Date.parse(right.entry.added) - Date.parse(left.entry.added) ||
+        left.index - right.index,
+      );
+    }
+
+    return entries.map(({ entry }) => entry);
+  }, [sort, query, category]);
+
+  const value = useMemo<LandingContextValue>(() => ({
+    sort,
+    query,
+    notice,
+    showAll,
+    setSort,
+    category,
+    setQuery,
+    setNotice,
+    setShowAll,
+    setCategory,
+    filteredCount: filteredEntries.length,
+    visibleEntries: showAll || query.trim() || category !== `all`
+      ? filteredEntries
+      : previewTypes.flatMap((type) => {
+        const entry = filteredEntries.find((item) => item.type === type);
+        return entry ? [entry] : [];
+      }),
+  }), [sort, query, notice, showAll, category, filteredEntries]);
+
+  return (
+    <LandingContext.Provider value={value}>
+      {children}
+    </LandingContext.Provider>
+  );
+};
+
+export const useLanding = () => {
+  const context = useContext(LandingContext);
+
+  if (!context) {
+    throw new Error(`useLanding Requires LandingProvider`);
+  }
+
+  return context;
+};

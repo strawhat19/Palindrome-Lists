@@ -1,0 +1,20 @@
+{
+  "id": "/",
+  "lang": "en",
+  "scope": "/",
+  "start_url": "/",
+  "name": "Palindrome Lists",
+  "short_name": "Palindrome Lists",
+  "display": "standalone",
+  "theme_color": "#FFFBFD",
+  "background_color": "#FFFBFD",
+  "description": "Good words. Both ways.",
+  "icons": [
+    {
+      "sizes": "any",
+      "purpose": "any",
+      "type": "image/svg+xml",
+      "src": "/brand/half-turn-pink-lime.svg"
+    }
+  ]
+}

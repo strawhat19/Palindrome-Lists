@@ -1,0 +1,28 @@
+.palindrome-landing {
+  .scroll-to-top {
+    position: fixed;
+    z-index: 21;
+    right: 24px;
+    bottom: 23px;
+    display: inline-flex;
+    width: 44px;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+    color: var(--action);
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(8px);
+    box-shadow: 0 3px 12px rgba(35, 38, 41, .06);
+
+    &.is-visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
+    &:hover { background: var(--soft); }
+  }
+
+  @media (max-width: 520px) {
+    .scroll-to-top { right: 17px; bottom: 18px; }
+  }
+}

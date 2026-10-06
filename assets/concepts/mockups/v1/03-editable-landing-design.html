@@ -1,0 +1,545 @@
+<!doctype html>
+<html lang="en" data-theme="paper">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="An editable landing-page design concept for palindromelists.com.">
+    <title>palindromelists.com — Landing Design v1</title>
+    <style>
+      :root {
+        --page: #f8f7f3;
+        --card: #ffffff;
+        --ink: #171717;
+        --muted: #74746d;
+        --line: #e3e2da;
+        --hero: #f8f7f3;
+        --accent: #2857e8;
+        --soft: #eef1ff;
+        --hero-ink: #171717;
+        --hero-line: #e3e2da;
+        --hero-muted: #74746d;
+        --hero-accent: #2857e8;
+        --button-ink: #ffffff;
+        --button-fill: #2857e8;
+        --header-glass: rgba(248, 247, 243, .88);
+        color-scheme: light;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      }
+
+      :root[data-theme="forest"] {
+        --page: #f5f2e9;
+        --card: #fffdf7;
+        --ink: #143c35;
+        --muted: #687770;
+        --line: #dfdfd1;
+        --hero: #143c35;
+        --accent: #143c35;
+        --soft: #eceee2;
+        --hero-ink: #f5f2e9;
+        --hero-line: rgba(245, 242, 233, .18);
+        --hero-muted: #bdcec4;
+        --hero-accent: #dcb968;
+        --button-ink: #143c35;
+        --button-fill: #dcb968;
+        --header-glass: rgba(20, 60, 53, .86);
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body { margin: 0; color: var(--ink); background: var(--page); }
+      a { color: inherit; text-decoration: none; }
+      button, input { font: inherit; }
+      button, a, input { -webkit-tap-highlight-color: transparent; }
+      button { cursor: pointer; }
+      button:disabled { cursor: default; }
+      button, a { transition: color 180ms ease, background 180ms ease, border-color 180ms ease, opacity 180ms ease, transform 180ms ease; }
+      :focus-visible { outline: 3px solid var(--hero-accent); outline-offset: 5px; }
+      ::selection { color: #ffffff; background: #2857e8; }
+      .container { width: min(1220px, calc(100% - 96px)); margin-inline: auto; }
+      .icon { width: 17px; height: 17px; flex: 0 0 auto; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+      .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+      .skip-link { position: fixed; z-index: 20; top: 12px; left: 16px; padding: 12px 18px; color: #ffffff; background: #2857e8; transform: translateY(-150%); }
+      .skip-link:focus { transform: translateY(0); }
+
+      .design-toolbar { display: flex; min-height: 40px; align-items: center; justify-content: space-between; gap: 16px; padding: 6px 24px; color: #77776f; background: #eeede7; border-bottom: 1px solid #deddd5; font-size: 10px; letter-spacing: .03em; }
+      .design-label { display: flex; align-items: center; gap: 8px; }
+      .design-dot { width: 5px; height: 5px; border-radius: 50%; background: #8d8d82; }
+      .design-theme-options { display: flex; align-items: center; gap: 5px; }
+      .design-theme-button { display: inline-flex; min-height: 27px; align-items: center; gap: 6px; padding: 4px 9px; color: #77776f; background: transparent; border: 1px solid transparent; border-radius: 5px; font-size: 10px; }
+      .design-theme-button[aria-pressed="true"] { color: #272722; background: #faf9f5; border-color: #d5d4cc; }
+      .design-swatch { width: 8px; height: 8px; border-radius: 50%; }
+      .design-swatch-paper { background: #2857e8; }
+      .design-swatch-forest { background: #143c35; }
+
+      .site-header { z-index: 10; color: var(--hero-ink); background: var(--hero); border-bottom: 1px solid var(--hero-line); transition: background 240ms ease, box-shadow 240ms ease; }
+      .site-header.is-sticky { position: sticky; top: 0; }
+      .site-header.is-scrolled { background: var(--header-glass); box-shadow: 0 1px 12px rgba(0, 0, 0, .025); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); }
+      .header-inner { display: flex; min-height: 90px; align-items: center; justify-content: space-between; gap: 32px; }
+      .site-brand { display: inline-flex; flex: 0 0 auto; align-items: center; gap: 11px; }
+      .brand-mark { display: block; width: 48px; height: 48px; }
+      .brand-name { font-size: 17px; font-weight: 650; letter-spacing: -.6px; }
+      .brand-domain { color: var(--hero-muted); font-weight: 450; }
+      :root[data-theme="forest"] .site-header .brand-mark { filter: brightness(0) invert(1); }
+      .site-navigation { display: flex; align-items: center; gap: 27px; font-size: 12px; }
+      .navigation-link { padding-block: 10px; color: var(--hero-muted); }
+      .navigation-link:hover { color: var(--hero-ink); }
+      .sign-in-link { display: inline-flex; align-items: center; gap: 7px; padding: 10px 16px; color: var(--hero-ink); border: 1px solid var(--hero-line); border-radius: 6px; }
+      .sign-in-link:hover { border-color: var(--hero-accent); }
+      .sign-in-link .icon { width: 14px; height: 14px; }
+
+      .hero { padding: 68px 0 64px; color: var(--hero-ink); background: var(--hero); }
+      .hero-layout { display: grid; grid-template-columns: 1.13fr 1fr; align-items: center; gap: 76px; }
+      .hero-eyebrow { display: flex; align-items: center; gap: 9px; margin: 0 0 22px; color: var(--hero-accent); font-size: 10px; font-weight: 650; letter-spacing: 1.8px; text-transform: uppercase; }
+      .hero-eyebrow .icon { width: 18px; height: 18px; }
+      .hero-title { margin: 0; font-family: Georgia, 'Times New Roman', serif; font-size: clamp(52px, 5.7vw, 80px); font-weight: 400; letter-spacing: -4px; line-height: 1.04; }
+      .hero-title-accent { color: var(--hero-accent); }
+      .hero-description { max-width: 410px; margin: 23px 0 0; color: var(--hero-muted); font-size: 15px; line-height: 1.75; }
+      .hero-search { display: flex; min-height: 58px; align-items: center; gap: 11px; margin-top: 29px; padding: 7px 7px 7px 17px; color: var(--muted); background: var(--card); border: 1px solid var(--hero-line); border-radius: 7px; box-shadow: 0 4px 14px rgba(0, 0, 0, .025); }
+      .hero-search-input { width: 100%; min-width: 0; padding: 8px 0; color: var(--ink); background: transparent; border: 0; font-size: 12px; outline-offset: 1px; }
+      .hero-search-input::placeholder { color: #98988f; }
+      .hero-search-button { display: inline-flex; align-items: center; gap: 7px; padding: 13px 17px; color: var(--button-ink); background: var(--button-fill); border: 0; border-radius: 5px; font-size: 11px; font-weight: 600; }
+      .hero-search-button .icon { width: 14px; height: 14px; }
+      .hero-footnote { display: flex; align-items: center; gap: 7px; margin: 14px 0 0; color: var(--hero-muted); font-size: 10px; }
+      .hero-footnote .icon { width: 13px; height: 13px; }
+
+      .spotlight-card { position: relative; overflow: hidden; color: var(--ink); background: var(--card); border: 1px solid var(--line); border-radius: 11px; box-shadow: 0 16px 40px rgba(31, 38, 31, .035); }
+      .spotlight-content { padding: 26px 29px 24px; }
+      .spotlight-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 30px; }
+      .spotlight-label { display: flex; align-items: center; gap: 7px; color: var(--accent); font-size: 9px; font-weight: 700; letter-spacing: 1.3px; text-transform: uppercase; }
+      .spotlight-label .icon { width: 14px; height: 14px; }
+      .record-type { display: inline-flex; align-items: center; gap: 5px; padding: 5px 9px; color: var(--accent); background: var(--soft); border-radius: 4px; font-size: 9px; font-weight: 600; }
+      .record-type .icon { width: 12px; height: 12px; }
+      .spotlight-title { max-width: 360px; margin: 0; font-family: Georgia, 'Times New Roman', serif; font-size: clamp(30px, 2.7vw, 39px); font-weight: 400; letter-spacing: -1.1px; line-height: 1.2; }
+      .record-summary { display: flex; align-items: center; gap: 7px; margin: 11px 0 0; color: var(--muted); font-size: 10px; }
+      .summary-dot { width: 2px; height: 2px; border-radius: 50%; background: #b3b3a8; }
+      .reading-demo { display: grid; gap: 11px; margin-top: 24px; padding: 17px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+      .reading-row { display: grid; grid-template-columns: 71px 1fr 17px; align-items: center; gap: 12px; }
+      .reading-label { color: var(--muted); font-size: 9px; }
+      .reading-value { color: var(--accent); font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace; font-size: 13px; letter-spacing: 1.6px; }
+      .reading-row .icon { width: 15px; height: 15px; color: var(--accent); }
+      .reading-note { margin: 10px 0 0; color: var(--muted); font-size: 9px; line-height: 1.5; }
+      .spotlight-metadata { display: grid; grid-template-columns: 1fr 1fr; gap: 9px 20px; margin: 19px 0 0; font-size: 9px; }
+      .metadata-pair { display: flex; min-width: 0; flex-direction: column; gap: 5px; }
+      .metadata-pair dt { color: var(--muted); }
+      .metadata-pair dd { margin: 0; font-size: 10px; line-height: 1.4; }
+      .spotlight-actions { padding: 12px 17px; border-top: 1px solid var(--line); }
+
+      .collection { padding: 54px 0 66px; }
+      .collection-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; }
+      .collection-eyebrow { margin: 0 0 8px; color: var(--muted); font-size: 9px; font-weight: 650; letter-spacing: 1.7px; text-transform: uppercase; }
+      .collection-title { margin: 0; font-family: Georgia, 'Times New Roman', serif; font-size: 31px; font-weight: 400; letter-spacing: -.8px; }
+      .sample-collection-note { margin: 0 0 3px; color: var(--muted); font-size: 10px; }
+      .collection-controls { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin: 26px 0 24px; padding-bottom: 17px; border-bottom: 1px solid var(--line); }
+      .collection-filters { display: flex; align-items: center; gap: 6px; }
+      .filter-button { display: inline-flex; min-height: 35px; align-items: center; gap: 7px; padding: 8px 15px; color: var(--muted); background: transparent; border: 1px solid transparent; border-radius: 5px; font-size: 11px; }
+      .filter-button[aria-pressed="true"] { color: var(--accent); background: var(--soft); border-color: var(--soft); }
+      .filter-button:hover { color: var(--accent); }
+      .filter-button .icon { width: 13px; height: 13px; }
+      .collection-sort { display: flex; align-items: center; gap: 4px; }
+      .sort-button { display: inline-flex; align-items: center; gap: 6px; padding: 8px 11px; color: var(--muted); background: transparent; border: 0; border-radius: 5px; font-size: 10px; }
+      .sort-button .icon { width: 13px; height: 13px; }
+      .sort-button[aria-pressed="true"] { color: var(--ink); background: var(--card); box-shadow: 0 0 0 1px var(--line); }
+      .palindrome-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+      .palindrome-card { display: flex; overflow: hidden; min-width: 0; flex-direction: column; background: var(--card); border: 1px solid var(--line); border-radius: 8px; }
+      .card-content { display: flex; flex: 1; flex-direction: column; padding: 24px 27px 23px; }
+      .card-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+      .card-record-id { color: #a0a095; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 9px; }
+      .card-title { display: flex; min-height: 74px; align-items: center; margin: 15px 0 0; font-family: Georgia, 'Times New Roman', serif; font-size: 33px; font-weight: 400; letter-spacing: -.8px; line-height: 1.28; }
+      .card-title-long { max-width: 420px; font-size: 29px; }
+      .card-reading { display: flex; align-items: center; gap: 9px; margin: 11px 0 0; color: var(--muted); font-size: 10px; }
+      .card-reading .icon { width: 14px; height: 14px; color: var(--accent); }
+      .card-metadata { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 22px; margin: 22px 0 0; padding-top: 20px; border-top: 1px solid var(--line); }
+      .card-metadata .metadata-pair dt { font-size: 9px; }
+      .card-added-date { margin: 18px 0 0; color: var(--muted); font-size: 9px; }
+      .card-actions { padding: 12px 17px; border-top: 1px solid var(--line); }
+      .record-actions { display: flex; align-items: center; justify-content: space-between; gap: 3px; }
+      .record-action { display: inline-flex; min-height: 32px; align-items: center; justify-content: center; gap: 5px; padding: 7px 5px; color: var(--muted); background: transparent; border: 0; border-radius: 4px; font-size: 9px; white-space: nowrap; }
+      .record-action:hover { color: var(--accent); background: var(--soft); }
+      .record-action .icon { width: 14px; height: 14px; }
+      .record-action-upvote { color: var(--accent); }
+      .action-count { font-size: 10px; font-variant-numeric: tabular-nums; }
+      .spotlight-actions .action-name { display: none; }
+      .collection-bottom { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-top: 27px; }
+      .collection-note { max-width: 550px; margin: 0; color: var(--muted); font-size: 10px; line-height: 1.65; }
+      .browse-link { display: inline-flex; flex: 0 0 auto; align-items: center; gap: 8px; color: var(--accent); font-size: 11px; font-weight: 600; }
+      .browse-link .icon { width: 14px; height: 14px; }
+      .browse-link:hover .icon { transform: translateX(3px); }
+
+      .footer { padding: 29px 0 23px; border-top: 1px solid var(--line); }
+      .footer-top { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+      .footer-brand { display: inline-flex; align-items: center; gap: 9px; font-size: 12px; font-weight: 600; letter-spacing: -.3px; }
+      .footer-brand-mark { width: 32px; height: 32px; }
+      .footer-navigation { display: flex; gap: 22px; color: var(--muted); font-size: 10px; }
+      .footer-navigation a:hover { color: var(--accent); }
+      .footer-bottom { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-top: 24px; color: var(--muted); font-size: 9px; }
+      .copyright { margin: 0; }
+      .piratechs-link { display: inline-flex; align-items: center; gap: 5px; }
+      .piratechs-link .icon { width: 11px; height: 11px; }
+      .piratechs-link:hover { color: var(--accent); }
+      .scroll-to-top { position: fixed; z-index: 11; right: 26px; bottom: 24px; display: inline-flex; width: 43px; height: 43px; align-items: center; justify-content: center; color: var(--button-ink); background: var(--button-fill); border: 0; border-radius: 50%; opacity: 0; pointer-events: none; transform: translateY(8px); box-shadow: 0 4px 12px rgba(0, 0, 0, .1); }
+      .scroll-to-top.is-visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
+
+      @media (min-width: 1500px) {
+        .hero { padding-block: 78px; }
+        .hero-layout { gap: 96px; }
+      }
+
+      @media (max-width: 1100px) {
+        .container { width: min(1220px, calc(100% - 56px)); }
+        .site-navigation { gap: 18px; }
+        .brand-name { font-size: 15px; }
+        .brand-mark { width: 42px; height: 42px; }
+        .hero-layout { gap: 38px; }
+        .hero-title { letter-spacing: -3px; }
+        .record-action { gap: 4px; }
+        .action-name { display: none; }
+      }
+
+      @media (max-width: 800px) {
+        .container { width: calc(100% - 40px); }
+        .header-inner { min-height: 0; flex-wrap: wrap; gap: 0; padding-top: 16px; }
+        .site-brand { margin-bottom: 9px; }
+        .site-navigation { width: 100%; justify-content: space-between; gap: 10px; padding-bottom: 12px; font-size: 10px; }
+        .sign-in-link { padding: 8px 10px; }
+        .hero { padding: 42px 0 44px; }
+        .hero-layout { grid-template-columns: 1.05fr 1fr; gap: 25px; }
+        .hero-title { font-size: 52px; letter-spacing: -2.8px; }
+        .hero-description { font-size: 12px; }
+        .hero-search { gap: 7px; padding-left: 12px; }
+        .hero-search-input { font-size: 10px; }
+        .hero-search-button { padding-inline: 12px; }
+        .hero-search-button .icon { display: none; }
+        .spotlight-content { padding: 22px 21px; }
+        .spotlight-heading { margin-bottom: 22px; }
+        .spotlight-title { font-size: 29px; }
+        .spotlight-label { font-size: 8px; letter-spacing: .8px; }
+        .reading-row { grid-template-columns: 54px 1fr 14px; gap: 6px; }
+        .reading-value { font-size: 10px; letter-spacing: .7px; }
+        .spotlight-actions { padding-inline: 10px; }
+        .card-content { padding: 21px; }
+        .card-title { font-size: 29px; }
+        .card-title-long { font-size: 25px; }
+        .card-metadata { gap: 12px; }
+        .card-actions { padding-inline: 10px; }
+      }
+
+      @media (max-width: 600px) {
+        .design-toolbar { justify-content: center; gap: 12px; padding-inline: 10px; }
+        .design-label { font-size: 9px; }
+        .design-label-copy { display: none; }
+        .design-theme-button { padding-inline: 7px; font-size: 9px; }
+        .design-theme-options { gap: 0; }
+        .site-brand { gap: 8px; }
+        .brand-name { font-size: 16px; }
+        .brand-mark { width: 41px; height: 41px; }
+        .site-navigation { gap: 5px; font-size: 10px; }
+        .sign-in-link { gap: 4px; padding: 7px 8px; }
+        .sign-in-link .icon { width: 12px; height: 12px; }
+        .hero { padding-top: 36px; }
+        .hero-layout { grid-template-columns: 1fr; gap: 30px; }
+        .hero-eyebrow { margin-bottom: 17px; font-size: 9px; }
+        .hero-title { font-size: 59px; letter-spacing: -3.2px; }
+        .hero-description { max-width: 330px; margin-top: 19px; font-size: 13px; }
+        .hero-search { min-height: 56px; margin-top: 22px; }
+        .hero-search-input { font-size: 11px; }
+        .hero-search-button { padding-inline: 17px; }
+        .hero-footnote { font-size: 9px; }
+        .spotlight-content { padding: 23px; }
+        .spotlight-heading { margin-bottom: 21px; }
+        .spotlight-title { max-width: 300px; font-size: 34px; }
+        .spotlight-label { font-size: 9px; letter-spacing: 1px; }
+        .reading-row { grid-template-columns: 70px 1fr 17px; gap: 10px; }
+        .reading-value { font-size: 12px; letter-spacing: 1.4px; }
+        .collection { padding-top: 36px; }
+        .collection-heading { align-items: flex-start; flex-direction: column; gap: 11px; }
+        .collection-title { font-size: 30px; }
+        .sample-collection-note { font-size: 9px; }
+        .collection-controls { gap: 7px; margin-top: 20px; }
+        .collection-filters { gap: 0; }
+        .filter-button { gap: 5px; padding-inline: 10px; font-size: 10px; }
+        .filter-button .icon { width: 12px; height: 12px; }
+        .collection-sort { gap: 0; }
+        .sort-button { gap: 4px; padding-inline: 8px; font-size: 9px; }
+        .sort-button .icon { display: none; }
+        .palindrome-grid { grid-template-columns: 1fr; gap: 16px; }
+        .card-content { padding: 23px; }
+        .card-title { min-height: 65px; margin-top: 12px; font-size: 34px; }
+        .card-title-long { font-size: 29px; }
+        .card-metadata { gap: 15px 24px; }
+        .card-actions { padding-inline: 14px; }
+        .record-action { min-height: 35px; gap: 7px; padding-inline: 7px; }
+        .record-action .icon { width: 15px; height: 15px; }
+        .action-count { font-size: 11px; }
+        .collection-bottom { align-items: flex-start; flex-direction: column; gap: 18px; }
+        .footer-top { align-items: flex-start; flex-direction: column; gap: 19px; }
+        .footer-navigation { gap: 22px; }
+        .footer-bottom { align-items: flex-start; gap: 15px; font-size: 8px; }
+        .scroll-to-top { right: 18px; bottom: 18px; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        *, *::before, *::after { transition: none !important; animation: none !important; }
+      }
+    </style>
+  </head>
+  <body id="landing-design-preview" class="landing-design-preview">
+    <!-- Isolated artwork. Search, filters, sorts, and record actions are static design controls.
+         Theme selection and scroll behavior are the only active prototype interactions.
+         All users, counts, collection dates, and submission data are fictional samples.
+         Original palindrome authors and discovery dates are unknown here.
+         A future adopted app should prompt for sign-in when an identity action is selected.
+         Internal route destinations are layout references, not implemented preview pages. -->
+    <a id="skip-to-collection" class="skip-link" href="#collection">Skip to Collection</a>
+    <svg id="design-icon-library" class="visually-hidden" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <symbol id="icon-up" viewBox="0 0 24 24"><path d="m6 11 6-6 6 6M12 5v14"/></symbol>
+      <symbol id="icon-down" viewBox="0 0 24 24"><path d="m6 13 6 6 6-6M12 5v14"/></symbol>
+      <symbol id="icon-right" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol>
+      <symbol id="icon-left" viewBox="0 0 24 24"><path d="M20 12H4m6-6-6 6 6 6"/></symbol>
+      <symbol id="icon-both" viewBox="0 0 24 24"><path d="M3 7h18m-4-4 4 4-4 4M21 17H3m4-4-4 4 4 4"/></symbol>
+      <symbol id="icon-comment" viewBox="0 0 24 24"><path d="M20 15a3 3 0 0 1-3 3H9l-5 3V6a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3z"/></symbol>
+      <symbol id="icon-save" viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></symbol>
+      <symbol id="icon-heart" viewBox="0 0 24 24"><path d="M20.8 4.8a5.1 5.1 0 0 0-7.2 0L12 6.4l-1.6-1.6a5.1 5.1 0 0 0-7.2 7.2L12 21l8.8-9a5.1 5.1 0 0 0 0-7.2Z"/></symbol>
+      <symbol id="icon-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+      <symbol id="icon-word" viewBox="0 0 24 24"><path d="m4 19 6-14 6 14M6 14h8M19 5v14"/></symbol>
+      <symbol id="icon-phrase" viewBox="0 0 24 24"><path d="M4 6h16M4 12h12M4 18h16"/></symbol>
+      <symbol id="icon-all" viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></symbol>
+      <symbol id="icon-trending" viewBox="0 0 24 24"><path d="m3 17 6-6 4 4 8-10m-6 0h6v6"/></symbol>
+      <symbol id="icon-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+      <symbol id="icon-sign-in" viewBox="0 0 24 24"><path d="M14 4h6v16h-6M3 12h12m-5-5 5 5-5 5"/></symbol>
+      <symbol id="icon-external" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M10 4H4v16h16v-6"/></symbol>
+    </svg>
+
+    <aside id="design-toolbar" class="design-toolbar" aria-label="Design Preview Controls">
+      <div id="design-preview-label" class="design-label"><span class="design-dot" aria-hidden="true"></span><span>Design v1<span class="design-label-copy"> · editable landing concept</span></span></div>
+      <div id="design-theme-options" class="design-theme-options" role="group" aria-label="Preview Color Palette">
+        <button id="design-theme-paper" class="design-theme-button" type="button" data-theme-choice="paper" aria-pressed="true"><span class="design-swatch design-swatch-paper" aria-hidden="true"></span>Paper &amp; Cobalt</button>
+        <button id="design-theme-forest" class="design-theme-button" type="button" data-theme-choice="forest" aria-pressed="false"><span class="design-swatch design-swatch-forest" aria-hidden="true"></span>Forest &amp; Cream</button>
+      </div>
+    </aside>
+
+    <header id="site-header" class="site-header">
+      <div id="header-inner" class="container header-inner">
+        <a id="header-brand" class="site-brand" href="/" aria-label="palindromelists.com Home">
+          <img id="header-half-turn-logo" class="brand-mark" src="../../logos/v1/02-half-turn.svg" width="48" height="48" alt="Half Turn PL logo">
+          <span class="brand-name">palindromelists<span class="brand-domain">.com</span></span>
+        </a>
+        <nav id="site-navigation" class="site-navigation" aria-label="Main Navigation">
+          <a id="navigation-about" class="navigation-link" href="/about">About</a>
+          <a id="navigation-api" class="navigation-link" href="/api">API</a>
+          <a id="navigation-words" class="navigation-link" href="/words">Words</a>
+          <a id="navigation-phrases" class="navigation-link" href="/phrases">Phrases</a>
+          <a id="navigation-contact" class="navigation-link" href="/contact">Contact</a>
+          <a id="navigation-sign-in" class="sign-in-link" href="/signin">Sign In<svg class="icon" aria-hidden="true"><use href="#icon-sign-in"></use></svg></a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="landing-main" class="landing-main">
+      <section id="hero" class="hero" aria-labelledby="hero-title">
+        <div id="hero-layout" class="container hero-layout">
+          <div id="hero-introduction" class="hero-introduction">
+            <p id="hero-eyebrow" class="hero-eyebrow"><svg class="icon" aria-hidden="true"><use href="#icon-both"></use></svg>A little symmetry for your day</p>
+            <h1 id="hero-title" class="hero-title">Good words.<br><span class="hero-title-accent">Both ways.</span></h1>
+            <p id="hero-description" class="hero-description">A small collection of words and phrases that read the same forward and backward.</p>
+            <div id="hero-search" class="hero-search" role="search" aria-label="Search the Collection">
+              <svg class="icon" aria-hidden="true"><use href="#icon-search"></use></svg>
+              <label class="visually-hidden" for="hero-search-input">Search Palindrome Words and Phrases</label>
+              <input id="hero-search-input" class="hero-search-input" type="search" name="q" placeholder="Find a word or phrase…">
+              <button id="hero-search-button" class="hero-search-button" type="button">Search<svg class="icon" aria-hidden="true"><use href="#icon-right"></use></svg></button>
+            </div>
+            <p id="hero-footnote" class="hero-footnote"><svg class="icon" aria-hidden="true"><use href="#icon-both"></use></svg>Ignore spaces, punctuation, and case. Keep the wonder.</p>
+          </div>
+
+          <article id="spotlight-never-odd-or-even" class="spotlight-card" aria-labelledby="spotlight-title-never-odd-or-even">
+            <div id="spotlight-content-never-odd-or-even" class="spotlight-content">
+              <div id="spotlight-heading-never-odd-or-even" class="spotlight-heading">
+                <span class="spotlight-label"><svg class="icon" aria-hidden="true"><use href="#icon-both"></use></svg>Palindrome Spotlight</span>
+                <span class="record-type"><svg class="icon" aria-hidden="true"><use href="#icon-phrase"></use></svg>Phrase</span>
+              </div>
+              <h2 id="spotlight-title-never-odd-or-even" class="spotlight-title">Never odd or even.</h2>
+              <p class="record-summary"><span>English</span><span class="summary-dot" aria-hidden="true"></span><span>14 letters</span><span class="summary-dot" aria-hidden="true"></span><span>4 words</span></p>
+              <div id="spotlight-reading-never-odd-or-even" class="reading-demo" aria-label="Normalized Phrase Reads neveroddoreven in Both Directions">
+                <div class="reading-row"><span class="reading-label">Forward</span><span class="reading-value">neveroddoreven</span><svg class="icon" aria-hidden="true"><use href="#icon-right"></use></svg></div>
+                <div class="reading-row"><span class="reading-label">Backward</span><span class="reading-value">neveroddoreven</span><svg class="icon" aria-hidden="true"><use href="#icon-left"></use></svg></div>
+              </div>
+              <p class="reading-note">Same letters. A different direction.</p>
+              <dl id="spotlight-metadata-never-odd-or-even" class="spotlight-metadata">
+                <div class="metadata-pair"><dt>Original author</dt><dd>Unknown</dd></div>
+                <div class="metadata-pair"><dt>Discovered</dt><dd>Unknown</dd></div>
+                <div class="metadata-pair"><dt>Source</dt><dd>Community submission (sample)</dd></div>
+                <div class="metadata-pair"><dt>Added by</dt><dd>Maya (demo) · Oct 3, 2026</dd></div>
+              </dl>
+            </div>
+            <div id="spotlight-actions-never-odd-or-even" class="spotlight-actions record-actions" role="group" aria-label="Sample Actions for Never Odd or Even">
+              <button id="spotlight-upvote-never-odd-or-even" class="record-action record-action-upvote" type="button" aria-label="Upvote Never Odd or Even, 312 Sample Upvotes"><svg class="icon" aria-hidden="true"><use href="#icon-up"></use></svg><span class="action-name">Upvote</span><span class="action-count">312</span></button>
+              <button id="spotlight-downvote-never-odd-or-even" class="record-action" type="button" aria-label="Downvote Never Odd or Even, 2 Sample Downvotes"><svg class="icon" aria-hidden="true"><use href="#icon-down"></use></svg><span class="action-name">Downvote</span><span class="action-count">2</span></button>
+              <button id="spotlight-comment-never-odd-or-even" class="record-action" type="button" aria-label="Comment on Never Odd or Even, 18 Sample Comments"><svg class="icon" aria-hidden="true"><use href="#icon-comment"></use></svg><span class="action-name">Comment</span><span class="action-count">18</span></button>
+              <button id="spotlight-save-never-odd-or-even" class="record-action" type="button" aria-label="Save Never Odd or Even, 64 Sample Saves"><svg class="icon" aria-hidden="true"><use href="#icon-save"></use></svg><span class="action-name">Save</span><span class="action-count">64</span></button>
+              <button id="spotlight-heart-never-odd-or-even" class="record-action" type="button" aria-label="Heart Never Odd or Even, 127 Sample Favorites"><svg class="icon" aria-hidden="true"><use href="#icon-heart"></use></svg><span class="action-name">Heart</span><span class="action-count">127</span></button>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="collection" class="container collection" aria-labelledby="collection-title">
+        <div id="collection-heading" class="collection-heading">
+          <div id="collection-introduction" class="collection-introduction"><p class="collection-eyebrow">The Collection</p><h2 id="collection-title" class="collection-title">Worth a second look.</h2></div>
+          <p id="sample-collection-note" class="sample-collection-note">Sample collection for design preview</p>
+        </div>
+        <div id="collection-controls" class="collection-controls">
+          <div id="collection-filters" class="collection-filters" role="group" aria-label="Collection Type Filters, Static Preview">
+            <button id="filter-all" class="filter-button" type="button" aria-pressed="true"><svg class="icon" aria-hidden="true"><use href="#icon-all"></use></svg>All</button>
+            <button id="filter-words" class="filter-button" type="button" aria-pressed="false"><svg class="icon" aria-hidden="true"><use href="#icon-word"></use></svg>Words</button>
+            <button id="filter-phrases" class="filter-button" type="button" aria-pressed="false"><svg class="icon" aria-hidden="true"><use href="#icon-phrase"></use></svg>Phrases</button>
+          </div>
+          <div id="collection-sort" class="collection-sort" role="group" aria-label="Collection Sorting, Static Preview">
+            <button id="sort-trending" class="sort-button" type="button" aria-pressed="true"><svg class="icon" aria-hidden="true"><use href="#icon-trending"></use></svg>Trending</button>
+            <button id="sort-newest" class="sort-button" type="button" aria-pressed="false"><svg class="icon" aria-hidden="true"><use href="#icon-clock"></use></svg>Newest</button>
+          </div>
+        </div>
+
+        <div id="palindrome-grid" class="palindrome-grid">
+          <article id="palindrome-card-level" class="palindrome-card" aria-labelledby="palindrome-title-level">
+            <div id="palindrome-content-level" class="card-content">
+              <div class="card-heading"><span class="record-type"><svg class="icon" aria-hidden="true"><use href="#icon-word"></use></svg>Word</span><span class="card-record-id">001</span></div>
+              <h3 id="palindrome-title-level" class="card-title">level</h3>
+              <p class="card-reading"><svg class="icon" aria-hidden="true"><use href="#icon-both"></use></svg>English<span class="summary-dot" aria-hidden="true"></span>5 letters<span class="summary-dot" aria-hidden="true"></span>Reads both ways</p>
+              <dl id="palindrome-metadata-level" class="card-metadata">
+                <div class="metadata-pair"><dt>Original author</dt><dd>Unknown</dd></div>
+                <div class="metadata-pair"><dt>Discovered</dt><dd>Unknown</dd></div>
+                <div class="metadata-pair"><dt>Source</dt><dd>Community submission (sample)</dd></div>
+                <div class="metadata-pair"><dt>Added by</dt><dd>Alex (demo)</dd></div>
+              </dl>
+              <p class="card-added-date">Added Oct 5, 2026 · Sample date</p>
+            </div>
+            <div id="palindrome-actions-level" class="card-actions record-actions" role="group" aria-label="Sample Actions for Level">
+              <button id="upvote-level" class="record-action record-action-upvote" type="button" aria-label="Upvote Level, 128 Sample Upvotes"><svg class="icon" aria-hidden="true"><use href="#icon-up"></use></svg><span class="action-name">Upvote</span><span class="action-count">128</span></button>
+              <button id="downvote-level" class="record-action" type="button" aria-label="Downvote Level, 1 Sample Downvote"><svg class="icon" aria-hidden="true"><use href="#icon-down"></use></svg><span class="action-name">Downvote</span><span class="action-count">1</span></button>
+              <button id="comment-level" class="record-action" type="button" aria-label="Comment on Level, 8 Sample Comments"><svg class="icon" aria-hidden="true"><use href="#icon-comment"></use></svg><span class="action-name">Comment</span><span class="action-count">8</span></button>
+              <button id="save-level" class="record-action" type="button" aria-label="Save Level, 34 Sample Saves"><svg class="icon" aria-hidden="true"><use href="#icon-save"></use></svg><span class="action-name">Save</span><span class="action-count">34</span></button>
+              <button id="heart-level" class="record-action" type="button" aria-label="Heart Level, 56 Sample Favorites"><svg class="icon" aria-hidden="true"><use href="#icon-heart"></use></svg><span class="action-name">Heart</span><span class="action-count">56</span></button>
+            </div>
+          </article>
+
+          <article id="palindrome-card-racecar" class="palindrome-card" aria-labelledby="palindrome-title-racecar">
+            <div id="palindrome-content-racecar" class="card-content">
+              <div class="card-heading"><span class="record-type"><svg class="icon" aria-hidden="true"><use href="#icon-word"></use></svg>Word</span><span class="card-record-id">002</span></div>
+              <h3 id="palindrome-title-racecar" class="card-title">racecar</h3>
+              <p class="card-reading"><svg class="icon" aria-hidden="true"><use href="#icon-both"></use></svg>English<span class="summary-dot" aria-hidden="true"></span>7 letters<span class="summary-dot" aria-hidden="true"></span>Reads both ways</p>
+              <dl id="palindrome-metadata-racecar" class="card-metadata">
+                <div class="metadata-pair"><dt>Original author</dt><dd>Unknown</dd></div>
+                <div class="metadata-pair"><dt>Discovered</dt><dd>Unknown</dd></div>
+                <div class="metadata-pair"><dt>Source</dt><dd>Community submission (sample)</dd></div>
+                <div class="metadata-pair"><dt>Added by</dt><dd>Sam (demo)</dd></div>
+              </dl>
+              <p class="card-added-date">Added Oct 4, 2026 · Sample date</p>
+            </div>
+            <div id="palindrome-actions-racecar" class="card-actions record-actions" role="group" aria-label="Sample Actions for Racecar">
+              <button id="upvote-racecar" class="record-action record-action-upvote" type="button" aria-label="Upvote Racecar, 204 Sample Upvotes"><svg class="icon" aria-hidden="true"><use href="#icon-up"></use></svg><span class="action-name">Upvote</span><span class="action-count">204</span></button>
+              <button id="downvote-racecar" class="record-action" type="button" aria-label="Downvote Racecar, 3 Sample Downvotes"><svg class="icon" aria-hidden="true"><use href="#icon-down"></use></svg><span class="action-name">Downvote</span><span class="action-count">3</span></button>
+              <button id="comment-racecar" class="record-action" type="button" aria-label="Comment on Racecar, 12 Sample Comments"><svg class="icon" aria-hidden="true"><use href="#icon-comment"></use></svg><span class="action-name">Comment</span><span class="action-count">12</span></button>
+              <button id="save-racecar" class="record-action" type="button" aria-label="Save Racecar, 48 Sample Saves"><svg class="icon" aria-hidden="true"><use href="#icon-save"></use></svg><span class="action-name">Save</span><span class="action-count">48</span></button>
+              <button id="heart-racecar" class="record-action" type="button" aria-label="Heart Racecar, 83 Sample Favorites"><svg class="icon" aria-hidden="true"><use href="#icon-heart"></use></svg><span class="action-name">Heart</span><span class="action-count">83</span></button>
+            </div>
+          </article>
+
+          <article id="palindrome-card-never-odd-or-even" class="palindrome-card" aria-labelledby="palindrome-title-never-odd-or-even">
+            <div id="palindrome-content-never-odd-or-even" class="card-content">
+              <div class="card-heading"><span class="record-type"><svg class="icon" aria-hidden="true"><use href="#icon-phrase"></use></svg>Phrase</span><span class="card-record-id">003</span></div>
+              <h3 id="palindrome-title-never-odd-or-even" class="card-title">Never odd or even.</h3>
+              <p class="card-reading"><svg class="icon" aria-hidden="true"><use href="#icon-both"></use></svg>English<span class="summary-dot" aria-hidden="true"></span>14 letters<span class="summary-dot" aria-hidden="true"></span>4 words</p>
+              <dl id="palindrome-metadata-never-odd-or-even" class="card-metadata">
+                <div class="metadata-pair"><dt>Original author</dt><dd>Unknown</dd></div>
+                <div class="metadata-pair"><dt>Discovered</dt><dd>Unknown</dd></div>
+                <div class="metadata-pair"><dt>Source</dt><dd>Community submission (sample)</dd></div>
+                <div class="metadata-pair"><dt>Added by</dt><dd>Maya (demo)</dd></div>
+              </dl>
+              <p class="card-added-date">Added Oct 3, 2026 · Sample date</p>
+            </div>
+            <div id="palindrome-actions-never-odd-or-even" class="card-actions record-actions" role="group" aria-label="Sample Actions for Never Odd or Even">
+              <button id="upvote-never-odd-or-even" class="record-action record-action-upvote" type="button" aria-label="Upvote Never Odd or Even, 312 Sample Upvotes"><svg class="icon" aria-hidden="true"><use href="#icon-up"></use></svg><span class="action-name">Upvote</span><span class="action-count">312</span></button>
+              <button id="downvote-never-odd-or-even" class="record-action" type="button" aria-label="Downvote Never Odd or Even, 2 Sample Downvotes"><svg class="icon" aria-hidden="true"><use href="#icon-down"></use></svg><span class="action-name">Downvote</span><span class="action-count">2</span></button>
+              <button id="comment-never-odd-or-even" class="record-action" type="button" aria-label="Comment on Never Odd or Even, 18 Sample Comments"><svg class="icon" aria-hidden="true"><use href="#icon-comment"></use></svg><span class="action-name">Comment</span><span class="action-count">18</span></button>
+              <button id="save-never-odd-or-even" class="record-action" type="button" aria-label="Save Never Odd or Even, 64 Sample Saves"><svg class="icon" aria-hidden="true"><use href="#icon-save"></use></svg><span class="action-name">Save</span><span class="action-count">64</span></button>
+              <button id="heart-never-odd-or-even" class="record-action" type="button" aria-label="Heart Never Odd or Even, 127 Sample Favorites"><svg class="icon" aria-hidden="true"><use href="#icon-heart"></use></svg><span class="action-name">Heart</span><span class="action-count">127</span></button>
+            </div>
+          </article>
+
+          <article id="palindrome-card-panama" class="palindrome-card" aria-labelledby="palindrome-title-panama">
+            <div id="palindrome-content-panama" class="card-content">
+              <div class="card-heading"><span class="record-type"><svg class="icon" aria-hidden="true"><use href="#icon-phrase"></use></svg>Phrase</span><span class="card-record-id">004</span></div>
+              <h3 id="palindrome-title-panama" class="card-title card-title-long">A man, a plan, a canal: Panama.</h3>
+              <p class="card-reading"><svg class="icon" aria-hidden="true"><use href="#icon-both"></use></svg>English<span class="summary-dot" aria-hidden="true"></span>21 letters<span class="summary-dot" aria-hidden="true"></span>7 words</p>
+              <dl id="palindrome-metadata-panama" class="card-metadata">
+                <div class="metadata-pair"><dt>Original author</dt><dd>Unknown</dd></div>
+                <div class="metadata-pair"><dt>Discovered</dt><dd>Unknown</dd></div>
+                <div class="metadata-pair"><dt>Source</dt><dd>Community submission (sample)</dd></div>
+                <div class="metadata-pair"><dt>Added by</dt><dd>Jo (demo)</dd></div>
+              </dl>
+              <p class="card-added-date">Added Oct 2, 2026 · Sample date</p>
+            </div>
+            <div id="palindrome-actions-panama" class="card-actions record-actions" role="group" aria-label="Sample Actions for A Man a Plan a Canal Panama">
+              <button id="upvote-panama" class="record-action record-action-upvote" type="button" aria-label="Upvote A Man a Plan a Canal Panama, 286 Sample Upvotes"><svg class="icon" aria-hidden="true"><use href="#icon-up"></use></svg><span class="action-name">Upvote</span><span class="action-count">286</span></button>
+              <button id="downvote-panama" class="record-action" type="button" aria-label="Downvote A Man a Plan a Canal Panama, 4 Sample Downvotes"><svg class="icon" aria-hidden="true"><use href="#icon-down"></use></svg><span class="action-name">Downvote</span><span class="action-count">4</span></button>
+              <button id="comment-panama" class="record-action" type="button" aria-label="Comment on A Man a Plan a Canal Panama, 21 Sample Comments"><svg class="icon" aria-hidden="true"><use href="#icon-comment"></use></svg><span class="action-name">Comment</span><span class="action-count">21</span></button>
+              <button id="save-panama" class="record-action" type="button" aria-label="Save A Man a Plan a Canal Panama, 72 Sample Saves"><svg class="icon" aria-hidden="true"><use href="#icon-save"></use></svg><span class="action-name">Save</span><span class="action-count">72</span></button>
+              <button id="heart-panama" class="record-action" type="button" aria-label="Heart A Man a Plan a Canal Panama, 104 Sample Favorites"><svg class="icon" aria-hidden="true"><use href="#icon-heart"></use></svg><span class="action-name">Heart</span><span class="action-count">104</span></button>
+            </div>
+          </article>
+        </div>
+        <div id="collection-bottom" class="collection-bottom">
+          <p id="collection-note" class="collection-note">Every palindrome has a story. Original authors and discovery dates stay unknown until there is a source to support them. Letter counts ignore spaces and punctuation.</p>
+          <a id="browse-all-words" class="browse-link" href="/words">Explore the words<svg class="icon" aria-hidden="true"><use href="#icon-right"></use></svg></a>
+        </div>
+      </section>
+    </main>
+
+    <footer id="site-footer" class="footer">
+      <div id="footer-inner" class="container footer-inner">
+        <div id="footer-top" class="footer-top">
+          <a id="footer-brand" class="footer-brand" href="/"><img id="footer-half-turn-logo" class="footer-brand-mark" src="../../logos/v1/02-half-turn.svg" width="32" height="32" alt="Half Turn PL logo"><span>palindromelists.com</span></a>
+          <nav id="footer-navigation" class="footer-navigation" aria-label="Footer Navigation"><a id="footer-about" href="/about">About</a><a id="footer-terms" href="/terms">Terms</a><a id="footer-contact" href="/contact">Contact</a><a id="footer-privacy" href="/privacy">Privacy Policy</a></nav>
+        </div>
+        <div id="footer-bottom" class="footer-bottom">
+          <p id="copyright" class="copyright">© 2026 palindromelists.com. All rights reserved.</p>
+          <a id="piratechs-link" class="piratechs-link" href="https://piratechs.com/">Made by Piratechs<svg class="icon" aria-hidden="true"><use href="#icon-external"></use></svg></a>
+        </div>
+      </div>
+    </footer>
+    <button id="scroll-to-top" class="scroll-to-top" type="button" aria-label="Scroll to Top" disabled><svg class="icon" aria-hidden="true"><use href="#icon-up"></use></svg></button>
+
+    <script>
+      const sticky = true;
+      const hero = document.getElementById(`hero`);
+      const header = document.getElementById(`site-header`);
+      const themeButtons = document.querySelectorAll(`[data-theme-choice]`);
+      const scrollTopButton = document.getElementById(`scroll-to-top`);
+      const reducedMotion = window.matchMedia(`(prefers-reduced-motion: reduce)`);
+
+      header?.classList.toggle(`is-sticky`, sticky);
+      themeButtons?.forEach((button) => {
+        button.addEventListener(`click`, () => {
+          document.documentElement.dataset.theme = button.dataset.themeChoice;
+          themeButtons?.forEach((choice) => {
+            choice.setAttribute(`aria-pressed`, String(choice === button));
+          });
+        });
+      });
+
+      const updateScrollState = () => {
+        const beyondHero = Boolean(hero && window.scrollY > hero.offsetTop + hero.offsetHeight);
+        header?.classList.toggle(`is-scrolled`, window.scrollY > 16);
+        scrollTopButton?.classList.toggle(`is-visible`, beyondHero);
+        if (scrollTopButton) scrollTopButton.disabled = !beyondHero;
+      };
+
+      scrollTopButton?.addEventListener(`click`, () => {
+        window.scrollTo({ top: 0, behavior: reducedMotion?.matches ? `auto` : `smooth` });
+      });
+      window.addEventListener(`scroll`, updateScrollState, { passive: true });
+      window.addEventListener(`resize`, updateScrollState);
+      updateScrollState();
+    </script>
+  </body>
+</html>

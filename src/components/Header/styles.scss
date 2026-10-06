@@ -1,0 +1,211 @@
+.palindrome-landing {
+  .site-header {
+    z-index: 20;
+    background: var(--page);
+    border-bottom: 1px solid var(--line);
+    transition: background 220ms ease, box-shadow 220ms ease;
+
+    &.is-sticky { position: sticky; top: 0; }
+
+    &.is-scrolled {
+      background: var(--header-glass);
+      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(16px);
+    }
+  }
+
+  .header-inner {
+    display: flex;
+    gap: 30px;
+    min-height: 77px;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .site-brand { display: inline-flex; gap: 9px; flex: 0 0 auto; align-items: center; }
+  .brand-name { font-size: 17px; font-weight: 650; letter-spacing: -.5px; }
+  .header-logo-orbit { display: inline-flex; width: 39px; height: 39px; flex: 0 0 auto; transform-origin: center; }
+  .header-actions { order: 2; display: flex; gap: 10px; flex: 0 0 auto; align-items: center; }
+
+  .header-theme-toggle {
+    display: inline-flex;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    color: var(--leaf);
+    background: var(--soft);
+    border: 1px solid var(--lime);
+    border-radius: 50%;
+
+    &:hover { color: var(--search-ink); background: var(--lime); }
+  }
+
+  .navigation-panel { order: 1; margin-left: auto; }
+  .site-navigation { display: flex; align-items: center; font-size: 12px; }
+  .navigation-links { display: flex; gap: 25px; align-items: center; }
+  .navigation-caption,
+  .navigation-item-icon,
+  .navigation-item-arrow { display: none; }
+
+  .navigation-link {
+    padding-block: 12px;
+    color: var(--muted);
+
+    &:hover,
+    &[aria-current='page'] { color: var(--action); }
+  }
+
+  .sign-in-link {
+    display: inline-flex;
+    gap: 7px;
+    min-height: 40px;
+    align-items: center;
+    padding: 8px 15px;
+    color: var(--page);
+    background: var(--action);
+    border: 1px solid var(--action);
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+
+    &:hover { opacity: .88; }
+  }
+
+  .navigation-menu-button { display: none; }
+
+  @media (max-width: 960px) {
+    .header-inner { gap: 20px; }
+    .navigation-links { gap: 16px; }
+    .brand-name { font-size: 14px; }
+  }
+
+  @media (max-width: 800px) {
+    .header-inner { gap: 0; min-height: 70px; padding-block: 15px; flex-wrap: wrap; }
+    .header-actions { gap: 8px; margin-left: auto; }
+    .brand-name { font-size: 15px; }
+
+    .navigation-menu-button {
+      display: inline-flex;
+      width: 40px;
+      height: 40px;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      color: var(--ink);
+      background: transparent;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+
+      &:hover,
+      &.is-open { color: var(--action); background: var(--card); border-color: var(--accent); }
+    }
+
+    .navigation-menu-icon { position: relative; width: 19px; height: 19px; }
+
+    .navigation-menu-line {
+      position: absolute;
+      top: 9px;
+      left: 0;
+      width: 19px;
+      height: 1.5px;
+      background: currentColor;
+      border-radius: 2px;
+      transform-origin: center;
+      transition: transform 420ms cubic-bezier(.22, 1, .36, 1), opacity 200ms ease;
+
+      &:nth-child(1) { transform: translateY(-6px); }
+      &:nth-child(3) { transform: translateY(6px); }
+    }
+
+    .navigation-menu-button.is-open .navigation-menu-line {
+      &:nth-child(1) { transform: rotate(45deg); }
+      &:nth-child(2) { opacity: 0; transform: scaleX(.2); }
+      &:nth-child(3) { transform: rotate(-45deg); }
+    }
+
+    .navigation-panel {
+      order: 3;
+      display: grid;
+      width: 100%;
+      opacity: 0;
+      visibility: hidden;
+      flex-basis: 100%;
+      margin-left: 0;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 440ms cubic-bezier(.22, 1, .36, 1), opacity 280ms ease, visibility 0s 440ms;
+
+      &.is-open {
+        opacity: 1;
+        visibility: visible;
+        grid-template-rows: 1fr;
+        transition: grid-template-rows 480ms cubic-bezier(.22, 1, .36, 1), opacity 280ms ease, visibility 0s;
+      }
+    }
+
+    .site-navigation {
+      display: block;
+      min-height: 0;
+      overflow: hidden;
+      max-height: calc(100vh - 70px);
+      max-height: calc(100svh - 70px);
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+    }
+    .navigation-caption { display: block; margin: 18px 2px 12px; color: var(--muted); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; }
+    .navigation-links { display: grid; gap: 8px; align-items: stretch; padding-bottom: 5px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .navigation-item-icon,
+    .navigation-item-arrow { display: inline-flex; color: var(--action); }
+    .navigation-item-arrow { opacity: .6; }
+
+    .navigation-link {
+      display: flex;
+      gap: 8px;
+      min-height: 48px;
+      opacity: 0;
+      align-items: center;
+      justify-content: space-between;
+      padding: 13px 14px;
+      color: var(--ink);
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      font-size: 13px;
+      transform: translateY(-7px);
+      transition: opacity 260ms ease, transform 360ms cubic-bezier(.22, 1, .36, 1), background 180ms ease, color 180ms ease, border-color 180ms ease;
+
+      &:hover { color: var(--action); border-color: var(--accent); }
+    }
+
+    .navigation-link .flip-content { gap: 8px; }
+    .navigation-link[aria-current='page'] { color: var(--leaf); background: var(--soft); border-color: var(--lime); }
+
+    .navigation-panel.is-open {
+      .site-navigation { overflow-y: auto; }
+
+      .navigation-link {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: calc(var(--navigation-index, 0) * 35ms + 60ms), calc(var(--navigation-index, 0) * 35ms + 60ms), 0s, 0s, 0s;
+      }
+    }
+  }
+
+  @media (max-width: 390px) {
+    .brand-name { font-size: 13px; }
+    .site-brand { gap: 6px; }
+    .header-actions { gap: 6px; }
+    .navigation-link { padding-inline: 12px; }
+    .header-logo-orbit { width: 32px; height: 32px; }
+    .header-logo-orbit > svg { width: 100%; height: 100%; }
+    .sign-in-link { gap: 5px; padding-inline: 9px; font-size: 11px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .navigation-panel,
+    .navigation-menu-line,
+    .navigation-link,
+    .sign-in-link { transition: none !important; }
+  }
+}

@@ -1,0 +1,31 @@
+<svg
+  role="img"
+  viewBox="0 0 320 320"
+  xmlns="http://www.w3.org/2000/svg"
+  aria-labelledby="mirror-stack-title mirror-stack-description"
+>
+  <title id="mirror-stack-title">Palindrome Lists — Mirror Stack</title>
+  <desc id="mirror-stack-description">A bold, rounded PL above the same pair reflected from left to right. The lower row reverses both the order and shapes of the letters.</desc>
+  <defs>
+    <g id="mirror-stack-pair" fill="#171717">
+      <path
+        id="mirror-stack-letter-p"
+        fill-rule="evenodd"
+        d="M56 132V66Q56 44 78 44H113C140 44 156 59 156 78C156 97 140 112 113 112H86V133C86 142 80 148 71 148C62 148 56 142 56 132ZM86 70V86H112C122 86 128 83 128 78C128 73 122 70 112 70Z"
+      />
+      <path
+        id="mirror-stack-letter-l"
+        d="M191 44C200 44 206 51 206 60V118H249C257 118 264 125 264 133C264 141 257 148 249 148H191C183 148 176 141 176 133V60C176 51 183 44 191 44Z"
+      />
+    </g>
+  </defs>
+  <use
+    id="mirror-stack-upper-pair"
+    href="#mirror-stack-pair"
+  />
+  <use
+    id="mirror-stack-lower-pair"
+    href="#mirror-stack-pair"
+    transform="matrix(-1 0 0 1 320 128)"
+  />
+</svg>

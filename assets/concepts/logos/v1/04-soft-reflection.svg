@@ -1,0 +1,37 @@
+<svg
+  role="img"
+  viewBox="0 0 320 320"
+  xmlns="http://www.w3.org/2000/svg"
+  aria-labelledby="soft-reflection-title soft-reflection-description"
+>
+  <title id="soft-reflection-title">Palindrome Lists — Soft Reflection</title>
+  <desc id="soft-reflection-description">Rounded monoline P and L letterforms float above their exact upside-down reflection, creating a light and friendly symmetric monogram.</desc>
+  <defs>
+    <g
+      fill="none"
+      stroke="#171717"
+      stroke-width="14"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      id="soft-reflection-pair"
+    >
+      <path
+        id="soft-reflection-letter-p"
+        d="M64 140V80Q64 60 84 60H102C124 60 136 73 136 90C136 107 124 120 102 120H64"
+      />
+      <path
+        id="soft-reflection-letter-l"
+        d="M180 60V120Q180 140 200 140H256"
+      />
+    </g>
+  </defs>
+  <use
+    id="soft-reflection-upper-pair"
+    href="#soft-reflection-pair"
+  />
+  <use
+    id="soft-reflection-lower-pair"
+    href="#soft-reflection-pair"
+    transform="matrix(1 0 0 -1 0 320)"
+  />
+</svg>

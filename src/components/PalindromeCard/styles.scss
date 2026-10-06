@@ -1,0 +1,164 @@
+.palindrome-landing {
+  .palindrome-card {
+    container-type: inline-size;
+    min-width: 0;
+    overflow: hidden;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+  }
+
+  .card-content { padding: 23px 25px 18px; }
+  .card-heading { display: flex; gap: 10px; align-items: center; justify-content: space-between; }
+
+  .record-type {
+    display: inline-flex;
+    flex: 0 0 auto;
+    padding: 4px 9px;
+    color: var(--leaf);
+    background: var(--soft);
+    border-radius: 5px;
+    font-size: 10px;
+    font-weight: 550;
+  }
+
+  .card-title {
+    display: flex;
+    min-height: 66px;
+    align-items: center;
+    margin: 12px 0 0;
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -.9px;
+    overflow-wrap: anywhere;
+  }
+
+  .card-title-phrase { font-size: 27px; letter-spacing: -.8px; }
+
+  .card-language {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin: 4px 0 0;
+    color: var(--muted);
+    font-size: 11px;
+  }
+
+  .metadata-dot { width: 2px; height: 2px; background: var(--muted); border-radius: 50%; }
+
+  .card-visible-metadata {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: .95fr .85fr 1.35fr;
+    margin: 17px 0 2px;
+    padding-top: 13px;
+    border-top: 1px solid var(--line);
+  }
+
+  .visible-metadata-pair,
+  .metadata-pair {
+    display: flex;
+    gap: 5px;
+    min-width: 0;
+    flex-direction: column;
+
+    dt { color: var(--muted); font-size: 10px; }
+    dd { margin: 0; font-size: 11px; line-height: 1.5; overflow-wrap: anywhere; }
+  }
+
+  .card-footer {
+    display: flex;
+    gap: 10px 16px;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 10px 20px;
+    border-top: 1px solid var(--line);
+  }
+
+  .record-actions { display: flex; gap: 2px; align-items: center; margin-left: auto; }
+  .vote-controls { display: flex; gap: 2px; align-items: center; margin-left: auto; }
+
+  .icon-button {
+    display: inline-flex;
+    width: 33px;
+    min-height: 38px;
+    align-items: center;
+    justify-content: center;
+    padding: 7px;
+    color: var(--muted);
+    background: transparent;
+    border: 0;
+    border-radius: 5px;
+
+    &:hover { color: var(--action); background: var(--soft); }
+  }
+
+  .heart-button,
+  .upvote-button { color: var(--accent); }
+  .copy-button.is-copied { color: var(--leaf); background: var(--soft); }
+
+  .vote-score {
+    min-width: 26px;
+    color: var(--action);
+    font-size: 11px;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .comment-button { gap: 4px; width: auto; padding-inline: 7px; }
+  .comment-count { font-size: 11px; font-variant-numeric: tabular-nums; }
+
+  .details-button {
+    display: inline-flex;
+    gap: 6px;
+    min-height: 38px;
+    align-items: center;
+    padding: 7px 0;
+    color: var(--action);
+    background: transparent;
+    border: 0;
+    border-radius: 4px;
+    font-size: 11px;
+
+    &:hover { color: var(--accent); }
+    &[aria-expanded='true'] svg { transform: rotate(180deg); }
+    svg { transition: transform 180ms ease; }
+  }
+
+  .metadata-panel { margin: 0; padding: 4px 25px 21px; border-top: 1px solid var(--line); }
+  .card-metadata { display: grid; gap: 16px 22px; grid-template-columns: 1fr 1fr; margin: 0; padding-top: 11px; }
+  .demo-note { margin: 18px 0 0; color: var(--muted); font-size: 10px; line-height: 1.6; }
+
+  @container (max-width: 300px) {
+    .card-heading { display: grid; gap: 5px; grid-template-columns: 1fr; }
+    .record-type { justify-self: start; }
+    .record-actions { justify-self: end; }
+  }
+
+  @media (max-width: 960px) {
+    .card-footer { gap: 8px; padding-inline: 15px; }
+    .card-content { padding-inline: 21px; }
+    .metadata-panel { padding-inline: 21px; }
+  }
+
+  @media (max-width: 720px) {
+    .card-title { font-size: 30px; }
+    .card-title-phrase { font-size: 25px; }
+  }
+
+  @media (max-width: 600px) {
+    .card-content { padding: 21px 23px 17px; }
+    .card-title { min-height: 58px; font-size: 32px; }
+    .card-title-phrase { font-size: 27px; }
+    .metadata-panel { padding-inline: 23px; }
+  }
+
+  @media (max-width: 390px) {
+    .icon-button { width: 29px; padding-inline: 5px; }
+    .comment-button { gap: 4px; width: auto; }
+    .vote-score { min-width: 24px; }
+    .card-visible-metadata { gap: 9px; grid-template-columns: 1fr 1fr; }
+  }
+}

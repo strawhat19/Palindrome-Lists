@@ -1,0 +1,31 @@
+<svg
+  role="img"
+  viewBox="0 0 320 320"
+  xmlns="http://www.w3.org/2000/svg"
+  aria-labelledby="half-turn-title half-turn-description"
+>
+  <title id="half-turn-title">Palindrome Lists — Half Turn</title>
+  <desc id="half-turn-description">Square geometric P and L letterforms above an identical pair turned 180 degrees. The complete monogram has exact rotational symmetry.</desc>
+  <defs>
+    <g id="half-turn-pair" fill="#171717">
+      <path
+        id="half-turn-letter-p"
+        fill-rule="evenodd"
+        d="M58 48H150V118H82V146H58ZM82 72V94H126V72Z"
+      />
+      <path
+        id="half-turn-letter-l"
+        d="M174 48H198V122H262V146H174Z"
+      />
+    </g>
+  </defs>
+  <use
+    id="half-turn-upper-pair"
+    href="#half-turn-pair"
+  />
+  <use
+    id="half-turn-lower-pair"
+    href="#half-turn-pair"
+    transform="matrix(-1 0 0 -1 320 320)"
+  />
+</svg>

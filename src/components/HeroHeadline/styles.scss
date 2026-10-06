@@ -1,0 +1,25 @@
+.palindrome-landing {
+  .hero-headline-cycle {
+    display: grid;
+    width: 100%;
+    perspective: 900px;
+  }
+
+  .hero-headline-phrase {
+    grid-area: 1 / 1;
+    opacity: 0;
+    visibility: hidden;
+    transform-origin: center;
+    backface-visibility: hidden;
+
+    &:first-child { opacity: 1; visibility: visible; }
+  }
+
+  .hero-headline-lead { white-space: nowrap; }
+
+  .hero-headline-word,
+  .hero-headline-char {
+    display: inline-block;
+    transform-origin: center bottom;
+  }
+}
