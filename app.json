@@ -10,8 +10,7 @@
     "plugins": ["expo-router"],
     "web": {
       "output": "static",
-      "bundler": "metro",
-      "favicon": "./public/favicon.svg"
+      "bundler": "metro"
     },
     "ios": {
       "supportsTablet": true,
