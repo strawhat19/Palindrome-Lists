@@ -55,7 +55,7 @@ const createStyles = (palette: ThemePalette) => StyleSheet.create({
     alignItems: `center`,
     borderColor: palette.lime,
     justifyContent: `center`,
-    backgroundColor: palette.soft,
+    backgroundColor: palette.lime,
   },
   accountActions: {
     gap: 8,

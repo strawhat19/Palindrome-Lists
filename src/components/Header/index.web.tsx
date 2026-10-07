@@ -55,7 +55,7 @@ const Header = ({ scrolled, onHome }: HeaderProps) => {
             onClick={toggleTheme}
           >
             <FlipContent id='header-theme-content'>
-              <Icon name={theme === `dark` ? `sun` : `moon`} size={19} />
+              <Icon fill='#FFFFFF' name={theme === `dark` ? `sun` : `moon`} size={19} />
             </FlipContent>
           </button>
           <Link href={landingLinks.signin} asChild>

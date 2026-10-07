@@ -157,7 +157,7 @@ const useLandingMotion = (rootRef: RefObject<HTMLDivElement | null>) => {
             if (!root.contains(control)) hovered.delete(control);
           });
           collection?.querySelectorAll<HTMLElement>(`[data-reveal='card']`).forEach((card, index) => {
-            if (seenCards.has(card.id)) return;
+            if (card.closest(`[data-carousel-slide]`) || seenCards.has(card.id)) return;
             seenCards.add(card.id);
             reveal(card, (index % 2) * .08);
           });

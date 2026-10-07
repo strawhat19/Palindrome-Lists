@@ -58,6 +58,11 @@
   }
 
   .collection { width: min(1120px, calc(100% - 80px)); padding-top: 40px; padding-bottom: 66px; }
+  .collection.is-carousel {
+    width: 100%;
+
+    > .collection-heading { width: min(1120px, calc(100% - 80px)); margin-inline: auto; }
+  }
   .collection-heading { display: flex; gap: 22px; align-items: center; justify-content: space-between; margin-bottom: 24px; }
   .collection-title { margin: 0; font-size: 23px; font-weight: 600; letter-spacing: -.7px; }
   .sample-label { margin: 8px 0 0; color: var(--muted); font-size: 11px; }
@@ -151,6 +156,7 @@
 
     .collection-heading { gap: 20px; align-items: flex-start; flex-direction: column; }
     .collection-controls { width: 100%; justify-content: space-between; }
+    .collection.is-carousel > .collection-heading { width: calc(100% - 48px); }
     .palindrome-grid.is-preview {
       grid-template-columns: 1fr;
 
@@ -175,6 +181,7 @@
     .collection { width: calc(100% - 36px); }
 
     .collection-heading { gap: 19px; }
+    .collection.is-carousel > .collection-heading { width: calc(100% - 36px); }
     .collection-title { font-size: 22px; letter-spacing: -.6px; }
     .collection-controls { gap: 12px; flex-wrap: wrap; }
     .filter-button { padding-inline: 12px; }

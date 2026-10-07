@@ -1,0 +1,156 @@
+.palindrome-landing {
+  .palindrome-carousel {
+    width: 100%;
+    min-width: 0;
+    --carousel-card-width: min(409.2px, calc(100vw - 60px));
+  }
+
+  .palindrome-carousel-viewport {
+    cursor: grab;
+    position: relative;
+    isolation: isolate;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-block: 80px;
+    scrollbar-width: none;
+    scroll-behavior: auto;
+    overscroll-behavior-x: contain;
+    touch-action: pan-x pan-y pinch-zoom;
+
+    &::-webkit-scrollbar { display: none; }
+  }
+
+  .palindrome-carousel-track {
+    display: flex;
+    position: relative;
+    width: max-content;
+    align-items: center;
+    transform: translate3d(0, 0, 0);
+  }
+
+  .palindrome-carousel-group {
+    display: flex;
+    gap: 24px;
+    flex: 0 0 auto;
+    align-items: center;
+    padding-inline-end: 24px;
+  }
+
+  .palindrome-carousel-slide {
+    opacity: 1;
+    flex: 0 0 auto;
+    position: relative;
+    transform-origin: center;
+    width: var(--carousel-card-width);
+    transform: perspective(1100px) translate3d(0, 0, 0) rotateY(0deg) scale(1);
+
+    &::before {
+      inset: 0;
+      z-index: -1;
+      content: '';
+      position: absolute;
+      border-radius: 10px;
+      pointer-events: none;
+      box-shadow: 0 20px 40px -16px rgba(11, 32, 27, .12);
+    }
+
+    > .palindrome-card {
+      height: 356px;
+      display: flex;
+      min-height: 0;
+      flex-direction: column;
+      backface-visibility: hidden;
+
+      .card-content {
+        flex: 1;
+        display: flex;
+        min-height: 0;
+        overflow-y: auto;
+        flex-direction: column;
+        padding-top: 30px;
+        padding-bottom: 24px;
+      }
+
+      .card-heading,
+      .card-language,
+      .card-visible-metadata { flex-shrink: 0; }
+
+      .card-title {
+        min-height: 0;
+        font-size: 40px;
+        flex: 1 0 auto;
+        text-align: center;
+        justify-content: center;
+      }
+
+      .card-title-phrase { font-size: 27px; }
+      .card-footer { order: 2; flex-shrink: 0; }
+
+      .metadata-panel {
+        order: 1;
+        min-height: 0;
+        flex: 0 1 auto;
+        max-height: 132px;
+        overflow-y: auto;
+      }
+
+      &:has(> .metadata-panel:not([hidden])) .card-content { flex: 0 1 auto; }
+    }
+  }
+
+  .palindrome-carousel.is-dragging {
+    .palindrome-carousel-viewport { cursor: grabbing; }
+    .palindrome-card { user-select: none; -webkit-user-select: none; }
+  }
+
+  .palindrome-carousel-controls {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    margin-top: -28px;
+  }
+
+  .palindrome-carousel-button {
+    display: inline-flex;
+    gap: 7px;
+    min-height: 40px;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 12px;
+    color: var(--action);
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    font-size: 11px;
+
+    &:hover { background: var(--soft); }
+    &:disabled { color: var(--muted); opacity: .65; }
+  }
+
+  .palindrome-carousel-previous-icon {
+    display: inline-flex;
+    transform: rotate(180deg);
+  }
+
+  @media (max-width: 600px) {
+    .palindrome-carousel-group { gap: 16px; padding-inline-end: 16px; }
+    .palindrome-carousel-slide > .palindrome-card .card-content { padding-top: 21px; padding-bottom: 17px; }
+  }
+
+  @media (max-width: 520px) {
+    .palindrome-carousel-controls { gap: 7px; }
+    .palindrome-carousel-button { gap: 6px; padding-inline: 10px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .palindrome-carousel-slide {
+      opacity: 1 !important;
+      transform: none !important;
+
+      &::before { display: none; }
+      > .palindrome-card { box-shadow: 0 4px 12px rgba(11, 32, 27, .04); }
+    }
+  }
+}

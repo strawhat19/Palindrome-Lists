@@ -1,7 +1,6 @@
-import { useColorScheme } from 'react-native';
 import { readStoredTheme, writeStoredTheme } from '../common/themeStorage';
 import { themePalettes, type ThemeMode, type ThemePalette } from '../../styles/theme/theme';
-import { createContext, useCallback, useEffect, useMemo, useRef, useState, type PropsWithChildren } from 'react';
+import { createContext, useCallback, useEffect, useMemo, useState, type PropsWithChildren } from 'react';
 
 export type ThemeContextValue = {
   theme: ThemeMode;
@@ -12,20 +11,12 @@ export type ThemeContextValue = {
 export const ThemeContext = createContext<ThemeContextValue | null>(null);
 
 export const ThemeProvider = ({ children }: PropsWithChildren) => {
-  const systemTheme = useColorScheme() === `dark` ? `dark` : `light`;
   const [theme, setTheme] = useState<ThemeMode>(`light`);
-  const initialized = useRef(false);
-  const selectedTheme = useRef<ThemeMode | null>(null);
   const palette = themePalettes[theme];
 
   useEffect(() => {
-    if (!initialized.current) {
-      selectedTheme.current = readStoredTheme();
-      initialized.current = true;
-    }
-
-    setTheme(selectedTheme.current ?? systemTheme);
-  }, [systemTheme]);
+    setTheme(readStoredTheme() ?? `light`);
+  }, []);
 
   useEffect(() => {
     if (typeof document === `undefined`) return;
@@ -42,7 +33,6 @@ export const ThemeProvider = ({ children }: PropsWithChildren) => {
   const toggleTheme = useCallback(() => {
     const nextTheme = theme === `dark` ? `light` : `dark`;
 
-    selectedTheme.current = nextTheme;
     setTheme(nextTheme);
     writeStoredTheme(nextTheme);
   }, [theme]);

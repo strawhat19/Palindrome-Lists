@@ -93,7 +93,7 @@ const ContentPageView = ({ page }: ContentPageProps) => {
                   accessibilityLabel={theme === `dark` ? `Switch to Light Mode` : `Switch to Dark Mode`}
                   style={({ pressed }) => [styles.themeToggle, pressed && styles.pressed]}
                 >
-                  <Icon name={theme === `dark` ? `sun` : `moon`} size={20} color={palette.leaf} />
+                  <Icon name={theme === `dark` ? `sun` : `moon`} size={20} fill={`#FFFFFF`} color={`#FFFFFF`} />
                 </Pressable>
                 <Link href={landingLinks.signin} asChild>
                   <Pressable

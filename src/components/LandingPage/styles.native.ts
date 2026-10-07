@@ -54,7 +54,7 @@ const createStyles = (palette: ThemePalette) => StyleSheet.create({
     alignItems: `center`,
     borderColor: palette.lime,
     justifyContent: `center`,
-    backgroundColor: palette.soft,
+    backgroundColor: palette.lime,
   },
   accountActions: {
     gap: 8,
@@ -140,7 +140,7 @@ const createStyles = (palette: ThemePalette) => StyleSheet.create({
     minHeight: 58,
     marginTop: 28,
     borderWidth: 1,
-    borderRadius: 9,
+    borderRadius: 999,
     paddingVertical: 6,
     paddingRight: 6,
     paddingLeft: 14,
@@ -159,7 +159,7 @@ const createStyles = (palette: ThemePalette) => StyleSheet.create({
   searchButton: {
     gap: 6,
     minHeight: 44,
-    borderRadius: 6,
+    borderRadius: 999,
     paddingHorizontal: 13,
     alignItems: `center`,
     flexDirection: `row`,

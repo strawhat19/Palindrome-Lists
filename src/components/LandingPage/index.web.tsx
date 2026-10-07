@@ -12,6 +12,7 @@ import ScrollToTop from '../ScrollToTop/index.web';
 import type { Sort } from '../../shared/landing/types';
 import PalindromeCard from '../PalindromeCard/index.web';
 import LandingSections from '../LandingSections/index.web';
+import PalindromeCarousel from '../PalindromeCarousel/index.web';
 import { useTheme } from '../../shared/themeContext/useTheme';
 import { useLanding } from '../../shared/landing/LandingContext';
 import './styles.scss';
@@ -49,6 +50,7 @@ const LandingPage = () => {
     setCategory,
     filteredCount,
     visibleEntries,
+    carouselEntries,
   } = useLanding();
   const { goHome, scrolled, scrollToTop, showScrollTop, scrollToSection } = useLandingPage();
   const isFiltered = Boolean(query.trim() || category !== `all`);
@@ -68,7 +70,7 @@ const LandingPage = () => {
         <section
           id='collection'
           tabIndex={-1}
-          className='landing-container collection'
+          className={`landing-container collection${!showAll && !isFiltered ? ` is-carousel` : ``}`}
           aria-labelledby='collection-title'
         >
           <div id='collection-heading' className='collection-heading'>
@@ -141,9 +143,13 @@ const LandingPage = () => {
             {filteredCount} {filteredCount === 1 ? `palindrome` : `palindromes`} found
           </p>
           {visibleEntries?.length ? (
-            <div id='palindrome-grid' className={`palindrome-grid${!showAll && !isFiltered ? ` is-preview` : ``}`}>
-              {visibleEntries.map((entry) => <PalindromeCard key={entry.id} entry={entry} />)}
-            </div>
+            !showAll && !isFiltered ? (
+              <PalindromeCarousel entries={carouselEntries} />
+            ) : (
+              <div id='palindrome-grid' className='palindrome-grid'>
+                {visibleEntries.map((entry) => <PalindromeCard key={entry.id} entry={entry} />)}
+              </div>
+            )
           ) : (
             <div id='collection-empty' className='collection-empty'>
               <Icon name='search' size={27} />

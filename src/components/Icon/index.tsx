@@ -29,13 +29,14 @@ export type IconName = keyof typeof iconPaths;
 
 type IconProps = {
   name: IconName;
+  fill?: string;
   size?: number;
   color?: string;
 };
 
-const Icon = ({ name, size = 18, color = `currentColor` }: IconProps) => (
+const Icon = ({ name, fill = `none`, size = 18, color = `currentColor` }: IconProps) => (
   <Svg
-    fill='none'
+    fill={fill}
     width={size}
     height={size}
     stroke={color}

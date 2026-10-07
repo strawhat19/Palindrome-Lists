@@ -34,12 +34,12 @@
     align-items: center;
     justify-content: center;
     padding: 8px;
-    color: var(--leaf);
-    background: var(--soft);
+    color: #fff;
+    background: var(--lime);
     border: 1px solid var(--lime);
     border-radius: 50%;
 
-    &:hover { color: var(--search-ink); background: var(--lime); }
+    &:hover { opacity: .88; }
   }
 
   .navigation-panel { order: 1; margin-left: auto; }

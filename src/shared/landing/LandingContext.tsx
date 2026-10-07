@@ -11,6 +11,7 @@ export type LandingContextValue = {
   notice: Notice | null;
   filteredCount: number;
   visibleEntries: Palindrome[];
+  carouselEntries: Palindrome[];
   setSort: Dispatch<SetStateAction<Sort>>;
   setQuery: Dispatch<SetStateAction<string>>;
   setShowAll: Dispatch<SetStateAction<boolean>>;
@@ -57,6 +58,17 @@ export const LandingProvider = ({ children }: { children: ReactNode }) => {
     return entries.map(({ entry }) => entry);
   }, [sort, query, category]);
 
+  const carouselEntries = useMemo(() => {
+    const groups = previewTypes.map((type) => filteredEntries.filter((entry) => entry.type === type));
+    const rounds = Math.max(...groups.map((entries) => entries.length));
+
+    // Cycle shorter groups so every round and the loop seam keep Word → Name → Phrase.
+    return Array.from({ length: rounds }, (_, index) => groups.flatMap((entries) => {
+      const entry = entries[index % entries.length];
+      return entry ? [entry] : [];
+    })).flat();
+  }, [filteredEntries]);
+
   const value = useMemo<LandingContextValue>(() => ({
     sort,
     query,
@@ -68,6 +80,7 @@ export const LandingProvider = ({ children }: { children: ReactNode }) => {
     setNotice,
     setShowAll,
     setCategory,
+    carouselEntries,
     filteredCount: filteredEntries.length,
     visibleEntries: showAll || query.trim() || category !== `all`
       ? filteredEntries
@@ -75,7 +88,7 @@ export const LandingProvider = ({ children }: { children: ReactNode }) => {
         const entry = filteredEntries.find((item) => item.type === type);
         return entry ? [entry] : [];
       }),
-  }), [sort, query, notice, showAll, category, filteredEntries]);
+  }), [sort, query, notice, showAll, category, carouselEntries, filteredEntries]);
 
   return (
     <LandingContext.Provider value={value}>

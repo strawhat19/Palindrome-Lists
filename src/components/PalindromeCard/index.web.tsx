@@ -9,9 +9,12 @@ import './styles.scss';
 
 type PalindromeCardProps = {
   entry: Palindrome;
+  tabbable?: boolean;
+  instanceId?: string;
 };
 
-const PalindromeCard = ({ entry }: PalindromeCardProps) => {
+const PalindromeCard = ({ entry, tabbable = true, instanceId }: PalindromeCardProps) => {
+  const cardId = instanceId ?? entry.id;
   const [expanded, setExpanded] = useState(false);
   const { setNotice } = useLanding();
   const { copied, copying, dialogMode, closeDialog, copyPalindrome, sharePalindrome } = usePalindromeCard(entry);
@@ -29,75 +32,80 @@ const PalindromeCard = ({ entry }: PalindromeCardProps) => {
   return (
     <article
       tabIndex={-1}
-      id={`palindrome-card-${entry.id}`}
+      id={`palindrome-card-${cardId}`}
       className='palindrome-card'
       data-reveal='card'
       data-type={entry.type}
-      aria-labelledby={`palindrome-title-${entry.id}`}
+      aria-labelledby={`palindrome-title-${cardId}`}
     >
-      <div id={`palindrome-content-${entry.id}`} className='card-content'>
-        <div id={`card-heading-${entry.id}`} className='card-heading'>
-          <span id={`palindrome-type-${entry.id}`} className='record-type'>
+      <div id={`palindrome-content-${cardId}`} className='card-content'>
+        <div id={`card-heading-${cardId}`} className='card-heading'>
+          <span id={`palindrome-type-${cardId}`} className='record-type'>
             {entry.type === `word` ? `Word` : entry.type === `name` ? `Name` : `Phrase`}
           </span>
           <div
             role='group'
             className='record-actions'
-            id={`palindrome-actions-${entry.id}`}
+            id={`palindrome-actions-${cardId}`}
             aria-label={`Actions for ${entry.text}`}
           >
             <button
+              tabIndex={tabbable ? undefined : -1}
               type='button'
               title='Comment on palindrome'
               className='icon-button comment-button'
-              id={`comment-${entry.id}`}
+              id={`comment-${cardId}`}
               aria-label={`Comment on ${entry.text}, ${entry.comments} comments, preview only`}
               onClick={() => requestAction(`join the conversation on a palindrome`)}
             >
-              <FlipContent id={`comment-content-${entry.id}`}>
+              <FlipContent id={`comment-content-${cardId}`}>
                 <Icon name='comment' size={17} /><span className='comment-count'>{entry.comments}</span>
               </FlipContent>
             </button>
             <button
+              tabIndex={tabbable ? undefined : -1}
               type='button'
               title='Heart palindrome'
               className='icon-button heart-button'
-              id={`heart-${entry.id}`}
+              id={`heart-${cardId}`}
               aria-label={`Heart ${entry.text}`}
               onClick={() => requestAction(`heart your favorite palindromes`)}
             >
-              <FlipContent id={`heart-content-${entry.id}`}><Icon name='heart' size={17} /></FlipContent>
+              <FlipContent id={`heart-content-${cardId}`}><Icon name='heart' size={17} /></FlipContent>
             </button>
             <button
+              tabIndex={tabbable ? undefined : -1}
               type='button'
               disabled={copying}
               onClick={copyPalindrome}
-              id={`copy-${entry.id}`}
+              id={`copy-${cardId}`}
               title={copied ? `Copied` : `Copy palindrome`}
               className={`icon-button copy-button${copied ? ` is-copied` : ``}`}
               aria-label={`Copy ${entry.text}`}
             >
-              <FlipContent id={`copy-content-${entry.id}`}><Icon name={copied ? `check` : `copy`} size={17} /></FlipContent>
+              <FlipContent id={`copy-content-${cardId}`}><Icon name={copied ? `check` : `copy`} size={17} /></FlipContent>
             </button>
             <button
+              tabIndex={tabbable ? undefined : -1}
               type='button'
               title='Save palindrome'
               className='icon-button save-button'
-              id={`save-${entry.id}`}
+              id={`save-${cardId}`}
               aria-label={`Save ${entry.text}`}
               onClick={() => requestAction(`save palindromes to your collection`)}
             >
-              <FlipContent id={`save-content-${entry.id}`}><Icon name='save' size={17} /></FlipContent>
+              <FlipContent id={`save-content-${cardId}`}><Icon name='save' size={17} /></FlipContent>
             </button>
             <button
+              tabIndex={tabbable ? undefined : -1}
               type='button'
               title='Share palindrome'
               className='icon-button share-button'
               onClick={sharePalindrome}
-              id={`share-${entry.id}`}
+              id={`share-${cardId}`}
               aria-label={`Share ${entry.text}`}
             >
-              <FlipContent id={`share-content-${entry.id}`}><Icon name='share' size={17} /></FlipContent>
+              <FlipContent id={`share-content-${cardId}`}><Icon name='share' size={17} /></FlipContent>
             </button>
           </div>
         </div>
@@ -105,93 +113,96 @@ const PalindromeCard = ({ entry }: PalindromeCardProps) => {
           role='status'
           aria-live='polite'
           className='visually-hidden'
-          id={`copy-status-${entry.id}`}
+          id={`copy-status-${cardId}`}
         >
           {copied ? `Palindrome copied to clipboard` : ``}
         </span>
         <h3
-          id={`palindrome-title-${entry.id}`}
+          id={`palindrome-title-${cardId}`}
           className={`card-title${entry.type === `phrase` ? ` card-title-phrase` : ``}`}
         >
           {entry.text}
         </h3>
-        <p id={`card-language-${entry.id}`} className='card-language'>
+        <p id={`card-language-${cardId}`} className='card-language'>
           <span>{entry.letters} letters</span>
           <span className='metadata-dot' aria-hidden='true' />
           <span>{entry.language}</span>
         </p>
-        <dl id={`visible-metadata-${entry.id}`} className='card-visible-metadata'>
-          <div id={`metadata-source-${entry.id}`} className='visible-metadata-pair'>
+        <dl id={`visible-metadata-${cardId}`} className='card-visible-metadata'>
+          <div id={`metadata-source-${cardId}`} className='visible-metadata-pair'>
             <dt>Source</dt><dd>{entry.source}</dd>
           </div>
-          <div id={`metadata-author-${entry.id}`} className='visible-metadata-pair'>
+          <div id={`metadata-author-${cardId}`} className='visible-metadata-pair'>
             <dt>Author</dt><dd>{entry.author}</dd>
           </div>
-          <div id={`metadata-added-${entry.id}`} className='visible-metadata-pair'>
+          <div id={`metadata-added-${cardId}`} className='visible-metadata-pair'>
             <dt>Added</dt><dd><time dateTime={entry.added}>{addedDate}</time></dd>
           </div>
         </dl>
       </div>
-      <div id={`card-footer-${entry.id}`} className='card-footer'>
+      <div id={`card-footer-${cardId}`} className='card-footer'>
         <button
+          tabIndex={tabbable ? undefined : -1}
           type='button'
           aria-expanded={expanded}
           className='details-button'
-          id={`details-button-${entry.id}`}
-          aria-controls={`metadata-panel-${entry.id}`}
+          id={`details-button-${cardId}`}
+          aria-controls={`metadata-panel-${cardId}`}
           onClick={() => setExpanded(!expanded)}
         >
-          <FlipContent id={`details-content-${entry.id}`}>
+          <FlipContent id={`details-content-${cardId}`}>
             <span>Details</span><Icon name='chevron' size={13} />
           </FlipContent>
         </button>
         <div
           role='group'
           className='vote-controls'
-          id={`vote-controls-${entry.id}`}
+          id={`vote-controls-${cardId}`}
           aria-label={`Votes for ${entry.text}, preview only`}
         >
           <button
+            tabIndex={tabbable ? undefined : -1}
             type='button'
             className='icon-button'
-            id={`downvote-${entry.id}`}
+            id={`downvote-${cardId}`}
             aria-label={`Downvote ${entry.text}`}
             onClick={() => requestAction(`vote on palindromes`)}
           >
-            <FlipContent id={`downvote-content-${entry.id}`}><Icon name='down' size={18} /></FlipContent>
+            <FlipContent id={`downvote-content-${cardId}`}><Icon name='down' size={18} /></FlipContent>
           </button>
           <span
             className='vote-score'
-            id={`vote-score-${entry.id}`}
+            id={`vote-score-${cardId}`}
             aria-label={`${entry.votes} net votes, preview only`}
           >
             {entry.votes}
           </span>
           <button
+            tabIndex={tabbable ? undefined : -1}
             type='button'
             className='icon-button upvote-button'
-            id={`upvote-${entry.id}`}
+            id={`upvote-${cardId}`}
             aria-label={`Upvote ${entry.text}`}
             onClick={() => requestAction(`vote on palindromes`)}
           >
-            <FlipContent id={`upvote-content-${entry.id}`}><Icon name='up' size={18} /></FlipContent>
+            <FlipContent id={`upvote-content-${cardId}`}><Icon name='up' size={18} /></FlipContent>
           </button>
         </div>
       </div>
       <div
         hidden={!expanded}
         className='metadata-panel'
-        id={`metadata-panel-${entry.id}`}
+        id={`metadata-panel-${cardId}`}
       >
-        <dl id={`palindrome-metadata-${entry.id}`} className='card-metadata'>
-          <div id={`metadata-recorded-${entry.id}`} className='metadata-pair'>
+        <dl id={`palindrome-metadata-${cardId}`} className='card-metadata'>
+          <div id={`metadata-recorded-${cardId}`} className='metadata-pair'>
             <dt>First recorded</dt><dd>{entry.firstRecorded ?? `Not recorded`}</dd>
           </div>
-          <div id={`metadata-contributor-${entry.id}`} className='metadata-pair'>
+          <div id={`metadata-contributor-${cardId}`} className='metadata-pair'>
             <dt>Added by</dt><dd>{entry.addedBy}</dd>
           </div>
         </dl>
-        <p id={`demo-note-${entry.id}`} className='demo-note'>
+        <p id={`demo-note-${cardId}`} className='demo-note'>
           Added dates describe the collection, not invention. Activity controls are previews.
           Letter counts ignore spaces and punctuation.
         </p>
