@@ -22,7 +22,9 @@ import type {
 } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import Icon from '../Icon';
+import PinkCta from '../PinkCta';
 import HeroGlow from '../HeroGlow';
+import PageMetadata from '../PageMetadata';
 import HeroHeadline from '../HeroHeadline';
 import createStyles from './styles.native';
 import HalfTurnLogo from '../HalfTurnLogo';
@@ -35,12 +37,13 @@ import { formatPalindrome, getPalindromeShareData } from '../../shared/landing/s
 import { landingLinks, mainNavigation, footerNavigation } from '../../shared/routes';
 
 type SectionId = `collection` | `about` | `api` | `faq` | `contact`;
+type LandingPageProps = { collectionOnly?: boolean };
 
 const filters = [
-  { value: `all`, label: `All` },
-  { value: `word`, label: `Words` },
-  { value: `name`, label: `Names` },
-  { value: `phrase`, label: `Phrases` },
+  { value: `all`, label: `All`, icon: `repeat` },
+  { value: `word`, label: `Words`, icon: `book` },
+  { value: `name`, label: `Names`, icon: `user` },
+  { value: `phrase`, label: `Phrases`, icon: `quote` },
 ] as const;
 
 const sortOptions = [
@@ -66,7 +69,7 @@ const questions = [
   },
   {
     question: `Where do the examples come from?`,
-    answer: `These are editorial examples of familiar English palindromes. Curation and original authorship are separate; an unknown author is left as “Not recorded.” Added dates describe the collection, not invention.`,
+    answer: `Words and phrases are in English; names include other languages and transliterations. Entries combine dictionary and name-directory sources with editorial selections. Unknown authors remain “Not recorded.” Added dates describe the collection, not invention.`,
   },
 ];
 
@@ -77,7 +80,7 @@ const formatDate = (value: string) =>
     month: `short`,
   });
 
-const LandingPage = () => {
+const LandingPage = ({ collectionOnly = false }: LandingPageProps) => {
   const {
     query,
     sort,
@@ -90,8 +93,10 @@ const LandingPage = () => {
     setShowAll,
     setCategory,
     filteredCount,
-    visibleEntries,
+    filteredEntries,
+    visibleEntries: previewEntries,
   } = useLanding();
+  const visibleEntries = collectionOnly ? filteredEntries : previewEntries;
   const sticky = true;
   const { theme, palette, toggleTheme } = useTheme();
   const styles = useMemo(() => createStyles(palette), [palette]);
@@ -109,7 +114,7 @@ const LandingPage = () => {
   const [sortMenuOpen, setSortMenuOpen] = useState(false);
   const [openQuestion, setOpenQuestion] = useState<number | null>(null);
   const [expandedCards, setExpandedCards] = useState<Record<string, boolean>>({});
-  const isPreview = !showAll && !query.trim() && category === `all`;
+  const isPreview = !collectionOnly && !showAll && !query.trim() && category === `all`;
   const selectedSortLabel = sortOptions.find((option) => option.value === sort)?.label;
   const headerColor = scrollProgress.interpolate({
     inputRange: [0, 40],
@@ -251,6 +256,7 @@ const LandingPage = () => {
       style={styles.safeArea}
       edges={[`top`, `left`, `right`]}
     >
+      <PageMetadata page={collectionOnly ? `palindromes` : `home`} />
       <ScrollView
         ref={scrollRef}
         style={styles.page}
@@ -303,7 +309,7 @@ const LandingPage = () => {
                     nativeID={`navigation-${item.key}`}
                     style={({ pressed }) => [styles.navigationLink, pressed && styles.pressed]}
                   >
-                    <Icon name={item.icon} size={13} color={palette.muted} />
+                    <Icon name={item.icon} size={13} color={palette[item.iconColor]} />
                     <Text
                       nativeID={`navigation-label-${item.key}`}
                       style={styles.navigationText}
@@ -329,7 +335,7 @@ const LandingPage = () => {
                     accessibilityRole={`link`}
                     style={({ pressed }) => [styles.signIn, pressed && styles.pressed]}
                   >
-                    <Icon name={`right`} size={13} color={palette.page} />
+                    <Icon name={`login`} size={13} color={theme === `dark` ? palette.searchInk : palette.lime} />
                     <Text nativeID={`navigation-label-signin`} style={styles.signInText}>Sign in</Text>
                   </Pressable>
                 </Link>
@@ -340,9 +346,17 @@ const LandingPage = () => {
 
         <View
           nativeID={`hero`}
-          style={[styles.container, styles.hero]}
+          style={[styles.container, styles.hero, collectionOnly && styles.collectionHero]}
           onLayout={(event) => { heroEnd.current = event.nativeEvent.layout.y + event.nativeEvent.layout.height; }}
         >
+          {collectionOnly ? (
+            <>
+              <Text nativeID={`palindromes-eyebrow`} style={[styles.eyebrow, styles.heroEyebrow]}>WORDS, NAMES & PHRASES</Text>
+              <Text nativeID={`palindromes-title`} accessibilityRole={`header`} style={[styles.collectionHeroTitle, width < 620 && styles.smallCollectionHeroTitle]}>Palindromes</Text>
+              <Text nativeID={`palindromes-copy`} style={styles.heroCopy}>Explore the full collection of words, names, and phrases that read the same in both directions.</Text>
+            </>
+          ) : (
+            <>
           <HeroGlow progress={rotation} reducedMotion={reducedMotion} />
           <Animated.View
             nativeID={`hero-rotating-logo`}
@@ -357,8 +371,10 @@ const LandingPage = () => {
           <Text nativeID={`hero-copy`} style={styles.heroCopy}>
             A little collection of words, names, and phrases that read the same forwards and backwards.
           </Text>
+            </>
+          )}
           <View nativeID={`hero-search`} style={styles.search}>
-            <Icon name={`search`} size={17} color={palette.muted} />
+            <Icon name={`search`} size={17} color={palette.action} />
             <TextInput
               value={query}
               autoCorrect={false}
@@ -380,8 +396,8 @@ const LandingPage = () => {
               onPress={() => scrollToSection(`collection`)}
               style={({ pressed }) => [styles.searchButton, pressed && styles.pressed]}
             >
+              <Icon name={`search`} size={14} color={palette.searchInk} />
               <Text nativeID={`search-button-label`} style={styles.searchButtonText}>Search</Text>
-              <Icon name={`right`} size={14} color={palette.searchInk} />
             </Pressable>
           </View>
         </View>
@@ -393,13 +409,13 @@ const LandingPage = () => {
         >
           <View nativeID={`collection-heading`} style={styles.collectionHeading}>
             <Text nativeID={`collection-title`} accessibilityRole={`header`} style={styles.sectionTitle}>
-              A few favorites.
+              {collectionOnly ? `The collection.` : `A few favorites.`}
             </Text>
-            <Text nativeID={`collection-sample-label`} style={styles.sampleLabel}>Curated examples</Text>
+            <Text nativeID={`collection-sample-label`} style={styles.sampleLabel}>{collectionOnly ? `${visibleEntries.length.toLocaleString()} ${visibleEntries.length === 1 ? `result` : `results`}` : `Curated examples`}</Text>
           </View>
           <View nativeID={`collection-controls`} style={styles.collectionControls}>
             <View nativeID={`collection-filters`} style={styles.filters}>
-              {filters.map((filter) => (
+              {filters.map((filter, index) => (
                 <Pressable
                   key={filter.value}
                   accessibilityRole={`button`}
@@ -412,6 +428,7 @@ const LandingPage = () => {
                     pressed && styles.pressed,
                   ]}
                 >
+                  <Icon name={filter.icon} size={14} color={index % 2 ? palette.leaf : palette.action} />
                   <Text
                     nativeID={`filter-label-${filter.value}`}
                     style={[styles.filterText, category === filter.value && styles.filterTextSelected]}
@@ -428,8 +445,9 @@ const LandingPage = () => {
               accessibilityLabel={`Sort Collection, ${selectedSortLabel}`}
               style={({ pressed }) => [styles.sortButton, pressed && styles.pressed]}
             >
+              <Icon name={`repeat`} size={13} color={palette.action} />
               <Text nativeID={`sort-control-label`} style={styles.sortText}>{selectedSortLabel}</Text>
-              <Icon name={`chevron`} size={12} color={palette.muted} />
+              <Icon name={`chevron`} size={12} color={palette.action} />
             </Pressable>
           </View>
           {visibleEntries.length > 0 ? (
@@ -477,7 +495,7 @@ const LandingPage = () => {
                           accessibilityLabel={`Comment on ${entry.text}, ${entry.comments} comments, preview only`}
                           style={({ pressed }) => [styles.iconButton, styles.commentButton, pressed && styles.pressed]}
                         >
-                          <Icon name={`comment`} size={17} color={palette.muted} />
+                          <Icon name={`comment`} size={17} color={palette.action} />
                           <Text nativeID={`comment-count-${entry.id}`} style={styles.actionCount}>
                             {entry.comments}
                           </Text>
@@ -490,7 +508,7 @@ const LandingPage = () => {
                           onPress={() => showAccountsNotice(`Hearting palindromes`)}
                           style={({ pressed }) => [styles.iconButton, pressed && styles.pressed]}
                         >
-                          <Icon name={`heart`} size={17} color={palette.muted} />
+                          <Icon name={`heart`} size={17} color={palette.action} />
                         </Pressable>
                         <Pressable
                           hitSlop={4}
@@ -500,7 +518,7 @@ const LandingPage = () => {
                           accessibilityLabel={`Copy ${entry.text}`}
                           style={({ pressed }) => [styles.iconButton, pressed && styles.pressed]}
                         >
-                          <Icon name={`copy`} size={17} color={palette.muted} />
+                          <Icon name={`copy`} size={17} color={palette.leaf} />
                         </Pressable>
                         <Pressable
                           hitSlop={4}
@@ -510,7 +528,7 @@ const LandingPage = () => {
                           onPress={() => showAccountsNotice(`Saving palindromes`)}
                           style={({ pressed }) => [styles.iconButton, pressed && styles.pressed]}
                         >
-                          <Icon name={`save`} size={17} color={palette.muted} />
+                          <Icon name={`save`} size={17} color={palette.leaf} />
                         </Pressable>
                         <Pressable
                           hitSlop={4}
@@ -520,7 +538,7 @@ const LandingPage = () => {
                           accessibilityLabel={`Share ${entry.text}`}
                           style={({ pressed }) => [styles.iconButton, pressed && styles.pressed]}
                         >
-                          <Icon name={`share`} size={17} color={palette.muted} />
+                          <Icon name={`share`} size={17} color={palette.action} />
                         </Pressable>
                       </View>
                     </View>
@@ -567,10 +585,10 @@ const LandingPage = () => {
                         [entry.id]: !current[entry.id],
                       }))}
                     >
-                      <Text style={styles.detailsText}>Details</Text>
                       <View style={expandedCards[entry.id] ? styles.chevronExpanded : undefined}>
-                        <Icon name={`chevron`} size={12} color={palette.muted} />
+                        <Icon name={`chevron`} size={12} color={palette.action} />
                       </View>
+                      <Text style={styles.detailsText}>Details</Text>
                     </Pressable>
                     <View nativeID={`record-votes-${entry.id}`} style={styles.actions}>
                       <Pressable
@@ -581,7 +599,7 @@ const LandingPage = () => {
                         onPress={() => showAccountsNotice(`Voting on palindromes`)}
                         style={({ pressed }) => [styles.iconButton, pressed && styles.pressed]}
                       >
-                        <Icon name={`down`} size={17} color={palette.muted} />
+                        <Icon name={`down`} size={17} color={palette.leaf} />
                       </Pressable>
                       <Text
                         style={styles.voteScore}
@@ -598,7 +616,7 @@ const LandingPage = () => {
                         onPress={() => showAccountsNotice(`Voting on palindromes`)}
                         style={({ pressed }) => [styles.iconButton, pressed && styles.pressed]}
                       >
-                        <Icon name={`up`} size={17} color={palette.pink} />
+                        <Icon name={`up`} size={17} color={palette.action} />
                       </Pressable>
                     </View>
                   </View>
@@ -641,17 +659,17 @@ const LandingPage = () => {
               </Pressable>
             </View>
           )}
-          {(showAll || filteredCount > visibleEntries.length) && (
+          {!collectionOnly && (showAll || filteredCount > visibleEntries.length) && (
             <Pressable
               nativeID={`browse-collection`}
               accessibilityRole={`button`}
               onPress={() => setShowAll(!showAll)}
               style={({ pressed }) => [styles.browseButton, pressed && styles.pressed]}
             >
+              <Icon name={showAll ? `up` : `book`} size={15} color={palette.action} />
               <Text nativeID={`browse-collection-label`} style={styles.browseText}>
                 {showAll ? `Show fewer` : `Browse the collection`}
               </Text>
-              <Icon name={showAll ? `up` : `right`} size={15} color={palette.action} />
             </Pressable>
           )}
           <Text nativeID={`collection-sample-note`} style={styles.sampleNote}>
@@ -659,6 +677,18 @@ const LandingPage = () => {
           </Text>
         </View>
 
+        {collectionOnly ? (
+          <PinkCta
+            icon={`mail`}
+            id={`palindromes-cta`}
+            href={landingLinks.contact}
+            label={`Get in touch`}
+            eyebrow={`SHARE A DISCOVERY`}
+            title={`Found a palindrome worth sharing?`}
+            copy={`Have a new word, name, or phrase in mind? Help the collection grow with a suggestion or correction.`}
+          />
+        ) : (
+          <>
         <View
           nativeID={`about`}
           style={styles.about}
@@ -728,11 +758,12 @@ const LandingPage = () => {
                   onPress={() => setOpenQuestion(openQuestion === index ? null : index)}
                   style={({ pressed }) => [styles.faqQuestion, pressed && styles.pressed]}
                 >
+                  <Icon name={`info`} size={16} color={palette.action} />
                   <Text nativeID={`faq-question-label-${index}`} style={styles.faqQuestionText}>
                     {item.question}
                   </Text>
                   <View style={openQuestion === index ? styles.chevronExpanded : undefined}>
-                    <Icon name={`chevron`} size={16} color={palette.muted} />
+                    <Icon name={`chevron`} size={16} color={palette.action} />
                   </View>
                 </Pressable>
                 {openQuestion === index && (
@@ -767,6 +798,8 @@ const LandingPage = () => {
             <Icon name={`external`} size={13} color={palette.searchInk} />
           </Pressable>
         </View>
+          </>
+        )}
 
         <View
           nativeID={`site-footer`}
@@ -798,7 +831,7 @@ const LandingPage = () => {
                     nativeID={`footer-link-${item.key}`}
                     style={({ pressed }) => [styles.footerLink, pressed && styles.pressed]}
                   >
-                    <Icon name={item.icon} size={12} color={palette.muted} />
+                    <Icon name={item.icon} size={12} color={palette[item.iconColor]} />
                     <Text nativeID={`footer-label-${item.key}`} style={styles.footerLinkText}>{item.label}</Text>
                   </Pressable>
                 </Link>
@@ -814,8 +847,8 @@ const LandingPage = () => {
               accessibilityLabel={`Made by Piratechs, Opens Website`}
               style={({ pressed }) => [styles.piratechs, pressed && styles.pressed]}
             >
+              <Icon name={`external`} size={12} color={palette.action} />
               <Text nativeID={`piratechs-label`} style={styles.piratechsText}>Made by Piratechs</Text>
-              <Icon name={`external`} size={12} color={palette.muted} />
             </Pressable>
           </View>
         </View>
@@ -867,7 +900,7 @@ const LandingPage = () => {
                 accessibilityRole={`button`}
                 accessibilityLabel={`Close Dialog`}
               >
-                <Icon name={`close`} size={21} color={palette.muted} />
+                <Icon name={`close`} size={21} color={palette.action} />
               </Pressable>
             </View>
             {sortMenuOpen ? (
@@ -888,10 +921,10 @@ const LandingPage = () => {
                       pressed && styles.pressed,
                     ]}
                   >
+                    <Icon name={sort === option.value ? `check` : option.value === `popular` ? `heart` : `repeat`} size={18} color={sort === option.value ? palette.leaf : palette.action} />
                     <Text nativeID={`sort-option-label-${option.value}`} style={styles.sortOptionText}>
                       {option.label}
                     </Text>
-                    {sort === option.value && <Icon name={`check`} size={18} color={palette.leaf} />}
                   </Pressable>
                 ))}
               </View>

@@ -3,7 +3,7 @@
   .footer-top { display: flex; gap: 25px; align-items: center; justify-content: space-between; }
   .footer-brand { display: inline-flex; gap: 8px; align-items: center; font-size: 12px; font-weight: 550; }
   .footer-logo-orbit { display: inline-flex; width: 28px; height: 28px; flex: 0 0 auto; transform-origin: center; }
-  .footer-navigation { display: flex; gap: 22px; align-items: center; color: var(--muted); font-size: 11px; }
+  .footer-navigation { display: flex; gap: 22px; align-items: center; flex-wrap: wrap; color: var(--muted); font-size: 11px; }
 
   .footer-navigation button {
     margin: 0;
@@ -14,7 +14,7 @@
     font-size: inherit;
   }
 
-  .footer-navigation a { padding-block: 6px; }
+  .footer-navigation a { display: inline-flex; gap: 6px; align-items: center; padding-block: 6px; }
   .footer-navigation a:hover,
   .footer-navigation button:hover { color: var(--action); }
   .footer-bottom { display: flex; gap: 25px; align-items: center; justify-content: space-between; margin-top: 20px; color: var(--muted); font-size: 10px; }

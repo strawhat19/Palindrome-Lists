@@ -102,8 +102,8 @@ const PalindromeCarousel = ({ entries }: PalindromeCarouselProps) => {
           className='palindrome-carousel-button'
           aria-controls='palindrome-carousel-viewport'
         >
-          <span id='palindrome-carousel-next-label'>Next</span>
           <Icon name='right' size={15} />
+          <span id='palindrome-carousel-next-label'>Next</span>
         </button>
       </div>
     </div>

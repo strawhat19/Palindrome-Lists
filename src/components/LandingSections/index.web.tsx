@@ -3,7 +3,7 @@ import Icon from '../Icon';
 import PricingSection from '../PricingSection';
 import FlipContent from '../FlipContent/index.web';
 import WebAnchor from '../WebAnchor/index.web';
-import { landingLinks } from '../../shared/routes';
+import { landingLinks, mainNavigation } from '../../shared/routes';
 import './styles.scss';
 
 const steps = [
@@ -27,7 +27,7 @@ const questions = [
   {
     id: `sources`,
     question: `Where do these entries come from?`,
-    answer: `This starter collection contains familiar examples selected for their letter patterns. “Editorial example” describes how an entry joined this collection. It does not establish its origin; unknown original authors and first-recorded dates stay marked as unknown.`,
+    answer: `Words and phrases are in English; names include other languages and transliterations. Entries combine dictionary and name-directory sources with editorial selections. A cited source does not establish original authorship; unknown authors remain “Not recorded.”`,
   },
   {
     id: `accounts`,
@@ -63,11 +63,16 @@ const LandingSections = () => (
           <span id='palindrome-example-backward' className='example-word'>level</span>
         </div>
         <nav id='palindrome-guide-links' className='palindrome-guide-links' aria-label='Palindrome Guides'>
-          {guides.map((guide) => (
+          {guides.map((guide, index) => (
             <Link key={guide.key} href={landingLinks[guide.key]} asChild>
               <WebAnchor id={`guide-link-${guide.key}`} className='text-action'>
                 <FlipContent id={`guide-link-content-${guide.key}`}>
-                  <span>{guide.label}</span><Icon name='right' size={16} />
+                  <Icon
+                    size={16}
+                    color={`var(--${index % 2 ? `leaf` : `action`})`}
+                    name={mainNavigation.find((item) => item.key === guide.key)?.icon ?? `book`}
+                  />
+                  <span>{guide.label}</span>
                 </FlipContent>
               </WebAnchor>
             </Link>
@@ -87,7 +92,7 @@ const LandingSections = () => (
           <Link href={landingLinks.api} asChild>
             <WebAnchor id='api-developer-guide' className='text-action' data-reveal='section'>
               <FlipContent id='api-developer-guide-content'>
-                <span>Read the developer guide</span><Icon name='right' size={16} />
+                <Icon name='code' size={16} /><span>Read the developer guide</span>
               </FlipContent>
             </WebAnchor>
           </Link>
@@ -119,8 +124,8 @@ const LandingSections = () => (
           {questions.map((item) => (
             <details id={`faq-${item.id}`} className='faq-item' data-reveal='panel' key={item.id}>
               <summary id={`faq-question-${item.id}`} className='faq-question'>
-                <FlipContent id={`faq-question-content-${item.id}`}>{item.question}</FlipContent>
                 <Icon name='chevron' size={17} />
+                <FlipContent id={`faq-question-content-${item.id}`}>{item.question}</FlipContent>
               </summary>
               <p id={`faq-answer-${item.id}`} className='faq-answer'>{item.answer}</p>
             </details>
@@ -139,7 +144,7 @@ const LandingSections = () => (
         <Link href={landingLinks.contact} asChild>
           <WebAnchor id='contact-project' className='contact-button' data-reveal='section'>
             <FlipContent id='contact-project-content'>
-              <span>Get in touch</span><Icon name='mail' size={16} />
+              <Icon name='mail' size={16} /><span>Get in touch</span>
             </FlipContent>
           </WebAnchor>
         </Link>

@@ -1,6 +1,6 @@
 import type { PageKey } from '../content/types';
 
-export type MetadataPage = `home` | PageKey | `not-found`;
+export type MetadataPage = `home` | `signup` | PageKey | `palindromes` | `not-found`;
 
 export type PageSeo = {
   path: string;
@@ -30,6 +30,12 @@ export const pageMetadata: Record<MetadataPage, PageSeo> = {
     title: `About Palindrome Lists — Our Collection & Editorial Approach`,
     description: `Learn why Palindrome Lists exists, how we check palindrome examples, and how we handle sources, attribution, and corrections.`,
   },
+  palindromes: {
+    path: `/palindromes`,
+    label: `Palindromes`,
+    title: `All Palindromes — Words, Names & Phrases | Palindrome Lists`,
+    description: `Browse the complete Palindrome Lists collection of words, names, and phrases. Search examples and filter by palindrome type.`,
+  },
   words: {
     path: `/words`,
     label: `Words`,
@@ -57,8 +63,8 @@ export const pageMetadata: Record<MetadataPage, PageSeo> = {
   contact: {
     path: `/contact`,
     label: `Contact`,
-    title: `Contact Palindrome Lists — Suggestions & Corrections`,
-    description: `Find the project contact route for Palindrome Lists and learn what to include when suggesting an example or reporting a correction.`,
+    title: `Contact Palindrome Lists — Suggestions, Corrections & Projects`,
+    description: `Preview the Palindrome Lists inquiry form for suggestions, corrections, and project questions. Fields are validated locally; messages are not sent or stored.`,
   },
   pricing: {
     path: `/pricing`,
@@ -82,8 +88,15 @@ export const pageMetadata: Record<MetadataPage, PageSeo> = {
     path: `/signin`,
     label: `Sign in`,
     noIndex: true,
-    title: `Sign In — Account Feature Status | Palindrome Lists`,
-    description: `Account features are still in development. Browse palindrome words, names, and phrases freely without signing in.`,
+    title: `Sign In | Palindrome Lists`,
+    description: `Preview the Palindrome Lists sign-in form. Account services are not connected yet.`,
+  },
+  signup: {
+    path: `/signup`,
+    label: `Sign up`,
+    noIndex: true,
+    title: `Sign Up | Palindrome Lists`,
+    description: `Preview the Palindrome Lists sign-up form. Account services are not connected yet.`,
   },
   'not-found': {
     path: `/`,

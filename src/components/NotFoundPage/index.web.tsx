@@ -24,7 +24,7 @@ const NotFoundPage = () => {
           <p id='not-found-description' className='content-description'>This page couldn’t be found. There are still plenty of good words to explore.</p>
           <Link href={landingLinks.home} asChild>
             <WebAnchor id='not-found-home' className='content-text-link'>
-              <FlipContent id='not-found-home-label'><span>Back to Palindrome Lists</span><Icon name='right' size={16} /></FlipContent>
+              <FlipContent id='not-found-home-label'><Icon name='right' size={16} /><span>Back to Palindrome Lists</span></FlipContent>
             </WebAnchor>
           </Link>
         </section>

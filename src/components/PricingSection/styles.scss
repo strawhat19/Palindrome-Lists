@@ -121,6 +121,7 @@
     &__number { color: var(--muted); font-size: 9px; letter-spacing: 1px; white-space: nowrap; font-variant-numeric: tabular-nums; }
 
     a.pricing-plan__action {
+      gap: 7px;
       display: inline-flex;
       min-height: 44px;
       padding: 5px 0;

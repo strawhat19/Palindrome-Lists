@@ -26,6 +26,12 @@
   }
 
   svg { flex: 0 0 auto; }
+  :where(a, button:not(.header-theme-toggle), summary) svg[aria-hidden='true'] { color: var(--action); }
+  :is(.filter-button, .copy-button, .save-button, .footer-navigation-link, .palindrome-share-destination) svg[aria-hidden='true'] { color: var(--leaf); }
+  .filter-button:nth-child(odd) svg[aria-hidden='true'] { color: var(--action); }
+  :is(.search-button, .contact-button) svg[aria-hidden='true'] { color: var(--search-ink); }
+  :is(.skip-link, .sign-in-link) svg[aria-hidden='true'] { color: var(--lime); }
+  &[data-theme='dark'] :is(.skip-link, .sign-in-link) svg[aria-hidden='true'] { color: var(--search-ink); }
   :focus-visible { outline: 3px solid var(--action); outline-offset: 4px; }
   ::selection { color: var(--card); background: var(--action); }
   section[id],
@@ -44,6 +50,7 @@
   }
 
   .skip-link {
+    gap: 8px;
     position: fixed;
     z-index: 50;
     top: 10px;
@@ -58,6 +65,11 @@
   }
 
   .collection { width: min(1120px, calc(100% - 80px)); padding-top: 40px; padding-bottom: 66px; }
+  .palindromes-hero { max-width: 1120px; padding-block: 46px 12px; }
+  .palindromes-eyebrow { display: flex; gap: 8px; margin: 0 0 14px; align-items: center; color: var(--action); font-size: 10px; font-weight: 650; letter-spacing: .15em; text-transform: uppercase; }
+  .palindromes-title { margin: 0; font-size: clamp(36px, 5vw, 50px); font-weight: 650; letter-spacing: -1.8px; line-height: 1.2; }
+  .palindromes-copy { max-width: 620px; margin: 15px 0 0; color: var(--muted); font-size: 14px; line-height: 1.85; }
+  .palindromes-search { margin-left: 0; }
   .collection.is-carousel {
     width: 100%;
 
@@ -67,9 +79,10 @@
   .collection-title { margin: 0; font-size: 23px; font-weight: 600; letter-spacing: -.7px; }
   .sample-label { margin: 8px 0 0; color: var(--muted); font-size: 11px; }
   .collection-controls { display: flex; gap: 25px; align-items: center; }
-  .collection-filters { display: flex; gap: 4px; align-items: center; }
+  .collection-filters { display: flex; gap: 4px; align-items: center; flex-wrap: wrap; }
 
   .filter-button {
+    gap: 6px;
     display: inline-flex;
     min-height: 38px;
     align-items: center;
@@ -89,7 +102,7 @@
 
   .sort-select {
     min-height: 38px;
-    padding: 7px 30px 7px 12px;
+    padding: 7px 30px 7px 34px;
     color: var(--muted);
     background: transparent;
     border: 1px solid var(--line);
@@ -99,6 +112,8 @@
   }
 
   .sort-control svg { position: absolute; right: 10px; color: var(--action); pointer-events: none; }
+  .sort-control-icon { position: absolute; left: 12px; display: inline-flex; color: var(--leaf); pointer-events: none; }
+  .sort-control-icon svg { position: static; color: inherit; }
   .palindrome-grid { display: grid; gap: 20px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .palindrome-grid.is-preview {
     align-items: center;
@@ -184,7 +199,7 @@
     .collection.is-carousel > .collection-heading { width: calc(100% - 36px); }
     .collection-title { font-size: 22px; letter-spacing: -.6px; }
     .collection-controls { gap: 12px; flex-wrap: wrap; }
-    .filter-button { padding-inline: 12px; }
+    .filter-button { padding-inline: 10px; }
     .landing-notice-region { top: 85px; right: 18px; }
     section[id],
     .palindrome-card { scroll-margin-top: 88px; }

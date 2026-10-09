@@ -78,7 +78,7 @@ const ContentPageView = ({ page }: ContentPageProps) => {
                     accessibilityState={{ selected: item.key === page }}
                     style={({ pressed }) => [styles.navigationLink, pressed && styles.pressed]}
                   >
-                    <Icon name={item.icon} size={13} color={item.key === page ? palette.action : palette.muted} />
+                    <Icon name={item.icon} size={13} color={palette[item.iconColor]} />
                     <Text nativeID={`navigation-label-${item.key}`} style={[styles.navigationText, item.key === page && styles.activeText]}>
                       {item.label}
                     </Text>
@@ -102,7 +102,7 @@ const ContentPageView = ({ page }: ContentPageProps) => {
                     accessibilityState={{ selected: page === `signin` }}
                     style={({ pressed }) => [styles.signIn, pressed && styles.pressed]}
                   >
-                    <Icon name={`right`} size={13} color={palette.page} />
+                    <Icon name={`login`} size={13} color={theme === `dark` ? palette.searchInk : palette.lime} />
                     <Text nativeID={`navigation-label-signin`} style={styles.signInText}>Sign in</Text>
                   </Pressable>
                 </Link>
@@ -117,7 +117,7 @@ const ContentPageView = ({ page }: ContentPageProps) => {
         >
           <Link href={landingLinks.home} asChild>
             <Pressable nativeID={`content-home-link-${page}`} accessibilityRole={`link`} style={({ pressed }) => [styles.breadcrumb, pressed && styles.pressed]}>
-              <Icon name={`book`} size={12} color={palette.muted} />
+              <Icon name={`book`} size={12} color={palette.action} />
               <Text nativeID={`content-breadcrumb-label-${page}`} style={styles.breadcrumbText}>Home / {pageLabel}</Text>
             </Pressable>
           </Link>
@@ -171,8 +171,8 @@ const ContentPageView = ({ page }: ContentPageProps) => {
                         nativeID={`content-link-${page}-${section.id}-${index}`}
                         style={({ pressed }) => [styles.textLink, pressed && styles.pressed]}
                       >
-                        <Text nativeID={`content-link-label-${page}-${section.id}-${index}`} style={styles.linkLabel}>{item.label}</Text>
                         <Icon name={item.external ? `external` : `right`} size={13} color={palette.action} />
+                        <Text nativeID={`content-link-label-${page}-${section.id}-${index}`} style={styles.linkLabel}>{item.label}</Text>
                       </Pressable>
                     </Link>
                   ))}
@@ -185,11 +185,11 @@ const ContentPageView = ({ page }: ContentPageProps) => {
           <Text nativeID={`content-related-eyebrow-${page}`} style={styles.eyebrow}>KEEP EXPLORING</Text>
           <Text nativeID={`content-related-title-${page}`} accessibilityRole={`header`} style={styles.relatedTitle}>There’s more both ways.</Text>
           <View nativeID={`content-related-navigation-${page}`} style={styles.relatedNavigation}>
-            {mainNavigation.filter((item) => [`words`, `names`, `phrases`].includes(item.key) && item.key !== page).map((item) => (
+            {mainNavigation.filter((item) => [`words`, `names`, `phrases`].includes(item.key) && item.key !== page).map((item, index) => (
               <Link key={item.key} href={landingLinks[item.key]} asChild>
                 <Pressable nativeID={`content-related-link-${page}-${item.key}`} accessibilityRole={`link`} style={({ pressed }) => [styles.textLink, pressed && styles.pressed]}>
+                  <Icon name={item.icon} size={13} color={index % 2 ? palette.leaf : palette.action} />
                   <Text nativeID={`content-related-label-${page}-${item.key}`} style={styles.linkLabel}>{item.label}</Text>
-                  <Icon name={`right`} size={13} color={palette.action} />
                 </Pressable>
               </Link>
             ))}
@@ -209,7 +209,7 @@ const ContentPageView = ({ page }: ContentPageProps) => {
               {footerNavigation.map((item) => (
                 <Link key={item.key} href={landingLinks[item.key]} asChild>
                   <Pressable nativeID={`footer-${item.key}`} accessibilityRole={`link`} style={({ pressed }) => [styles.navigationLink, pressed && styles.pressed]}>
-                    <Icon name={item.icon} size={12} color={palette.muted} />
+                    <Icon name={item.icon} size={12} color={palette[item.iconColor]} />
                     <Text nativeID={`footer-label-${item.key}`} style={styles.navigationText}>{item.label}</Text>
                   </Pressable>
                 </Link>
@@ -219,8 +219,8 @@ const ContentPageView = ({ page }: ContentPageProps) => {
               <Text nativeID={`copyright`} style={styles.copyright}>© {new Date().getFullYear()} Palindrome Lists.</Text>
               <Link href={`https://piratechs.com/`} asChild>
                 <Pressable nativeID={`piratechs-link`} accessibilityRole={`link`} style={({ pressed }) => [styles.piratechsLink, pressed && styles.pressed]}>
-                  <Text nativeID={`piratechs-label`} style={styles.copyright}>Made by Piratechs</Text>
                   <Icon name={`external`} size={12} color={palette.action} />
+                  <Text nativeID={`piratechs-label`} style={styles.copyright}>Made by Piratechs</Text>
                 </Pressable>
               </Link>
             </View>

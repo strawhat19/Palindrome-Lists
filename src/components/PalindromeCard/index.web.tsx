@@ -151,7 +151,7 @@ const PalindromeCard = ({ entry, tabbable = true, instanceId }: PalindromeCardPr
           onClick={() => setExpanded(!expanded)}
         >
           <FlipContent id={`details-content-${cardId}`}>
-            <span>Details</span><Icon name='chevron' size={13} />
+            <Icon name='chevron' size={13} /><span>Details</span>
           </FlipContent>
         </button>
         <div

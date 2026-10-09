@@ -46,8 +46,9 @@
   .site-navigation { display: flex; align-items: center; font-size: 12px; }
   .navigation-links { display: flex; gap: 25px; align-items: center; }
   .navigation-caption,
-  .navigation-item-icon,
   .navigation-item-arrow { display: none; }
+  .navigation-item-icon { display: inline-flex; color: var(--action); }
+  .navigation-link .flip-content { gap: 7px; }
 
   .navigation-link {
     padding-block: 12px;
@@ -75,13 +76,13 @@
 
   .navigation-menu-button { display: none; }
 
-  @media (max-width: 960px) {
+  @media (max-width: 1200px) {
     .header-inner { gap: 20px; }
-    .navigation-links { gap: 16px; }
+    .navigation-links { gap: 12px; }
     .brand-name { font-size: 14px; }
   }
 
-  @media (max-width: 800px) {
+  @media (max-width: 1100px) {
     .header-inner { gap: 0; min-height: 70px; padding-block: 15px; flex-wrap: wrap; }
     .header-actions { gap: 8px; margin-left: auto; }
     .brand-name { font-size: 15px; }
@@ -93,7 +94,7 @@
       align-items: center;
       justify-content: center;
       padding: 0;
-      color: var(--ink);
+      color: var(--action);
       background: transparent;
       border: 1px solid var(--line);
       border-radius: 10px;

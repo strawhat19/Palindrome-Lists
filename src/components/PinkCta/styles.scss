@@ -1,0 +1,36 @@
+.palindrome-landing {
+  .pink-cta { position: relative; isolation: isolate; width: 100%; margin-bottom: 64px; padding-block: 48px; overflow: hidden; color: #fff; background: var(--pink); }
+  .pink-cta-inner { display: flex; gap: 35px; max-width: 1120px; align-items: center; justify-content: space-between; }
+  .pink-cta-decoration { position: absolute; z-index: -1; inset: 0; overflow: hidden; pointer-events: none; background-image: radial-gradient(circle, #ffffff26 1px, transparent 1px); background-position: right 24px top 24px; background-size: 22px 22px; mask-image: linear-gradient(100deg, transparent 36%, #000); }
+  .pink-cta-ring { position: absolute; width: 340px; height: 340px; border: 1px solid #ffffff38; border-radius: 50%; }
+  .pink-cta-ring--outer { top: -160px; right: -70px; }
+  .pink-cta-ring--inner { top: -130px; right: -40px; width: 280px; height: 280px; }
+  .pink-cta-word { position: absolute; color: #ffffff14; font-size: 96px; font-weight: 650; letter-spacing: -6px; line-height: 1; }
+  .pink-cta-word--level { right: 50px; bottom: -16px; transform: rotate(-12deg); }
+  .pink-cta-word--radar { top: 25px; right: 225px; font-size: 64px; transform: rotate(12deg); }
+  .pink-cta-content { max-width: 590px; }
+  .pink-cta-eyebrow { display: flex; gap: 8px; margin: 0 0 15px; align-items: center; font-size: 10px; font-weight: 650; letter-spacing: .15em; line-height: 1.5; text-transform: uppercase; }
+  .pink-cta-title { margin: 0; font-size: clamp(27px, 3vw, 36px); font-weight: 650; letter-spacing: -1.2px; line-height: 1.2; text-wrap: balance; }
+  .pink-cta-copy { max-width: 510px; margin: 15px 0 0; font-size: 13px; line-height: 1.85; text-wrap: pretty; }
+  .pink-cta-link { display: inline-flex; gap: 9px; min-height: 50px; flex-shrink: 0; padding: 14px 20px; align-items: center; justify-content: center; color: #000; background: var(--lime); border: 1px solid transparent; border-radius: 9px; font-size: 12px; font-weight: 650; line-height: 1.6; }
+  .pink-cta svg[aria-hidden='true'] { color: #000; }
+  .pink-cta-link:hover { background: color-mix(in srgb, var(--lime) 85%, white); transform: translateY(-2px); }
+  .pink-cta-link:focus-visible { outline-color: #211018; }
+
+  @media (max-width: 900px) {
+    .pink-cta-inner { gap: 25px; align-items: flex-start; flex-direction: column; }
+  }
+
+  @media (max-width: 600px) {
+    .pink-cta { margin-bottom: 45px; padding-block: 35px; }
+    .pink-cta-title { letter-spacing: -.8px; }
+    .pink-cta-link { width: 100%; }
+    .pink-cta-word--radar { right: 20px; }
+    .pink-cta-word--level { right: -25px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pink-cta-link { transition: none; }
+    .pink-cta-link:hover { transform: none; }
+  }
+}

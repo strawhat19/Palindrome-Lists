@@ -1,5 +1,5 @@
-import ContentPage from '../src/components/ContentPage';
+import ContactPage from '../src/components/ContactPage';
 
-const ContactPage = () => <ContentPage page='contact' />;
+const ContactRoute = () => <ContactPage />;
 
-export default ContactPage;
+export default ContactRoute;

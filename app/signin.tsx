@@ -1,5 +1,5 @@
-import ContentPage from '../src/components/ContentPage';
+import OnboardingPage from '../src/components/OnboardingPage';
 
-const SignInPage = () => <ContentPage page='signin' />;
+const SignInPage = () => <OnboardingPage mode={`signin`} />;
 
 export default SignInPage;

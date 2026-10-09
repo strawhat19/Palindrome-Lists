@@ -27,7 +27,9 @@ const Footer = ({ onHome }: FooterProps) => {
             {footerNavigation.map((item) => (
               <Link key={item.key} href={landingLinks[item.key]} asChild>
                 <WebAnchor id={`footer-${item.key}`} className='footer-navigation-link'>
-                  <FlipContent id={`footer-${item.key}-content`}>{item.label}</FlipContent>
+                  <FlipContent id={`footer-${item.key}-content`}>
+                    <Icon size={14} name={item.icon} color={`var(--${item.iconColor})`} /><span>{item.label}</span>
+                  </FlipContent>
                 </WebAnchor>
               </Link>
             ))}
@@ -44,7 +46,7 @@ const Footer = ({ onHome }: FooterProps) => {
             aria-label='Made by Piratechs, Opens in a New Tab'
           >
             <FlipContent id='piratechs-link-content'>
-              <span>Made by Piratechs</span><Icon name='external' size={12} />
+              <Icon name='external' size={12} /><span>Made by Piratechs</span>
             </FlipContent>
           </a>
         </div>

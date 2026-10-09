@@ -41,7 +41,7 @@ const ContentPageView = ({ page }: ContentPageProps) => {
     >
       <PageMetadata page={page} />
       <a id={`content-skip-${page}`} className='skip-link' href={`#content-main-${page}`}>
-        <FlipContent id={`content-skip-label-${page}`}>Skip to Content</FlipContent>
+        <FlipContent id={`content-skip-label-${page}`}><Icon name='down' size={16} /><span>Skip to Content</span></FlipContent>
       </a>
       <Header scrolled={scrolled} />
       <main id={`content-main-${page}`} className='content-main' tabIndex={-1}>
@@ -56,7 +56,7 @@ const ContentPageView = ({ page }: ContentPageProps) => {
               <li id={`content-breadcrumb-home-${page}`} className='content-breadcrumb-item'>
                 <Link href={landingLinks.home} asChild>
                   <WebAnchor id={`content-home-link-${page}`} className='content-home-link'>
-                    <FlipContent id={`content-home-label-${page}`}>Home</FlipContent>
+                    <FlipContent id={`content-home-label-${page}`}><Icon name='repeat' size={14} /><span>Home</span></FlipContent>
                   </WebAnchor>
                 </Link>
               </li>
@@ -77,7 +77,7 @@ const ContentPageView = ({ page }: ContentPageProps) => {
                   id={`content-contents-link-${page}-${section.id}`}
                   href={`#content-section-${page}-${section.id}`}
                 >
-                  <FlipContent id={`content-contents-label-${page}-${section.id}`}>{section.title}</FlipContent>
+                  <FlipContent id={`content-contents-label-${page}-${section.id}`}><Icon name='book' size={14} /><span>{section.title}</span></FlipContent>
                 </a>
               ))}
             </nav>
@@ -159,14 +159,14 @@ const ContentPageView = ({ page }: ContentPageProps) => {
                       id={`content-link-${page}-${section.id}-${index}`}
                     >
                       <FlipContent id={`content-link-label-${page}-${section.id}-${index}`}>
-                        <span>{item.label}</span><Icon name='external' size={13} />
+                        <Icon name='external' size={13} /><span>{item.label}</span>
                       </FlipContent>
                     </a>
                   ) : (
                     <Link key={`${item.href}-${index}`} href={item.href as Href} asChild>
                       <WebAnchor className='content-text-link' id={`content-link-${page}-${section.id}-${index}`}>
                         <FlipContent id={`content-link-label-${page}-${section.id}-${index}`}>
-                          <span>{item.label}</span><Icon name='right' size={14} />
+                          <Icon name='right' size={14} /><span>{item.label}</span>
                         </FlipContent>
                       </WebAnchor>
                     </Link>
@@ -182,11 +182,16 @@ const ContentPageView = ({ page }: ContentPageProps) => {
             <h2 id={`content-related-title-${page}`} className='content-related-title'>There’s more both ways.</h2>
           </div>
           <nav id={`content-related-navigation-${page}`} className='content-related-navigation' aria-label='Explore Palindrome Lists'>
-            {relatedPages.filter((item) => item.key !== page).map((item) => (
+            {relatedPages.filter((item) => item.key !== page).map((item, index) => (
               <Link key={item.key} href={landingLinks[item.key]} asChild>
                 <WebAnchor id={`content-related-link-${page}-${item.key}`} className='content-related-link'>
                   <FlipContent id={`content-related-label-${page}-${item.key}`}>
-                    <span>{item.label}</span><Icon name='right' size={14} />
+                    <Icon
+                      size={14}
+                      color={`var(--${index % 2 ? `leaf` : `action`})`}
+                      name={mainNavigation.find((route) => route.key === item.key)?.icon ?? `book`}
+                    />
+                    <span>{item.label}</span>
                   </FlipContent>
                 </WebAnchor>
               </Link>

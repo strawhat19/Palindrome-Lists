@@ -55,7 +55,7 @@ export const contentPages: Record<PageKey, ContentPageData> = {
         title: `Clear examples, honest context`,
         paragraphs: [
           `The explanations on these guide pages are written for this collection. Familiar examples are included to illustrate the letter patterns; we do not claim to have invented them. A phrase that has circulated for years may have several reported origins, so an unattributed example is not evidence of a particular author or date.`,
-          `The starter collection is curated by Palindrome Lists and labels its entries as editorial examples. That label describes our curation, not a historical source. When an original author or first recorded use is not known, we leave that uncertainty visible. An added date describes when an entry joined the collection, not when the palindrome was invented. Community activity controls are previews and do not publish activity.`,
+          `The collection includes English words and phrases, plus names from other languages and transliterations. Words and names include dictionary and name-directory sources; other entries are editorial selections. Some words are uncommon or dialectal. A cited source or editorial label does not establish original authorship. Unknown authors remain “Not recorded,” and added dates describe when entries joined the collection. Community activity controls are previews and do not publish activity.`,
         ],
       },
       {
@@ -279,16 +279,16 @@ isPalindrome('...'); // false`,
   },
   contact: {
     key: `contact`,
-    eyebrow: `Keep the collection clear`,
-    title: `Say hello. Send a correction.`,
-    description: `Find the project link and learn what to include when suggesting a palindrome, correcting an entry, or asking about attribution.`,
+    eyebrow: `Let’s talk wordplay`,
+    title: `A good conversation starts here.`,
+    description: `Have a palindrome to suggest, a correction to share, or a project in mind? Explore the contact form and tell us a little about it.`,
     sections: [
       {
-        id: `contact-project`,
-        title: `Find the project`,
+        id: `contact-form`,
+        title: `Try the contact form`,
         paragraphs: [
-          `Palindrome Lists links to Piratechs. Visit the Piratechs website to find any contact options it makes available. This page does not currently include a message form or a published project email address.`,
-          `Browsing the collection does not require an account. Community submissions and account support will be added only when those features are available.`,
+          `The contact form is a frontend preview for suggestions, corrections, and project questions. You can edit the fields and check their validation locally. No message is sent or stored, and there is no connected contact service yet.`,
+          `Browsing the collection and trying the form does not require an account. For any contact options currently offered by Piratechs, visit its separate website.`,
         ],
         links: [
           { href: `https://piratechs.com/`, label: `Visit Piratechs`, external: true },
@@ -298,8 +298,8 @@ isPalindrome('...'); // false`,
         id: `contact-correction`,
         title: `A useful correction starts with the text`,
         paragraphs: [
-          `When using an available project contact method, include the exact word, name, or phrase and the page where you found it. Explain the change you suggest so the issue can be understood without guessing.`,
-          `For a source or attribution question, include a link or enough publication details to locate the evidence. A claimed first use needs more context than a repeated online attribution. Tell us whether you would like your name credited if a contribution feature becomes available.`,
+          `For a correction, include the exact word, name, or phrase and the page where you found it. Explain the change you suggest so the issue can be understood without guessing.`,
+          `For a source or attribution question, include a link or enough publication details to locate the evidence. A claimed first use needs more context than a repeated online attribution. These details help make a useful inquiry when message delivery is connected.`,
         ],
         bullets: [
           `The exact palindrome spelling and its word, name, or phrase category.`,
@@ -312,7 +312,8 @@ isPalindrome('...'); // false`,
         id: `contact-privacy`,
         title: `Before sharing personal details`,
         paragraphs: [
-          `Piratechs is a separate website. Any contact method there is governed by that website’s own privacy practices. The Palindrome Lists privacy page describes what this app currently stores in your browser.`,
+          `Contact form values stay in the current page state while you edit. They are not saved to browser storage or sent to a server. Avoid entering passwords, account credentials, or sensitive personal information.`,
+          `Piratechs is a separate website. Any contact method there is governed by that website’s own privacy practices. The Palindrome Lists privacy page describes the app’s current browser storage.`,
         ],
         links: [
           { href: `/privacy`, label: `Read the Privacy Policy` },
@@ -368,7 +369,7 @@ isPalindrome('...'); // false`,
         id: `privacy-current`,
         title: `The current app`,
         paragraphs: [
-          `Updated October 6, 2026. Palindrome Lists currently offers public educational pages and a bundled example collection. There is no account registration, contact form, analytics integration, or advertising integration in this version of the app.`,
+          `Updated October 6, 2026. Palindrome Lists currently offers public educational pages, a bundled example collection, and a frontend contact form preview. Contact fields stay in page memory while you edit; no message is delivered, stored, or submitted to a server. There is no account registration, analytics integration, or advertising integration in this version of the app.`,
           `Searches, filters, and sorting run in your browser against the bundled examples. This application does not send that search text to an account service or a search provider. Preview controls for voting, comments, hearts, and saving do not submit community activity.`,
         ],
       },

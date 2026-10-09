@@ -56,7 +56,7 @@ const Hero = ({ onSearch }: HeroProps) => {
           />
           <button id='search-button' type='submit' className='search-button'>
             <FlipContent id='search-button-content'>
-              <span>Search</span><Icon name='right' size={16} />
+              <Icon name='search' size={16} /><span>Search</span>
             </FlipContent>
           </button>
         </form>

@@ -16,7 +16,7 @@ type HeaderProps = {
 
 const Header = ({ scrolled, onHome }: HeaderProps) => {
   const sticky = true;
-  const { theme, toggleTheme } = useTheme();
+  const { theme, palette, toggleTheme } = useTheme();
   const { isMobile, menuOpen, pathname, closeMenu, headerRef, navigationRef, menuButtonRef, toggleMenu } = useHeader();
   const themeLabel = theme === `dark` ? `Switch to Light Mode` : `Switch to Dark Mode`;
 
@@ -66,7 +66,7 @@ const Header = ({ scrolled, onHome }: HeaderProps) => {
               aria-current={pathname === landingLinks.signin.pathname ? `page` : undefined}
             >
               <FlipContent id='navigation-signin-content'>
-                <span>Sign in</span><Icon name='right' size={14} />
+                <Icon size={17} name='login' color={theme === `dark` ? palette.searchInk : palette.lime} /><span>Sign in</span>
               </FlipContent>
             </WebAnchor>
           </Link>
@@ -111,10 +111,10 @@ const Header = ({ scrolled, onHome }: HeaderProps) => {
                     style={{ '--navigation-index': index } as CSSProperties}
                   >
                     <FlipContent id={`navigation-${item.key}-content`}>
-                      <span className='navigation-item-icon'><Icon name={item.icon} size={17} /></span>
+                      <span className='navigation-item-icon'><Icon size={17} name={item.icon} color={`var(--${item.iconColor})`} /></span>
                       <span>{item.label}</span>
                     </FlipContent>
-                    <span className='navigation-item-arrow'><Icon name='right' size={15} /></span>
+                    <span className='navigation-item-arrow'><Icon size={15} name='right' color={`var(--${item.iconColor})`} /></span>
                   </WebAnchor>
                 </Link>
               ))}

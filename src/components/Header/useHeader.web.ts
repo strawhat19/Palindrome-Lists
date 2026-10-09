@@ -17,7 +17,7 @@ const useHeader = () => {
   };
 
   useEffect(() => {
-    const media = window.matchMedia(`(max-width: 800px)`);
+    const media = window.matchMedia(`(max-width: 1100px)`);
     const updateLayout = () => {
       if (media.matches && navigationRef.current?.contains(document.activeElement)) {
         menuButtonRef.current?.focus();

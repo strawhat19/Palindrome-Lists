@@ -17,7 +17,7 @@ const PageMetadata = ({ page }: PageMetadataProps) => {
         '@id': `${siteMetadata.url}/#website`,
       },
       {
-        '@type': [`words`, `names`, `phrases`].includes(page) ? `CollectionPage` : `WebPage`,
+        '@type': [`words`, `names`, `phrases`, `palindromes`].includes(page) ? `CollectionPage` : `WebPage`,
         url: canonical,
         name: metadata.title,
         '@id': `${canonical}#page`,

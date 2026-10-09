@@ -80,7 +80,7 @@ const PricingSection = ({ variant = `landing` }: PricingSectionProps) => {
                   <Link href={plan.id === `free` ? landingLinks.home : landingLinks.contact} asChild>
                     <WebAnchor id={`${planId}-action`} className='pricing-plan__action'>
                       <FlipContent id={`${planId}-action-label`}>
-                        <span>{actionLabel}</span><Icon size={14} name='right' />
+                        <Icon size={14} name={plan.id === `free` ? `search` : `mail`} /><span>{actionLabel}</span>
                       </FlipContent>
                     </WebAnchor>
                   </Link>

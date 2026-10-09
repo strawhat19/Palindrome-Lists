@@ -100,6 +100,23 @@ const createStyles = (palette: ThemePalette) => StyleSheet.create({
     paddingBottom: 54,
     alignItems: `center`,
   },
+  collectionHero: {
+    paddingTop: 44,
+    paddingBottom: 32,
+  },
+  collectionHeroTitle: {
+    fontSize: 46,
+    lineHeight: 54,
+    fontWeight: `600`,
+    textAlign: `center`,
+    color: palette.ink,
+    letterSpacing: -1.8,
+  },
+  smallCollectionHeroTitle: {
+    fontSize: 36,
+    lineHeight: 44,
+    letterSpacing: -1.3,
+  },
   heroLogo: {
     marginBottom: 30,
   },
@@ -205,10 +222,13 @@ const createStyles = (palette: ThemePalette) => StyleSheet.create({
     flexDirection: `row`,
   },
   filterButton: {
+    gap: 5,
     minHeight: 40,
     borderRadius: 6,
     paddingVertical: 10,
     paddingHorizontal: 12,
+    alignItems: `center`,
+    flexDirection: `row`,
     justifyContent: `center`,
   },
   filterSelected: {

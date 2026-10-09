@@ -122,17 +122,17 @@ const PricingSection = ({ variant = `landing` }: PricingSectionProps) => {
                       pressed && styles.pressed,
                     ]}
                   >
+                    <Icon
+                      size={15}
+                      name={isFree ? `book` : `mail`}
+                      color={plan.highlighted ? palette.searchInk : palette.action}
+                    />
                     <Text
                       nativeID={`${planId}-action-label`}
                       style={[styles.actionLabel, plan.highlighted && styles.highlightedActionLabel]}
                     >
                       {isFree ? `Explore free` : `Ask about ${plan.name}`}
                     </Text>
-                    <Icon
-                      size={15}
-                      name={isFree ? `right` : `mail`}
-                      color={plan.highlighted ? palette.searchInk : palette.ink}
-                    />
                   </Pressable>
                 </Link>
                 <View nativeID={`${planId}-footer`} style={styles.planFooter}>

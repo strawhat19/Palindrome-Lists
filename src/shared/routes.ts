@@ -9,39 +9,44 @@ export const landingLinks = {
   names: { pathname: `/names` },
   terms: { pathname: `/terms` },
   signin: { pathname: `/signin` },
+  signup: { pathname: `/signup` },
   privacy: { pathname: `/privacy` },
   phrases: { pathname: `/phrases` },
   pricing: { pathname: `/pricing` },
   contact: { pathname: `/contact` },
+  palindromes: { pathname: `/palindromes` },
 } as const;
 
 type NavigationItem = {
-  key: PageKey;
+  key: PageKey | `palindromes`;
   label: string;
   icon: IconName;
+  iconColor: `action` | `leaf`;
 };
 
 export const mainNavigation = [
-  { key: `about`, label: `About`, icon: `info` },
-  { key: `api`, label: `API`, icon: `code` },
-  { key: `words`, label: `Words`, icon: `book` },
-  { key: `names`, label: `Names`, icon: `book` },
-  { key: `phrases`, label: `Phrases`, icon: `book` },
-  { key: `pricing`, label: `Pricing`, icon: `repeat` },
-  { key: `contact`, label: `Contact`, icon: `mail` },
-  { key: `signin`, label: `Sign in`, icon: `right` },
+  { key: `about`, label: `About`, icon: `info`, iconColor: `action` },
+  { key: `palindromes`, label: `Palindromes`, icon: `repeat`, iconColor: `leaf` },
+  { key: `words`, label: `Words`, icon: `book`, iconColor: `action` },
+  { key: `names`, label: `Names`, icon: `user`, iconColor: `leaf` },
+  { key: `phrases`, label: `Phrases`, icon: `quote`, iconColor: `action` },
+  { key: `api`, label: `API`, icon: `code`, iconColor: `leaf` },
+  { key: `pricing`, label: `Pricing`, icon: `tag`, iconColor: `action` },
+  { key: `contact`, label: `Contact`, icon: `mail`, iconColor: `leaf` },
+  { key: `signin`, label: `Sign in`, icon: `login`, iconColor: `action` },
 ] as const satisfies readonly NavigationItem[];
 
 export const footerNavigation = [
-  { key: `about`, label: `About`, icon: `info` },
-  { key: `pricing`, label: `Pricing`, icon: `repeat` },
-  { key: `terms`, label: `Terms`, icon: `book` },
-  { key: `privacy`, label: `Privacy Policy`, icon: `save` },
-  { key: `contact`, label: `Contact`, icon: `mail` },
+  { key: `about`, label: `About`, icon: `info`, iconColor: `action` },
+  { key: `pricing`, label: `Pricing`, icon: `tag`, iconColor: `leaf` },
+  { key: `terms`, label: `Terms`, icon: `file`, iconColor: `action` },
+  { key: `privacy`, label: `Privacy Policy`, icon: `shield`, iconColor: `leaf` },
+  { key: `contact`, label: `Contact`, icon: `mail`, iconColor: `action` },
 ] as const satisfies readonly NavigationItem[];
 
-export const routeAliases: Record<string, PageKey> = {
+export const routeAliases: Record<string, PageKey | `signup`> = {
   log: `signin`,
+  new: `signup`,
   sign: `signin`,
   info: `about`,
   plans: `pricing`,
@@ -53,9 +58,12 @@ export const routeAliases: Record<string, PageKey> = {
   contactus: `contact`,
   contactme: `contact`,
   'sign-in': `signin`,
+  'sign-up': `signup`,
+  register: `signup`,
   'about-us': `about`,
   'about-me': `about`,
   getintouch: `contact`,
+  subscribe: `signup`,
   'contact-us': `contact`,
   'contact-me': `contact`,
   'get-in-touch': `contact`,

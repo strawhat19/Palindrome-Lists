@@ -10,6 +10,7 @@ export type LandingContextValue = {
   category: Category;
   notice: Notice | null;
   filteredCount: number;
+  filteredEntries: Palindrome[];
   visibleEntries: Palindrome[];
   carouselEntries: Palindrome[];
   setSort: Dispatch<SetStateAction<Sort>>;
@@ -21,6 +22,7 @@ export type LandingContextValue = {
 
 const LandingContext = createContext<LandingContextValue | null>(null);
 const previewTypes = [`word`, `name`, `phrase`] as const;
+const carouselSampleSize = 6;
 
 export const LandingProvider = ({ children }: { children: ReactNode }) => {
   const [query, setQuery] = useState(``);
@@ -59,7 +61,7 @@ export const LandingProvider = ({ children }: { children: ReactNode }) => {
   }, [sort, query, category]);
 
   const carouselEntries = useMemo(() => {
-    const groups = previewTypes.map((type) => filteredEntries.filter((entry) => entry.type === type));
+    const groups = previewTypes.map((type) => filteredEntries.filter((entry) => entry.type === type).slice(0, carouselSampleSize));
     const rounds = Math.max(...groups.map((entries) => entries.length));
 
     // Cycle shorter groups so every round and the loop seam keep Word → Name → Phrase.
@@ -81,6 +83,7 @@ export const LandingProvider = ({ children }: { children: ReactNode }) => {
     setShowAll,
     setCategory,
     carouselEntries,
+    filteredEntries,
     filteredCount: filteredEntries.length,
     visibleEntries: showAll || query.trim() || category !== `all`
       ? filteredEntries
