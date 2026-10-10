@@ -39,20 +39,20 @@ export const pageMetadata: Record<MetadataPage, PageSeo> = {
   words: {
     path: `/words`,
     label: `Words`,
-    title: `Palindrome Words — Examples & Patterns | Palindrome Lists`,
-    description: `Explore palindrome words including level, radar, civic, and racecar, with short explanations and a guide to checking their letters.`,
+    title: `Palindrome Words — Search the Collection | Palindrome Lists`,
+    description: `Browse the full palindrome word collection, including level, radar, civic, and racecar. Search words and filter by starting letter.`,
   },
   names: {
     path: `/names`,
     label: `Names`,
-    title: `Palindrome Names — Examples & Spelling Guide | Palindrome Lists`,
-    description: `Discover names that read the same backward, including Anna, Ada, Ava, and Otto. Learn why exact spelling matters when checking a name.`,
+    title: `Palindrome Names — Search the Collection | Palindrome Lists`,
+    description: `Browse the full palindrome name collection, including Anna, Ada, Ava, and Otto. Search names and filter by starting letter.`,
   },
   phrases: {
     path: `/phrases`,
     label: `Phrases`,
-    title: `Palindrome Phrases — Examples & How They Work | Palindrome Lists`,
-    description: `Read palindrome phrases such as Never odd or even and Step on no pets, with explanations of spacing, punctuation, and letter symmetry.`,
+    title: `Palindrome Phrases — Search the Collection | Palindrome Lists`,
+    description: `Browse the full palindrome phrase collection, including Never odd or even and Step on no pets. Search phrases and filter by starting letter.`,
   },
   api: {
     path: `/api`,

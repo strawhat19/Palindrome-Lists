@@ -14,11 +14,55 @@ type HeaderProps = {
   onHome?: () => void;
 };
 
+const navigationItems = mainNavigation.filter((item) => item.key !== `signin`);
+const palindromeCategories = navigationItems.filter((item) => item.key === `words` || item.key === `names` || item.key === `phrases`);
+
 const Header = ({ scrolled, onHome }: HeaderProps) => {
   const sticky = true;
   const { theme, palette, toggleTheme } = useTheme();
-  const { isMobile, menuOpen, pathname, closeMenu, headerRef, navigationRef, menuButtonRef, toggleMenu } = useHeader();
+  const {
+    isMobile,
+    menuOpen,
+    pathname,
+    closeMenu,
+    headerRef,
+    isCompact,
+    submenuRef,
+    toggleMenu,
+    blurSubmenu,
+    submenuOpen,
+    enterSubmenu,
+    leaveSubmenu,
+    navigationRef,
+    menuButtonRef,
+    toggleSubmenu,
+    palindromeLinkRef,
+    submenuButtonRef,
+  } = useHeader();
   const themeLabel = theme === `dark` ? `Switch to Light Mode` : `Switch to Dark Mode`;
+
+  const renderNavigationLink = (item: (typeof navigationItems)[number], index: number, submenu = false) => {
+    const linkId = `navigation-${submenu ? `palindromes-` : ``}${item.key}`;
+    const category = palindromeCategories.some((entry) => entry.key === item.key);
+    return (
+      <Link key={linkId} href={landingLinks[item.key]} asChild>
+        <WebAnchor
+          id={linkId}
+          onClick={() => closeMenu()}
+          style={{ '--navigation-index': index } as CSSProperties}
+          ref={item.key === `palindromes` ? palindromeLinkRef : undefined}
+          aria-current={pathname === landingLinks[item.key].pathname ? `page` : undefined}
+          className={`navigation-link${submenu ? ` navigation-submenu-link` : category ? ` navigation-category-link` : ``}`}
+        >
+          <FlipContent id={`${linkId}-content`}>
+            <span id={`${linkId}-icon`} className='navigation-item-icon'><Icon size={17} name={item.icon} color={`var(--${item.iconColor})`} /></span>
+            <span id={`${linkId}-label`} className='navigation-item-label'>{item.label}</span>
+          </FlipContent>
+          <span id={`${linkId}-arrow`} className='navigation-item-arrow'><Icon size={15} name='right' color={`var(--${item.iconColor})`} /></span>
+        </WebAnchor>
+      </Link>
+    );
+  };
 
   return (
     <header
@@ -55,7 +99,7 @@ const Header = ({ scrolled, onHome }: HeaderProps) => {
             onClick={toggleTheme}
           >
             <FlipContent id='header-theme-content'>
-              <Icon fill='#FFFFFF' name={theme === `dark` ? `sun` : `moon`} size={19} />
+              <Icon fill={`currentColor`} name={theme === `dark` ? `sun` : `moon`} size={19} />
             </FlipContent>
           </button>
           <Link href={landingLinks.signin} asChild>
@@ -101,23 +145,39 @@ const Header = ({ scrolled, onHome }: HeaderProps) => {
           >
             <p id='navigation-caption' className='navigation-caption'>A little discovery. Both ways.</p>
             <div id='navigation-links' className='navigation-links'>
-              {mainNavigation.filter((item) => item.key !== `signin`).map((item, index) => (
-                <Link key={item.key} href={landingLinks[item.key]} asChild>
-                  <WebAnchor
-                    id={`navigation-${item.key}`}
-                    onClick={() => closeMenu()}
-                    className='navigation-link'
-                    aria-current={pathname === landingLinks[item.key].pathname ? `page` : undefined}
-                    style={{ '--navigation-index': index } as CSSProperties}
+              {navigationItems.map((item, index) => item.key === `palindromes` ? (
+                <div
+                  key={item.key}
+                  ref={submenuRef}
+                  onBlur={blurSubmenu}
+                  onPointerEnter={enterSubmenu}
+                  onPointerLeave={leaveSubmenu}
+                  id='navigation-palindromes-group'
+                  className='navigation-palindromes'
+                >
+                  {renderNavigationLink(item, index)}
+                  <button
+                    type='button'
+                    ref={submenuButtonRef}
+                    onClick={toggleSubmenu}
+                    aria-expanded={submenuOpen}
+                    id='navigation-palindromes-toggle'
+                    className='navigation-submenu-toggle'
+                    aria-label='Toggle Palindrome Categories'
+                    aria-controls='navigation-palindromes-submenu'
                   >
-                    <FlipContent id={`navigation-${item.key}-content`}>
-                      <span className='navigation-item-icon'><Icon size={17} name={item.icon} color={`var(--${item.iconColor})`} /></span>
-                      <span>{item.label}</span>
-                    </FlipContent>
-                    <span className='navigation-item-arrow'><Icon size={15} name='right' color={`var(--${item.iconColor})`} /></span>
-                  </WebAnchor>
-                </Link>
-              ))}
+                    <Icon size={14} name='chevron' />
+                  </button>
+                  <div
+                    inert={!isCompact || !submenuOpen}
+                    id='navigation-palindromes-submenu'
+                    aria-hidden={!isCompact || !submenuOpen}
+                    className={`navigation-submenu${submenuOpen ? ` is-open` : ``}`}
+                  >
+                    {palindromeCategories.map((category, categoryIndex) => renderNavigationLink(category, categoryIndex, true))}
+                  </div>
+                </div>
+              ) : renderNavigationLink(item, index))}
             </div>
           </nav>
         </div>

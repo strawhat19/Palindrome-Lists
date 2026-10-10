@@ -4,11 +4,13 @@ import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import Icon from '../Icon';
 import PageMetadata from '../PageMetadata';
 import HalfTurnLogo from '../HalfTurnLogo';
+import AlphabetFilter from '../AlphabetFilter';
 import PricingSection from '../PricingSection/index.native';
 import useContentPage from './useContentPage.native';
 import { contentPages } from '../../shared/content/pages';
 import type { PageKey } from '../../shared/content/types';
 import { normalizePalindrome } from '../../shared/landing/data';
+import useAlphabetFilter from '../../shared/landing/useAlphabetFilter';
 import { landingLinks, mainNavigation, footerNavigation } from '../../shared/routes';
 
 type ContentPageProps = {
@@ -19,6 +21,8 @@ const ContentPageView = ({ page }: ContentPageProps) => {
   const sticky = true;
   const insets = useSafeAreaInsets();
   const content = contentPages[page];
+  const hasAlphabetFilter = [`words`, `names`, `phrases`].includes(page);
+  const { selectedLetters, toggleLetter, clearLetters, filteredEntries: filteredExamples } = useAlphabetFilter(content.examples);
   const pageLabel = [...mainNavigation, ...footerNavigation].find((item) => item.key === page)?.label ?? content.eyebrow;
   const {
     theme,
@@ -93,7 +97,12 @@ const ContentPageView = ({ page }: ContentPageProps) => {
                   accessibilityLabel={theme === `dark` ? `Switch to Light Mode` : `Switch to Dark Mode`}
                   style={({ pressed }) => [styles.themeToggle, pressed && styles.pressed]}
                 >
-                  <Icon name={theme === `dark` ? `sun` : `moon`} size={20} fill={`#FFFFFF`} color={`#FFFFFF`} />
+                  <Icon
+                    size={20}
+                    name={theme === `dark` ? `sun` : `moon`}
+                    fill={theme === `dark` ? palette.searchInk : `#FFFFFF`}
+                    color={theme === `dark` ? palette.searchInk : `#FFFFFF`}
+                  />
                 </Pressable>
                 <Link href={landingLinks.signin} asChild>
                   <Pressable
@@ -130,8 +139,18 @@ const ContentPageView = ({ page }: ContentPageProps) => {
           <View nativeID={`content-examples-${page}`} style={[styles.container, styles.examples]}>
             <Text nativeID={`content-examples-title-${page}`} accessibilityRole={`header`} style={styles.sectionTitle}>A few to start with.</Text>
             <Text nativeID={`content-examples-copy-${page}`} style={styles.examplesCopy}>Read each one forwards. Then backwards.</Text>
+            {hasAlphabetFilter && (
+              <AlphabetFilter
+                onClear={clearLetters}
+                onToggle={toggleLetter}
+                selectedLetters={selectedLetters}
+                id={`content-alphabet-filter-${page}`}
+                resultCount={filteredExamples.length}
+                controls={`content-examples-grid-${page}`}
+              />
+            )}
             <View nativeID={`content-examples-grid-${page}`} style={styles.exampleGrid}>
-              {content.examples?.map((example) => (
+              {filteredExamples.map((example) => (
                 <View key={example.id} nativeID={`content-example-${page}-${example.id}`} style={styles.example}>
                   <View nativeID={`content-example-heading-${page}-${example.id}`} style={styles.exampleHeading}>
                     <Text nativeID={`content-example-title-${page}-${example.id}`} accessibilityRole={`header`} style={styles.exampleTitle}>{example.text}</Text>
@@ -141,6 +160,11 @@ const ContentPageView = ({ page }: ContentPageProps) => {
                   <Text nativeID={`content-example-note-${page}-${example.id}`} style={styles.exampleNote}>{example.note}</Text>
                 </View>
               ))}
+              {filteredExamples.length === 0 && (
+                <Text nativeID={`content-examples-empty-${page}`} style={styles.examplesCopy}>
+                  No palindromes start with the selected letter(s). Choose another letter or All Letters.
+                </Text>
+              )}
             </View>
           </View>
         )}

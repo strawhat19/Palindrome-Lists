@@ -139,7 +139,12 @@ const ContactPage = () => {
                 </Link>
               )}
               <Pressable onPress={toggleTheme} accessibilityRole={`button`} nativeID={`contact-theme-toggle`} accessibilityLabel={theme === `dark` ? `Switch to Light Mode` : `Switch to Dark Mode`} style={({ pressed }) => [styles.themeToggle, pressed && styles.pressed]}>
-                <Icon name={theme === `dark` ? `sun` : `moon`} size={20} fill={`#FFFFFF`} color={`#FFFFFF`} />
+                <Icon
+                  size={20}
+                  name={theme === `dark` ? `sun` : `moon`}
+                  fill={theme === `dark` ? palette.searchInk : `#FFFFFF`}
+                  color={theme === `dark` ? palette.searchInk : `#FFFFFF`}
+                />
               </Pressable>
               <Link href={landingLinks.signin} asChild>
                 <Pressable accessibilityRole={`link`} nativeID={`contact-signin-link`} style={({ pressed }) => [styles.textButton, pressed && styles.pressed]}>

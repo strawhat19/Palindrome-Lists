@@ -3,6 +3,14 @@ html {
   background: var(--page, #fffbfd);
 }
 
+html:not([data-theme-ready='true']) {
+  transition: none !important;
+  body {
+    visibility: hidden;
+    &, *, *::before, *::after { transition: none !important; }
+  }
+}
+
 body {
   margin: 0;
   min-width: 320px;
@@ -13,7 +21,7 @@ body {
 
 html,
 body {
-  transition: color 220ms ease, background-color 220ms ease;
+  transition: color 120ms ease, background-color 120ms ease;
 }
 
 button,

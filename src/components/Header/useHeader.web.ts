@@ -1,38 +1,89 @@
 import { usePathname } from 'expo-router';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type FocusEvent, type PointerEvent } from 'react';
 
 const useHeader = () => {
   const pathname = usePathname();
   const headerRef = useRef<HTMLElement>(null);
+  const submenuRef = useRef<HTMLDivElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const navigationRef = useRef<HTMLElement>(null);
+  const palindromeLinkRef = useRef<HTMLAnchorElement>(null);
+  const submenuButtonRef = useRef<HTMLButtonElement>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [isCompact, setIsCompact] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [submenuOpen, setSubmenuOpen] = useState(false);
 
   const closeMenu = (restoreFocus = true) => {
     if (restoreFocus && isMobile && navigationRef.current?.contains(document.activeElement)) {
       menuButtonRef.current?.focus();
     }
     setMenuOpen(false);
+    setSubmenuOpen(false);
+  };
+
+  const enterSubmenu = (event: PointerEvent<HTMLDivElement>) => {
+    if (isCompact && event.pointerType !== `touch`) setSubmenuOpen(true);
+  };
+  const leaveSubmenu = (event: PointerEvent<HTMLDivElement>) => {
+    if (event.pointerType !== `touch` && !submenuRef.current?.contains(document.activeElement)) setSubmenuOpen(false);
+  };
+  const blurSubmenu = (event: FocusEvent<HTMLDivElement>) => {
+    if (!(event.relatedTarget instanceof Node) || !event.currentTarget.contains(event.relatedTarget)) setSubmenuOpen(false);
   };
 
   useEffect(() => {
-    const media = window.matchMedia(`(max-width: 1100px)`);
+    const mobileMedia = window.matchMedia(`(max-width: 1100px)`);
+    const compactMedia = window.matchMedia(`(min-width: 1101px) and (max-width: 1350px)`);
     const updateLayout = () => {
-      if (media.matches && navigationRef.current?.contains(document.activeElement)) {
+      const activeElement = document.activeElement;
+      if (mobileMedia.matches && navigationRef.current?.contains(activeElement)) {
         menuButtonRef.current?.focus();
-      } else if (!media.matches && document.activeElement === menuButtonRef.current) {
+      } else if (!mobileMedia.matches && activeElement === menuButtonRef.current) {
         navigationRef.current?.querySelector<HTMLAnchorElement>(`a`)?.focus();
+      } else if (compactMedia.matches && activeElement?.classList.contains(`navigation-category-link`)) {
+        palindromeLinkRef.current?.focus();
+      } else if (!compactMedia.matches && submenuRef.current?.contains(activeElement) && activeElement !== palindromeLinkRef.current) {
+        palindromeLinkRef.current?.focus();
       }
-      setIsMobile(media.matches);
+      setIsMobile(mobileMedia.matches);
+      setIsCompact(compactMedia.matches);
       setMenuOpen(false);
+      setSubmenuOpen(false);
     };
     updateLayout();
-    media.addEventListener(`change`, updateLayout);
-    return () => media.removeEventListener(`change`, updateLayout);
+    mobileMedia.addEventListener(`change`, updateLayout);
+    compactMedia.addEventListener(`change`, updateLayout);
+    return () => {
+      mobileMedia.removeEventListener(`change`, updateLayout);
+      compactMedia.removeEventListener(`change`, updateLayout);
+    };
   }, []);
 
-  useEffect(() => { setMenuOpen(false); }, [pathname]);
+  useEffect(() => {
+    setMenuOpen(false);
+    setSubmenuOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!submenuOpen) return;
+    const closeWithEscape = (event: KeyboardEvent) => {
+      if (event.key !== `Escape`) return;
+      submenuButtonRef.current?.focus();
+      setSubmenuOpen(false);
+    };
+    const closeOutsideSubmenu = (event: Event) => {
+      if (event.target instanceof Node && !submenuRef.current?.contains(event.target)) setSubmenuOpen(false);
+    };
+    document.addEventListener(`keydown`, closeWithEscape);
+    document.addEventListener(`focusin`, closeOutsideSubmenu);
+    document.addEventListener(`pointerdown`, closeOutsideSubmenu);
+    return () => {
+      document.removeEventListener(`keydown`, closeWithEscape);
+      document.removeEventListener(`focusin`, closeOutsideSubmenu);
+      document.removeEventListener(`pointerdown`, closeOutsideSubmenu);
+    };
+  }, [submenuOpen]);
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -65,9 +116,18 @@ const useHeader = () => {
     pathname,
     closeMenu,
     headerRef,
+    isCompact,
+    submenuRef,
+    blurSubmenu,
+    submenuOpen,
+    enterSubmenu,
+    leaveSubmenu,
     navigationRef,
     menuButtonRef,
+    palindromeLinkRef,
+    submenuButtonRef,
     toggleMenu: () => setMenuOpen((open) => !open),
+    toggleSubmenu: () => setSubmenuOpen((open) => !open),
   };
 };
 

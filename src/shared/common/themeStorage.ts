@@ -1,6 +1,6 @@
 import type { ThemeMode } from '../../styles/theme/theme';
 
-const themeStorageKey = `palindrome-lists.theme.v1`;
+export const themeStorageKey = `palindrome-lists.theme.v1`;
 
 export const readStoredTheme = (): ThemeMode | null => {
   if (typeof window === `undefined`) return null;

@@ -24,12 +24,12 @@ const LandingContext = createContext<LandingContextValue | null>(null);
 const previewTypes = [`word`, `name`, `phrase`] as const;
 const carouselSampleSize = 6;
 
-export const LandingProvider = ({ children }: { children: ReactNode }) => {
+export const LandingProvider = ({ children, initialCategory = `all` }: { children: ReactNode; initialCategory?: Category }) => {
   const [query, setQuery] = useState(``);
   const [showAll, setShowAll] = useState(false);
   const [sort, setSort] = useState<Sort>(`featured`);
   const [notice, setNotice] = useState<Notice | null>(null);
-  const [category, setCategory] = useState<Category>(`all`);
+  const [category, setCategory] = useState<Category>(initialCategory);
 
   useEffect(() => {
     setShowAll(false);

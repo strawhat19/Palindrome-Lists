@@ -2,12 +2,17 @@ import { gsap } from 'gsap';
 import { SplitText } from 'gsap/SplitText';
 import { useEffect, type RefObject } from 'react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useTheme } from '../../shared/themeContext/useTheme';
 import './styles.motion.scss';
 
 const interactiveSelector = `a, button, summary`;
 
 const useLandingMotion = (rootRef: RefObject<HTMLDivElement | null>) => {
+  const { isThemeReady } = useTheme();
+
   useEffect(() => {
+    if (!isThemeReady) return;
+
     const root = rootRef.current;
     if (!root) return;
 
@@ -261,7 +266,7 @@ const useLandingMotion = (rootRef: RefObject<HTMLDivElement | null>) => {
       media.revert();
       context.revert();
     };
-  }, [rootRef]);
+  }, [rootRef, isThemeReady]);
 };
 
 export default useLandingMotion;

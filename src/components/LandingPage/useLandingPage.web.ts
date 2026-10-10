@@ -3,6 +3,7 @@ import { useLocalSearchParams } from 'expo-router';
 import { sectionAliases } from '../../shared/routes';
 import { palindromes } from '../../shared/landing/data';
 import { useLanding } from '../../shared/landing/LandingContext';
+import { collectionPages, type CollectionPageKey } from '../../shared/landing/collectionPages';
 
 const reducedMotion = () => window.matchMedia(`(prefers-reduced-motion: reduce)`).matches;
 
@@ -15,7 +16,8 @@ const scrollToSection = (id: string) => {
   target?.focus({ preventScroll: true });
 };
 
-const useLandingPage = () => {
+const useLandingPage = (collectionPage?: CollectionPageKey) => {
+  const collectionCategory = collectionPage ? collectionPages[collectionPage].category : undefined;
   const [scrolled, setScrolled] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const { setSort, setQuery, setShowAll, setCategory } = useLanding();
@@ -47,7 +49,7 @@ const useLandingPage = () => {
   useEffect(() => {
     let target = sectionAliases[section ?? ``];
 
-    if (type === `word` || type === `name` || type === `phrase`) {
+    if ((!collectionPage || collectionPage === `palindromes`) && (type === `word` || type === `name` || type === `phrase`)) {
       setCategory(type);
       target = `collection`;
     }
@@ -56,17 +58,18 @@ const useLandingPage = () => {
     const targetId = target;
     const frame = window.requestAnimationFrame(() => scrollToSection(targetId));
     return () => window.cancelAnimationFrame(frame);
-  }, [type, section, setCategory]);
+  }, [type, section, setCategory, collectionPage]);
 
   useEffect(() => {
     const entry = palindromes.find((item) => item.id === palindromeId);
     if (!entry) return;
+    if (collectionCategory && collectionCategory !== `all` && entry.type !== collectionCategory) return;
 
-    setCategory(`all`);
+    setCategory(collectionCategory ?? `all`);
     setQuery(entry.text);
     const frame = window.requestAnimationFrame(() => scrollToSection(`palindrome-card-${entry.id}`));
     return () => window.cancelAnimationFrame(frame);
-  }, [palindromeId, setQuery, setCategory]);
+  }, [palindromeId, setQuery, setCategory, collectionCategory]);
 
   const scrollToTop = () => {
     window.scrollTo({

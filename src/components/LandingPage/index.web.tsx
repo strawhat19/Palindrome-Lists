@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+import { Link } from 'expo-router';
 import type { CSSProperties } from 'react';
 import Icon from '../Icon';
 import PinkCta from '../PinkCta/index.web';
@@ -8,6 +9,9 @@ import Footer from '../Footer/index.web';
 import Header from '../Header/index.web';
 import useLandingPage from './useLandingPage.web';
 import FlipContent from '../FlipContent/index.web';
+import WebAnchor from '../WebAnchor/index.web';
+import AlphabetFilter from '../AlphabetFilter/index.web';
+import PalindromeSearch from '../PalindromeSearch/index.web';
 import useLandingMotion from './useLandingMotion.web';
 import ScrollToTop from '../ScrollToTop/index.web';
 import { landingLinks } from '../../shared/routes';
@@ -17,13 +21,17 @@ import LandingSections from '../LandingSections/index.web';
 import PalindromeCarousel from '../PalindromeCarousel/index.web';
 import { useTheme } from '../../shared/themeContext/useTheme';
 import { useLanding } from '../../shared/landing/LandingContext';
+import useAlphabetFilter from '../../shared/landing/useAlphabetFilter';
+import { collectionPages, collectionPageOrder, type CollectionPageKey } from '../../shared/landing/collectionPages';
 import './styles.scss';
 
 type LandingPageProps = {
   collectionOnly?: boolean;
+  collectionPage?: CollectionPageKey;
 };
 
-const LandingPage = ({ collectionOnly = false }: LandingPageProps) => {
+const LandingPage = ({ collectionOnly = false, collectionPage = `palindromes` }: LandingPageProps) => {
+  const collection = collectionPages[collectionPage];
   const landingRef = useRef<HTMLDivElement>(null);
   const { theme, palette } = useTheme();
   useLandingMotion(landingRef);
@@ -59,14 +67,16 @@ const LandingPage = ({ collectionOnly = false }: LandingPageProps) => {
     carouselEntries,
     visibleEntries: previewEntries,
   } = useLanding();
-  const { goHome, scrolled, scrollToTop, showScrollTop, scrollToSection } = useLandingPage();
+  const { selectedLetters, toggleLetter, clearLetters, filteredEntries: letterEntries } = useAlphabetFilter(filteredEntries);
+  const { goHome, scrolled, scrollToTop, showScrollTop, scrollToSection } = useLandingPage(collectionOnly ? collectionPage : undefined);
   const isFiltered = Boolean(query.trim() || category !== `all`);
-  const visibleEntries = collectionOnly ? filteredEntries : previewEntries;
+  const visibleEntries = collectionOnly ? letterEntries : previewEntries;
+  const resultCount = collectionOnly ? letterEntries.length : filteredCount;
   const isCarousel = !collectionOnly && !showAll && !isFiltered;
 
   return (
-    <div id={collectionOnly ? `palindromes-page` : `palindrome-landing`} ref={landingRef} data-theme={theme} className={`palindrome-landing${collectionOnly ? ` palindromes-page` : ``}`} style={landingTheme}>
-      <PageMetadata page={collectionOnly ? `palindromes` : `home`} />
+    <div id={collectionOnly ? `${collectionPage}-page` : `palindrome-landing`} ref={landingRef} data-theme={theme} className={`palindrome-landing${collectionOnly ? ` palindromes-page` : ``}`} style={landingTheme}>
+      <PageMetadata page={collectionOnly ? collectionPage : `home`} />
       <a id='skip-to-collection' className='skip-link' href='#collection'>
         <FlipContent id='skip-to-collection-content'><Icon name='down' size={16} /><span>Skip to Collection</span></FlipContent>
       </a>
@@ -77,15 +87,9 @@ const LandingPage = ({ collectionOnly = false }: LandingPageProps) => {
       <main id='landing-main' className='landing-main'>
         {collectionOnly ? (
           <section id='hero' className='landing-container palindromes-hero' aria-labelledby='hero-title'>
-            <p id='hero-eyebrow' className='palindromes-eyebrow'><Icon name='repeat' size={15} /><span>The Full Collection</span></p>
-            <h1 id='hero-title' tabIndex={-1} className='palindromes-title'>Palindromes</h1>
-            <p id='hero-copy' className='palindromes-copy'>Explore every word, name, and phrase. Find something that reads the same both ways.</p>
-            <form id='hero-search' role='search' className='hero-search palindromes-search' aria-label='Search the Collection' onSubmit={(event) => { event.preventDefault(); scrollToSection(`collection`); }}>
-              <Icon name='search' size={19} />
-              <label htmlFor='search-input' className='visually-hidden'>Search Words, Names, and Phrases</label>
-              <input id='search-input' name='q' type='search' value={query} className='search-input' autoComplete='off' aria-controls='palindrome-grid' placeholder='Find a word, name, or phrase…' onChange={(event) => setQuery(event.target.value)} />
-              <button id='search-button' type='submit' className='search-button'><FlipContent id='search-button-content'><Icon name='search' size={16} /><span>Search</span></FlipContent></button>
-            </form>
+            <p id='hero-eyebrow' className='palindromes-eyebrow'><Icon name={collection.icon} size={15} /><span>{collection.eyebrow}</span></p>
+            <h1 id='hero-title' tabIndex={-1} className='palindromes-title'>{collection.title}</h1>
+            <p id='hero-copy' className='palindromes-copy'>{collection.copy}</p>
           </section>
         ) : <Hero onSearch={() => scrollToSection(`collection`)} />}
         <section
@@ -96,47 +100,42 @@ const LandingPage = ({ collectionOnly = false }: LandingPageProps) => {
         >
           <div id='collection-heading' className='collection-heading'>
             <div id='collection-heading-copy' className='collection-heading-copy'>
-              <h2 id='collection-title' className='collection-title' data-split='heading'>{collectionOnly ? `All palindromes` : `Find your next favorite.`}</h2>
-              <p id='collection-label' className='sample-label' data-reveal='section'>{collectionOnly ? `Words, names, and phrases` : `Curated examples`}</p>
+              <h2 id='collection-title' className='collection-title' data-split='heading'>{collectionOnly ? collection.category === `all` ? `All palindromes` : `All palindrome ${collection.label.toLowerCase()}` : `Find your next favorite.`}</h2>
+              <p id='collection-label' className='sample-label' data-reveal='section'>{collectionOnly ? collection.category === `all` ? `Words, names, and phrases` : collection.eyebrow : `Curated examples`}</p>
             </div>
             <div id='collection-controls' className='collection-controls'>
               <div id='collection-filters' className='collection-filters' role='group' aria-label='Collection Type'>
-                <button
-                  id='filter-all'
-                  type='button'
-                  className='filter-button'
-                  aria-pressed={category === `all`}
-                  onClick={() => setCategory(`all`)}
-                >
-                  <FlipContent id='filter-all-content'><Icon name='repeat' size={14} /><span>All</span></FlipContent>
-                </button>
-                <button
-                  id='filter-words'
-                  type='button'
-                  className='filter-button'
-                  aria-pressed={category === `word`}
-                  onClick={() => setCategory(`word`)}
-                >
-                  <FlipContent id='filter-words-content'><Icon name='book' size={14} /><span>Words</span></FlipContent>
-                </button>
-                <button
-                  id='filter-names'
-                  type='button'
-                  className='filter-button'
-                  aria-pressed={category === `name`}
-                  onClick={() => setCategory(`name`)}
-                >
-                  <FlipContent id='filter-names-content'><Icon name='user' size={14} /><span>Names</span></FlipContent>
-                </button>
-                <button
-                  id='filter-phrases'
-                  type='button'
-                  className='filter-button'
-                  aria-pressed={category === `phrase`}
-                  onClick={() => setCategory(`phrase`)}
-                >
-                  <FlipContent id='filter-phrases-content'><Icon name='quote' size={14} /><span>Phrases</span></FlipContent>
-                </button>
+                {collectionPageOrder.map((key) => {
+                  const item = collectionPages[key];
+                  const filterId = `filter-${key === `palindromes` ? `all` : key}`;
+                  const filterContent = (
+                    <FlipContent id={`${filterId}-content`}>
+                      <Icon name={item.icon} size={14} /><span id={`${filterId}-label`} className='filter-label'>{item.label}</span>
+                    </FlipContent>
+                  );
+                  return collectionOnly ? (
+                    <Link key={key} href={landingLinks[key]} asChild>
+                      <WebAnchor
+                        id={filterId}
+                        className='filter-button'
+                        aria-current={collectionPage === key ? `page` : undefined}
+                      >
+                        {filterContent}
+                      </WebAnchor>
+                    </Link>
+                  ) : (
+                    <button
+                      key={key}
+                      id={filterId}
+                      type='button'
+                      className='filter-button'
+                      aria-pressed={category === item.category}
+                      onClick={() => setCategory(item.category)}
+                    >
+                      {filterContent}
+                    </button>
+                  );
+                })}
               </div>
               <div id='sort-control' className='sort-control'>
                 <span id='sort-control-icon' className='sort-control-icon'><Icon name='repeat' size={14} /></span>
@@ -156,14 +155,36 @@ const LandingPage = ({ collectionOnly = false }: LandingPageProps) => {
               </div>
             </div>
           </div>
-          <p
-            id='collection-result-count'
-            role='status'
-            aria-live='polite'
-            className={collectionOnly || isFiltered ? `collection-result-count` : `visually-hidden`}
-          >
-            {filteredCount} {filteredCount === 1 ? `palindrome` : `palindromes`} found
-          </p>
+          {collectionOnly && (
+            <>
+              <AlphabetFilter
+                onClear={clearLetters}
+                onToggle={toggleLetter}
+                resultCount={resultCount}
+                controls='palindrome-grid'
+                selectedLetters={selectedLetters}
+                id={`${collectionPage}-alphabet-filter`}
+              />
+              <PalindromeSearch
+                query={query}
+                onChange={setQuery}
+                label={`Search ${collection.title}`}
+                id={`${collectionPage}-collection-search`}
+                placeholder={collection.placeholder}
+                onSubmit={() => scrollToSection(`collection`)}
+              />
+            </>
+          )}
+          {!collectionOnly && (
+            <p
+              role='status'
+              aria-live='polite'
+              id='collection-result-count'
+              className={isFiltered ? `collection-result-count` : `visually-hidden`}
+            >
+              {resultCount} {resultCount === 1 ? `palindrome` : `palindromes`} found
+            </p>
+          )}
           {visibleEntries?.length ? (
             isCarousel ? (
               <PalindromeCarousel entries={carouselEntries} />
@@ -183,7 +204,8 @@ const LandingPage = ({ collectionOnly = false }: LandingPageProps) => {
                 className='text-action'
                 onClick={() => {
                   setQuery(``);
-                  setCategory(`all`);
+                  clearLetters();
+                  setCategory(collectionOnly ? collection.category : `all`);
                 }}
               >
                 <FlipContent id='clear-search-content'>

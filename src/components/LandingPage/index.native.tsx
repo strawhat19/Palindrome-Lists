@@ -28,16 +28,23 @@ import PageMetadata from '../PageMetadata';
 import HeroHeadline from '../HeroHeadline';
 import createStyles from './styles.native';
 import HalfTurnLogo from '../HalfTurnLogo';
+import AlphabetFilter from '../AlphabetFilter';
+import PalindromeSearch from '../PalindromeSearch';
 import PricingSection from '../PricingSection/index.native';
 import type { Palindrome } from '../../shared/landing/types';
 import { copyText } from '../../shared/common/clipboard';
 import { useTheme } from '../../shared/themeContext/useTheme';
 import { useLanding } from '../../shared/landing/LandingContext';
+import useAlphabetFilter from '../../shared/landing/useAlphabetFilter';
 import { formatPalindrome, getPalindromeShareData } from '../../shared/landing/sharing';
 import { landingLinks, mainNavigation, footerNavigation } from '../../shared/routes';
+import { collectionPages, collectionPageOrder, type CollectionPageKey } from '../../shared/landing/collectionPages';
 
 type SectionId = `collection` | `about` | `api` | `faq` | `contact`;
-type LandingPageProps = { collectionOnly?: boolean };
+type LandingPageProps = {
+  collectionOnly?: boolean;
+  collectionPage?: CollectionPageKey;
+};
 
 const filters = [
   { value: `all`, label: `All`, icon: `repeat` },
@@ -80,7 +87,8 @@ const formatDate = (value: string) =>
     month: `short`,
   });
 
-const LandingPage = ({ collectionOnly = false }: LandingPageProps) => {
+const LandingPage = ({ collectionOnly = false, collectionPage = `palindromes` }: LandingPageProps) => {
+  const page = collectionPages[collectionPage];
   const {
     query,
     sort,
@@ -96,7 +104,8 @@ const LandingPage = ({ collectionOnly = false }: LandingPageProps) => {
     filteredEntries,
     visibleEntries: previewEntries,
   } = useLanding();
-  const visibleEntries = collectionOnly ? filteredEntries : previewEntries;
+  const { selectedLetters, toggleLetter, clearLetters, filteredEntries: letterEntries } = useAlphabetFilter(filteredEntries);
+  const visibleEntries = collectionOnly ? letterEntries : previewEntries;
   const sticky = true;
   const { theme, palette, toggleTheme } = useTheme();
   const styles = useMemo(() => createStyles(palette), [palette]);
@@ -246,7 +255,8 @@ const LandingPage = ({ collectionOnly = false }: LandingPageProps) => {
 
   const resetCollection = () => {
     setQuery(``);
-    setCategory(`all`);
+    clearLetters();
+    setCategory(collectionOnly ? page.category : `all`);
     setShowAll(false);
   };
 
@@ -256,13 +266,13 @@ const LandingPage = ({ collectionOnly = false }: LandingPageProps) => {
       style={styles.safeArea}
       edges={[`top`, `left`, `right`]}
     >
-      <PageMetadata page={collectionOnly ? `palindromes` : `home`} />
+      <PageMetadata page={collectionOnly ? collectionPage : `home`} />
       <ScrollView
         ref={scrollRef}
         style={styles.page}
         onScroll={handleScroll}
         scrollEventThrottle={16}
-        nativeID={`landing-page`}
+        nativeID={collectionOnly ? `${collectionPage}-page` : `landing-page`}
         keyboardDismissMode={`on-drag`}
         keyboardShouldPersistTaps={`handled`}
         contentContainerStyle={styles.content}
@@ -327,7 +337,12 @@ const LandingPage = ({ collectionOnly = false }: LandingPageProps) => {
                   accessibilityLabel={theme === `dark` ? `Switch to Light Mode` : `Switch to Dark Mode`}
                   style={({ pressed }) => [styles.themeToggle, pressed && styles.pressed]}
                 >
-                  <Icon name={theme === `dark` ? `sun` : `moon`} size={20} fill={`#FFFFFF`} color={`#FFFFFF`} />
+                  <Icon
+                    size={20}
+                    name={theme === `dark` ? `sun` : `moon`}
+                    fill={theme === `dark` ? palette.searchInk : `#FFFFFF`}
+                    color={theme === `dark` ? palette.searchInk : `#FFFFFF`}
+                  />
                 </Pressable>
                 <Link href={landingLinks.signin} asChild>
                   <Pressable
@@ -351,9 +366,9 @@ const LandingPage = ({ collectionOnly = false }: LandingPageProps) => {
         >
           {collectionOnly ? (
             <>
-              <Text nativeID={`palindromes-eyebrow`} style={[styles.eyebrow, styles.heroEyebrow]}>WORDS, NAMES & PHRASES</Text>
-              <Text nativeID={`palindromes-title`} accessibilityRole={`header`} style={[styles.collectionHeroTitle, width < 620 && styles.smallCollectionHeroTitle]}>Palindromes</Text>
-              <Text nativeID={`palindromes-copy`} style={styles.heroCopy}>Explore the full collection of words, names, and phrases that read the same in both directions.</Text>
+              <Text nativeID={`${collectionPage}-eyebrow`} style={[styles.eyebrow, styles.heroEyebrow]}>{page.eyebrow}</Text>
+              <Text nativeID={`${collectionPage}-title`} accessibilityRole={`header`} style={[styles.collectionHeroTitle, width < 620 && styles.smallCollectionHeroTitle]}>{page.title}</Text>
+              <Text nativeID={`${collectionPage}-copy`} style={styles.heroCopy}>{page.copy}</Text>
             </>
           ) : (
             <>
@@ -373,33 +388,35 @@ const LandingPage = ({ collectionOnly = false }: LandingPageProps) => {
           </Text>
             </>
           )}
-          <View nativeID={`hero-search`} style={styles.search}>
-            <Icon name={`search`} size={17} color={palette.action} />
-            <TextInput
-              value={query}
-              autoCorrect={false}
-              returnKeyType={`search`}
-              style={styles.searchInput}
-              onChangeText={setQuery}
-              keyboardAppearance={theme}
-              selectionColor={palette.pink}
-              autoCapitalize={`none`}
-              nativeID={`palindrome-search-input`}
-              placeholder={`Find a word, name, or phrase`}
-              placeholderTextColor={palette.muted}
-              accessibilityLabel={`Search Palindromes`}
-              onSubmitEditing={() => scrollToSection(`collection`)}
-            />
-            <Pressable
-              nativeID={`palindrome-search-button`}
-              accessibilityRole={`button`}
-              onPress={() => scrollToSection(`collection`)}
-              style={({ pressed }) => [styles.searchButton, pressed && styles.pressed]}
-            >
-              <Icon name={`search`} size={14} color={palette.searchInk} />
-              <Text nativeID={`search-button-label`} style={styles.searchButtonText}>Search</Text>
-            </Pressable>
-          </View>
+          {!collectionOnly && (
+            <View nativeID={`hero-search`} style={styles.search}>
+              <Icon name={`search`} size={17} color={palette.action} />
+              <TextInput
+                value={query}
+                autoCorrect={false}
+                returnKeyType={`search`}
+                style={styles.searchInput}
+                onChangeText={setQuery}
+                keyboardAppearance={theme}
+                selectionColor={palette.pink}
+                autoCapitalize={`none`}
+                nativeID={`palindrome-search-input`}
+                placeholder={`Find a word, name, or phrase`}
+                placeholderTextColor={palette.muted}
+                accessibilityLabel={`Search Palindromes`}
+                onSubmitEditing={() => scrollToSection(`collection`)}
+              />
+              <Pressable
+                nativeID={`palindrome-search-button`}
+                accessibilityRole={`button`}
+                onPress={() => scrollToSection(`collection`)}
+                style={({ pressed }) => [styles.searchButton, pressed && styles.pressed]}
+              >
+                <Icon name={`search`} size={14} color={palette.searchInk} />
+                <Text nativeID={`search-button-label`} style={styles.searchButtonText}>Search</Text>
+              </Pressable>
+            </View>
+          )}
         </View>
 
         <View
@@ -409,13 +426,34 @@ const LandingPage = ({ collectionOnly = false }: LandingPageProps) => {
         >
           <View nativeID={`collection-heading`} style={styles.collectionHeading}>
             <Text nativeID={`collection-title`} accessibilityRole={`header`} style={styles.sectionTitle}>
-              {collectionOnly ? `The collection.` : `A few favorites.`}
+              {collectionOnly ? page.title : `A few favorites.`}
             </Text>
-            <Text nativeID={`collection-sample-label`} style={styles.sampleLabel}>{collectionOnly ? `${visibleEntries.length.toLocaleString()} ${visibleEntries.length === 1 ? `result` : `results`}` : `Curated examples`}</Text>
+            <Text nativeID={`collection-sample-label`} style={styles.sampleLabel}>{collectionOnly ? `The collection` : `Curated examples`}</Text>
           </View>
           <View nativeID={`collection-controls`} style={styles.collectionControls}>
             <View nativeID={`collection-filters`} style={styles.filters}>
-              {filters.map((filter, index) => (
+              {collectionOnly ? collectionPageOrder.map((key, index) => (
+                <Link key={key} href={landingLinks[key]} asChild>
+                  <Pressable
+                    accessibilityRole={`link`}
+                    nativeID={`filter-${key}`}
+                    accessibilityState={{ selected: collectionPage === key }}
+                    style={({ pressed }) => [
+                      styles.filterButton,
+                      collectionPage === key && styles.filterSelected,
+                      pressed && styles.pressed,
+                    ]}
+                  >
+                    <Icon name={collectionPages[key].icon} size={14} color={index % 2 ? palette.leaf : palette.action} />
+                    <Text
+                      nativeID={`filter-label-${key}`}
+                      style={[styles.filterText, collectionPage === key && styles.filterTextSelected]}
+                    >
+                      {collectionPages[key].label}
+                    </Text>
+                  </Pressable>
+                </Link>
+              )) : filters.map((filter, index) => (
                 <Pressable
                   key={filter.value}
                   accessibilityRole={`button`}
@@ -450,6 +488,26 @@ const LandingPage = ({ collectionOnly = false }: LandingPageProps) => {
               <Icon name={`chevron`} size={12} color={palette.action} />
             </Pressable>
           </View>
+          {collectionOnly && (
+            <>
+              <AlphabetFilter
+                onClear={clearLetters}
+                onToggle={toggleLetter}
+                controls={`palindrome-grid`}
+                id={`${collectionPage}-alphabet-filter`}
+                selectedLetters={selectedLetters}
+                resultCount={visibleEntries.length}
+              />
+              <PalindromeSearch
+                query={query}
+                onChange={setQuery}
+                label={`Search ${page.title}`}
+                placeholder={page.placeholder}
+                id={`${collectionPage}-search`}
+                onSubmit={() => scrollToSection(`collection`)}
+              />
+            </>
+          )}
           {visibleEntries.length > 0 ? (
             <View
               nativeID={`palindrome-grid`}
@@ -680,7 +738,7 @@ const LandingPage = ({ collectionOnly = false }: LandingPageProps) => {
         {collectionOnly ? (
           <PinkCta
             icon={`mail`}
-            id={`palindromes-cta`}
+            id={`${collectionPage}-cta`}
             href={landingLinks.contact}
             label={`Get in touch`}
             eyebrow={`SHARE A DISCOVERY`}

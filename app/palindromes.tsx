@@ -1,5 +1,5 @@
-import LandingPage from '../src/components/LandingPage';
+import PalindromesPage from '../src/components/PalindromesPage';
 
-const PalindromesPage = () => <LandingPage collectionOnly />;
+const PalindromesRoute = () => <PalindromesPage />;
 
-export default PalindromesPage;
+export default PalindromesRoute;

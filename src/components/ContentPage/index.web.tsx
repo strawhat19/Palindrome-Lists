@@ -5,12 +5,14 @@ import Header from '../Header/index.web';
 import PageMetadata from '../PageMetadata';
 import useContentPage from './useContentPage.web';
 import FlipContent from '../FlipContent/index.web';
+import AlphabetFilter from '../AlphabetFilter/index.web';
 import WebAnchor from '../WebAnchor/index.web';
 import PricingSection from '../PricingSection';
 import ScrollToTop from '../ScrollToTop/index.web';
 import { contentPages } from '../../shared/content/pages';
 import type { PageKey } from '../../shared/content/types';
 import { normalizePalindrome } from '../../shared/landing/data';
+import useAlphabetFilter from '../../shared/landing/useAlphabetFilter';
 import { landingLinks, mainNavigation, footerNavigation } from '../../shared/routes';
 import '../LandingPage/styles.scss';
 import './styles.scss';
@@ -28,6 +30,8 @@ const relatedPages = [
 
 const ContentPageView = ({ page }: ContentPageProps) => {
   const content = contentPages[page];
+  const isPalindromePage = page === `words` || page === `names` || page === `phrases`;
+  const { selectedLetters, toggleLetter, clearLetters, filteredEntries: filteredExamples } = useAlphabetFilter(content.examples);
   const pageLabel = [...mainNavigation, ...footerNavigation].find((item) => item.key === page)?.label ?? content.eyebrow;
   const { theme, rootRef, heroRef, scrolled, themeStyle, showScrollTop, scrollToTop } = useContentPage(page);
 
@@ -94,10 +98,21 @@ const ContentPageView = ({ page }: ContentPageProps) => {
               <h2 id={`content-examples-title-${page}`} className='content-section-title' data-split='heading'>A few to start with.</h2>
               <p id={`content-examples-copy-${page}`} className='content-examples-copy'>Read each one forwards. Then backwards.</p>
             </div>
+            {isPalindromePage && (
+              <AlphabetFilter
+                onClear={clearLetters}
+                onToggle={toggleLetter}
+                id={`content-alphabet-filter-${page}`}
+                selectedLetters={selectedLetters}
+                resultCount={filteredExamples.length}
+                controls={`content-examples-grid-${page}`}
+              />
+            )}
             <div id={`content-examples-grid-${page}`} className='content-examples-grid'>
               {content.examples?.map((example) => (
                 <article
                   key={example.id}
+                  hidden={!filteredExamples.includes(example)}
                   data-reveal='example'
                   className='content-example'
                   id={`content-example-${page}-${example.id}`}
@@ -114,6 +129,11 @@ const ContentPageView = ({ page }: ContentPageProps) => {
                 </article>
               ))}
             </div>
+            {!filteredExamples.length && (
+              <div id={`content-examples-empty-${page}`} className='collection-empty'>
+                No examples match the selected letters. Choose All Letters to see every example.
+              </div>
+            )}
           </section>
         )}
         <div id={`content-reading-${page}`} className='landing-container content-reading'>

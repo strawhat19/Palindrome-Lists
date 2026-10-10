@@ -145,7 +145,12 @@ const OnboardingPageView = ({ mode }: OnboardingProps) => {
                 </Link>
               )}
               <Pressable onPress={toggleTheme} accessibilityRole={`button`} nativeID={`onboarding-theme-toggle`} accessibilityLabel={theme === `dark` ? `Switch to Light Mode` : `Switch to Dark Mode`} style={({ pressed }) => [styles.themeToggle, pressed && styles.pressed]}>
-                <Icon name={theme === `dark` ? `sun` : `moon`} size={20} fill={`#FFFFFF`} color={`#FFFFFF`} />
+                <Icon
+                  size={20}
+                  name={theme === `dark` ? `sun` : `moon`}
+                  fill={theme === `dark` ? palette.searchInk : `#FFFFFF`}
+                  color={theme === `dark` ? palette.searchInk : `#FFFFFF`}
+                />
               </Pressable>
               <Link href={isSignup ? landingLinks.signin : landingLinks.signup} asChild>
                 <Pressable accessibilityRole={`link`} nativeID={`onboarding-header-mode-link`} style={({ pressed }) => [styles.textButton, pressed && styles.pressed]}>

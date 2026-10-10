@@ -1,5 +1,5 @@
-import ContentPage from '../src/components/ContentPage';
+import PalindromesPage from '../src/components/PalindromesPage';
 
-const WordsPage = () => <ContentPage page='words' />;
+const WordsPage = () => <PalindromesPage page={`words`} />;
 
 export default WordsPage;

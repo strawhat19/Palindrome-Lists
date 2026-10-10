@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from 'react';
 import type { Palindrome } from '../../shared/landing/types';
 import type { MouseEvent, WheelEvent, KeyboardEvent, PointerEvent as ReactPointerEvent } from 'react';
 
+const pauseOnHover = false;
 const autoplayRampDuration = 240;
 const autoplayPixelsPerSecond = 80;
 
@@ -214,7 +215,7 @@ const usePalindromeCarousel = (entries: Palindrome[]) => {
       dirty.current = true;
     };
     const onPointerEnter = (event: PointerEvent) => {
-      hovered.current = event.pointerType !== `touch` && finePointer.matches;
+      hovered.current = pauseOnHover && event.pointerType !== `touch` && finePointer.matches;
     };
     const onPointerLeave = () => { hovered.current = false; };
     const updateFocus = (target: EventTarget | null) => {
