@@ -43,7 +43,7 @@
   .contact-field--wide { grid-column: 1 / -1; }
   .contact-label { display: block; margin-bottom: 8px; color: var(--ink); font-size: 11px; font-weight: 600; line-height: 1.5; }
   .contact-label > span { margin-left: 5px; color: var(--muted); font-size: 10px; font-weight: 400; }
-  :is(.contact-input, .contact-textarea) { width: 100%; min-height: 46px; padding: 12px 14px; color: var(--ink); background: var(--page); border: 1px solid var(--line); border-radius: 8px; font-size: 12px; line-height: 1.65; transition: border-color 180ms ease, box-shadow 180ms ease, background 180ms ease; }
+  :is(.contact-input, .contact-textarea) { width: 100%; min-height: 46px; padding: 12px 14px; color: var(--ink); background: var(--page); border: 1px solid var(--line); border-radius: 8px; font-size: 12px; line-height: 1.65; transition: border-color var(--theme-color-duration, 180ms) ease, box-shadow var(--theme-color-duration, 180ms) ease, background var(--theme-color-duration, 180ms) ease; }
   :is(.contact-input, .contact-textarea)::placeholder { color: color-mix(in srgb, var(--muted) 85%, transparent); }
   :is(.contact-input, .contact-textarea):hover { border-color: color-mix(in srgb, var(--muted) 45%, var(--line)); }
   :is(.contact-input, .contact-textarea):focus { border-color: var(--action); box-shadow: 0 0 0 3px color-mix(in srgb, var(--action) 10%, transparent); }

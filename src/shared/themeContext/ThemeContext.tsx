@@ -33,16 +33,19 @@ export const ThemeProvider = ({ children }: PropsWithChildren) => {
     if (typeof document === `undefined`) return;
 
     const root = document.documentElement;
-    if (root.dataset.themeReady === `true`) return;
+    if (root.dataset.themeReady === `true` && root.dataset.themeChanging !== `true`) return;
 
-    // Settle initial colors with transitions disabled before revealing the app.
+    // Commit palette colors before restoring their normal hover transitions.
     root.getBoundingClientRect();
     root.dataset.themeReady = `true`;
+    delete root.dataset.themeChanging;
   }, [theme, isThemeReady]);
 
   const toggleTheme = useCallback(() => {
     const nextTheme = theme === `dark` ? `light` : `dark`;
 
+    if (typeof document !== `undefined`) document.documentElement.dataset.themeChanging = `true`;
+    applyDocumentTheme(nextTheme);
     setTheme(nextTheme);
     writeStoredTheme(nextTheme);
   }, [theme]);

@@ -379,12 +379,18 @@ const LandingPage = ({ collectionOnly = false, collectionPage = `palindromes` }:
           >
             <HalfTurnLogo id={`hero-half-turn-logo`} size={72} />
           </Animated.View>
-          <Text nativeID={`hero-eyebrow`} style={[styles.eyebrow, styles.heroEyebrow]}>
-            WORDS WORTH REPEATING
-          </Text>
+          <View
+            nativeID={`palindrome-example`}
+            style={styles.heroExample}
+            accessibilityLabel={`Level reads the same forward and backward`}
+          >
+            <Text nativeID={`palindrome-example-forward`} style={styles.eyebrow}>LEVEL</Text>
+            <Icon name={`repeat`} size={12} color={palette.leaf} />
+            <Text nativeID={`palindrome-example-backward`} style={styles.eyebrow}>LEVEL</Text>
+          </View>
           <HeroHeadline visible={!beyondHero} reducedMotion={reducedMotion} />
           <Text nativeID={`hero-copy`} style={styles.heroCopy}>
-            A little collection of words, names, and phrases that read the same forwards and backwards.
+            A simple collection of Palindromes: words, names, and phrases that read the same in reverse.
           </Text>
             </>
           )}
@@ -547,28 +553,6 @@ const LandingPage = ({ collectionOnly = false, collectionPage = `palindromes` }:
                       </View>
                       <View nativeID={`record-actions-${entry.id}`} style={styles.topActions}>
                         <Pressable
-                          accessibilityRole={`button`}
-                          nativeID={`comment-${entry.id}`}
-                          onPress={() => showAccountsNotice(`Commenting on palindromes`)}
-                          accessibilityLabel={`Comment on ${entry.text}, ${entry.comments} comments, preview only`}
-                          style={({ pressed }) => [styles.iconButton, styles.commentButton, pressed && styles.pressed]}
-                        >
-                          <Icon name={`comment`} size={17} color={palette.action} />
-                          <Text nativeID={`comment-count-${entry.id}`} style={styles.actionCount}>
-                            {entry.comments}
-                          </Text>
-                        </Pressable>
-                        <Pressable
-                          hitSlop={4}
-                          accessibilityRole={`button`}
-                          nativeID={`heart-${entry.id}`}
-                          accessibilityLabel={`Heart ${entry.text}`}
-                          onPress={() => showAccountsNotice(`Hearting palindromes`)}
-                          style={({ pressed }) => [styles.iconButton, pressed && styles.pressed]}
-                        >
-                          <Icon name={`heart`} size={17} color={palette.action} />
-                        </Pressable>
-                        <Pressable
                           hitSlop={4}
                           accessibilityRole={`button`}
                           nativeID={`copy-${entry.id}`}
@@ -649,6 +633,33 @@ const LandingPage = ({ collectionOnly = false, collectionPage = `palindromes` }:
                       <Text style={styles.detailsText}>Details</Text>
                     </Pressable>
                     <View nativeID={`record-votes-${entry.id}`} style={styles.actions}>
+                      <Pressable
+                        accessibilityRole={`button`}
+                        nativeID={`comment-${entry.id}`}
+                        onPress={() => showAccountsNotice(`Commenting on palindromes`)}
+                        accessibilityLabel={`Comment on ${entry.text}, ${entry.comments} comments, preview only`}
+                        style={({ pressed }) => [styles.iconButton, styles.commentButton, pressed && styles.pressed]}
+                      >
+                        <Icon name={`comment`} size={17} color={palette.action} />
+                        <Text nativeID={`comment-count-${entry.id}`} style={styles.actionCount}>
+                          {entry.comments}
+                        </Text>
+                      </Pressable>
+                      <Pressable
+                        hitSlop={4}
+                        accessibilityRole={`button`}
+                        nativeID={`heart-${entry.id}`}
+                        accessibilityLabel={`Heart ${entry.text}`}
+                        onPress={() => showAccountsNotice(`Hearting palindromes`)}
+                        style={({ pressed }) => [styles.iconButton, pressed && styles.pressed]}
+                      >
+                        <Icon name={`heart`} size={17} color={palette.action} />
+                      </Pressable>
+                      <View
+                        accessible={false}
+                        style={styles.voteDivider}
+                        nativeID={`vote-divider-${entry.id}`}
+                      />
                       <Pressable
                         hitSlop={4}
                         accessibilityRole={`button`}

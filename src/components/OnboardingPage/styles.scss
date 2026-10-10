@@ -75,7 +75,7 @@
   .onboarding-story-pagination-row { display: flex; gap: 14px; align-items: center; justify-content: space-between; }
   .onboarding-story-pagination { display: flex; gap: 7px; align-items: center; }
   .onboarding-story-count { color: var(--muted); font-size: 10px; font-weight: 500; letter-spacing: .06em; }
-  .onboarding-story-dot { width: 7px; height: 7px; padding: 0; background: color-mix(in srgb, var(--muted) 25%, transparent); border: 0; border-radius: 8px; transition: width 220ms ease, background 220ms ease; }
+  .onboarding-story-dot { width: 7px; height: 7px; padding: 0; background: color-mix(in srgb, var(--muted) 25%, transparent); border: 0; border-radius: 8px; transition: width 220ms ease, background var(--theme-color-duration, 220ms) ease; }
   .onboarding-story-dot[aria-pressed='true'] { width: 25px; background: var(--action); }
   .onboarding-story-controls { display: flex; gap: 9px; }
   .onboarding-story-control { display: inline-flex; width: 35px; height: 35px; align-items: center; justify-content: center; padding: 0; background: color-mix(in srgb, var(--card) 70%, transparent); border: 1px solid var(--line); border-radius: 50%; }
@@ -121,7 +121,7 @@
     border-radius: 8px;
     outline: none;
     font-size: 12px;
-    transition: border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+    transition: border-color var(--theme-color-duration, 180ms) ease, box-shadow var(--theme-color-duration, 180ms) ease, background var(--theme-color-duration, 180ms) ease;
 
     &::placeholder { color: color-mix(in srgb, var(--muted) 75%, transparent); }
     &:focus { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 10%, transparent); }

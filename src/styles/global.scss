@@ -3,6 +3,8 @@ html {
   background: var(--page, #fffbfd);
 }
 
+html[data-theme-changing='true'] { --theme-color-duration: 0ms; }
+
 html:not([data-theme-ready='true']) {
   transition: none !important;
   body {
@@ -21,7 +23,7 @@ body {
 
 html,
 body {
-  transition: color 120ms ease, background-color 120ms ease;
+  transition: color var(--theme-color-duration, 120ms) ease, background-color var(--theme-color-duration, 120ms) ease;
 }
 
 button,

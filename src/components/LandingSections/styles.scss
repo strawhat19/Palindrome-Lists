@@ -51,17 +51,6 @@
   .step-title { margin: 16px 0 0; font-size: 15px; font-weight: 600; line-height: 1.45; }
   .step-copy { margin: 9px 0 0; color: var(--leaf); font-size: 12px; line-height: 1.8; }
 
-  .palindrome-example {
-    display: flex;
-    gap: 25px;
-    align-items: center;
-    justify-content: center;
-    margin-top: 43px;
-    color: var(--leaf);
-  }
-
-  .example-word { color: var(--action); font-size: 22px; font-weight: 550; letter-spacing: 4px; }
-
   .palindrome-guide-links {
     display: flex;
     gap: 12px 25px;

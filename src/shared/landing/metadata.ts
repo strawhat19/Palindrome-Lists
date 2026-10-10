@@ -13,7 +13,7 @@ export type PageSeo = {
 export const siteMetadata = {
   name: `Palindrome Lists`,
   url: `https://palindromelists.com`,
-  title: `Palindrome Lists — Words Worth Repeating`,
+  title: `Palindrome Lists - words, names, and phrases that read the same in reverse`,
   description: `Discover palindrome words, names, and phrases. Browse examples and learn how to check text that reads the same forward and backward.`,
 } as const;
 

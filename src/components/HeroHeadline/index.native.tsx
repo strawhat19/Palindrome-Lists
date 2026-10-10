@@ -37,7 +37,8 @@ const HeroHeadline = ({ visible = true, reducedMotion }: HeroHeadlineProps) => {
           nativeID={`hero-headline-lead-${index}`}
           style={[styles.line, { color: palette.ink }]}
         >
-          {phrase.lead}
+          {phrase.lead.slice(0, -1)}
+          <Text nativeID={`hero-headline-lead-period-${index}`} style={{ color: palette.lime }}>.</Text>
         </Text>
         <Text
           adjustsFontSizeToFit
@@ -46,7 +47,8 @@ const HeroHeadline = ({ visible = true, reducedMotion }: HeroHeadlineProps) => {
           nativeID={`hero-headline-accent-${index}`}
           style={[styles.line, { color: palette.accent }]}
         >
-          {phrase.accent}
+          {phrase.accent.slice(0, -1)}
+          <Text nativeID={`hero-headline-accent-period-${index}`} style={{ color: palette.lime }}>.</Text>
         </Text>
       </Animated.View>
     </View>

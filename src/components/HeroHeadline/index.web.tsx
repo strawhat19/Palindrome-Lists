@@ -24,8 +24,14 @@ const HeroHeadline = ({ visible = true, reducedMotion = false }: HeroHeadlinePro
             id={`hero-headline-phrase-${index}`}
             className='hero-headline-phrase'
           >
-            <span id={`hero-headline-lead-${index}`} className='hero-headline-lead'>{phrase.lead}</span>{` `}
-            <span id={`hero-headline-accent-${index}`} className='hero-title-accent'>{phrase.accent}</span>
+            <span id={`hero-headline-lead-${index}`} className='hero-headline-lead'>
+              {phrase.lead.slice(0, -1)}
+              <span id={`hero-headline-lead-period-${index}`} className='hero-headline-period'>.</span>
+            </span>{` `}
+            <span id={`hero-headline-accent-${index}`} className='hero-title-accent'>
+              {phrase.accent.slice(0, -1)}
+              <span id={`hero-headline-accent-period-${index}`} className='hero-headline-period'>.</span>
+            </span>
           </span>
         ))}
       </span>

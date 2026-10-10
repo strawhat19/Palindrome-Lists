@@ -150,6 +150,13 @@ const createStyles = (palette: ThemePalette) => StyleSheet.create({
     textAlign: `center`,
     color: palette.muted,
   },
+  heroExample: {
+    gap: 10,
+    marginBottom: 16,
+    alignItems: `center`,
+    flexDirection: `row`,
+    justifyContent: `center`,
+  },
   search: {
     gap: 9,
     width: `100%`,
@@ -437,6 +444,12 @@ const createStyles = (palette: ThemePalette) => StyleSheet.create({
     fontSize: 11,
     color: palette.muted,
     fontVariant: [`tabular-nums`],
+  },
+  voteDivider: {
+    width: 1,
+    height: 18,
+    marginHorizontal: 6,
+    backgroundColor: palette.line,
   },
   voteScore: {
     fontSize: 11,

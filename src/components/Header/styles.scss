@@ -3,7 +3,7 @@
     z-index: 20;
     background: var(--page);
     border-bottom: 1px solid var(--line);
-    transition: background 120ms ease, border-color 120ms ease, box-shadow 220ms ease;
+    transition: background var(--theme-color-duration, 120ms) ease, border-color var(--theme-color-duration, 120ms) ease, box-shadow var(--theme-color-duration, 220ms) ease;
 
     &.is-sticky { position: sticky; top: 0; }
 
@@ -244,7 +244,7 @@
       border-radius: 10px;
       font-size: 13px;
       transform: translateY(-7px);
-      transition: opacity 260ms ease, transform 360ms cubic-bezier(.22, 1, .36, 1), background 180ms ease, color 180ms ease, border-color 180ms ease;
+      transition: opacity 260ms ease, transform 360ms cubic-bezier(.22, 1, .36, 1), background var(--theme-color-duration, 180ms) ease, color var(--theme-color-duration, 180ms) ease, border-color var(--theme-color-duration, 180ms) ease;
 
       &:hover { color: var(--action); border-color: var(--accent); }
     }

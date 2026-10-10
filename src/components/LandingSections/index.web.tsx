@@ -57,11 +57,6 @@ const LandingSections = () => (
             </li>
           ))}
         </ol>
-        <div id='palindrome-example' className='palindrome-example' data-reveal='panel' aria-label='Level reads the same forward and backward'>
-          <span id='palindrome-example-forward' className='example-word'>level</span>
-          <Icon name='repeat' size={20} />
-          <span id='palindrome-example-backward' className='example-word'>level</span>
-        </div>
         <nav id='palindrome-guide-links' className='palindrome-guide-links' aria-label='Palindrome Guides'>
           {guides.map((guide, index) => (
             <Link key={guide.key} href={landingLinks[guide.key]} asChild>

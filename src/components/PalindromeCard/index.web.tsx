@@ -52,30 +52,6 @@ const PalindromeCard = ({ entry, tabbable = true, instanceId }: PalindromeCardPr
             <button
               tabIndex={tabbable ? undefined : -1}
               type='button'
-              title='Comment on palindrome'
-              className='icon-button comment-button'
-              id={`comment-${cardId}`}
-              aria-label={`Comment on ${entry.text}, ${entry.comments} comments, preview only`}
-              onClick={() => requestAction(`join the conversation on a palindrome`)}
-            >
-              <FlipContent id={`comment-content-${cardId}`}>
-                <Icon name='comment' size={17} /><span className='comment-count'>{entry.comments}</span>
-              </FlipContent>
-            </button>
-            <button
-              tabIndex={tabbable ? undefined : -1}
-              type='button'
-              title='Heart palindrome'
-              className='icon-button heart-button'
-              id={`heart-${cardId}`}
-              aria-label={`Heart ${entry.text}`}
-              onClick={() => requestAction(`heart your favorite palindromes`)}
-            >
-              <FlipContent id={`heart-content-${cardId}`}><Icon name='heart' size={17} /></FlipContent>
-            </button>
-            <button
-              tabIndex={tabbable ? undefined : -1}
-              type='button'
               disabled={copying}
               onClick={copyPalindrome}
               id={`copy-${cardId}`}
@@ -154,39 +130,65 @@ const PalindromeCard = ({ entry, tabbable = true, instanceId }: PalindromeCardPr
             <Icon name='chevron' size={13} /><span>Details</span>
           </FlipContent>
         </button>
-        <div
-          role='group'
-          className='vote-controls'
-          id={`vote-controls-${cardId}`}
-          aria-label={`Votes for ${entry.text}, preview only`}
-        >
+        <div id={`card-footer-actions-${cardId}`} className='card-footer-actions'>
           <button
             tabIndex={tabbable ? undefined : -1}
             type='button'
-            className='icon-button'
-            id={`downvote-${cardId}`}
-            aria-label={`Downvote ${entry.text}`}
-            onClick={() => requestAction(`vote on palindromes`)}
+            title='Comment on palindrome'
+            className='icon-button comment-button'
+            id={`comment-${cardId}`}
+            aria-label={`Comment on ${entry.text}, ${entry.comments} comments, preview only`}
+            onClick={() => requestAction(`join the conversation on a palindrome`)}
           >
-            <FlipContent id={`downvote-content-${cardId}`}><Icon name='down' size={18} /></FlipContent>
+            <FlipContent id={`comment-content-${cardId}`}>
+              <Icon name='comment' size={17} /><span className='comment-count'>{entry.comments}</span>
+            </FlipContent>
           </button>
-          <span
-            className='vote-score'
-            id={`vote-score-${cardId}`}
-            aria-label={`${entry.votes} net votes, preview only`}
-          >
-            {entry.votes}
-          </span>
           <button
             tabIndex={tabbable ? undefined : -1}
             type='button'
-            className='icon-button upvote-button'
-            id={`upvote-${cardId}`}
-            aria-label={`Upvote ${entry.text}`}
-            onClick={() => requestAction(`vote on palindromes`)}
+            title='Heart palindrome'
+            className='icon-button heart-button'
+            id={`heart-${cardId}`}
+            aria-label={`Heart ${entry.text}`}
+            onClick={() => requestAction(`heart your favorite palindromes`)}
           >
-            <FlipContent id={`upvote-content-${cardId}`}><Icon name='up' size={18} /></FlipContent>
+            <FlipContent id={`heart-content-${cardId}`}><Icon name='heart' size={17} /></FlipContent>
           </button>
+          <div
+            role='group'
+            className='vote-controls'
+            id={`vote-controls-${cardId}`}
+            aria-label={`Votes for ${entry.text}, preview only`}
+          >
+            <button
+              tabIndex={tabbable ? undefined : -1}
+              type='button'
+              className='icon-button'
+              id={`downvote-${cardId}`}
+              aria-label={`Downvote ${entry.text}`}
+              onClick={() => requestAction(`vote on palindromes`)}
+            >
+              <FlipContent id={`downvote-content-${cardId}`}><Icon name='down' size={18} /></FlipContent>
+            </button>
+            <span
+              className='vote-score'
+              id={`vote-score-${cardId}`}
+              aria-label={`${entry.votes} net votes, preview only`}
+            >
+              {entry.votes}
+            </span>
+            <button
+              tabIndex={tabbable ? undefined : -1}
+              type='button'
+              className='icon-button upvote-button'
+              id={`upvote-${cardId}`}
+              aria-label={`Upvote ${entry.text}`}
+              onClick={() => requestAction(`vote on palindromes`)}
+            >
+              <FlipContent id={`upvote-content-${cardId}`}><Icon name='up' size={18} /></FlipContent>
+            </button>
+          </div>
         </div>
       </div>
       <div

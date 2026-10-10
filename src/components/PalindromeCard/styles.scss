@@ -77,8 +77,15 @@
     border-top: 1px solid var(--line);
   }
 
-  .record-actions { display: flex; gap: 2px; align-items: center; margin-left: auto; }
-  .vote-controls { display: flex; gap: 2px; align-items: center; margin-left: auto; }
+  .record-actions,
+  .card-footer-actions { display: flex; gap: 2px; align-items: center; margin-left: auto; }
+  .vote-controls {
+    display: flex;
+    gap: 2px;
+    align-items: center;
+
+    &::before { content: ''; width: 1px; height: 18px; flex: 0 0 auto; margin-inline: 6px; background: var(--line); }
+  }
 
   .icon-button {
     display: inline-flex;
@@ -101,7 +108,7 @@
 
   .vote-score {
     min-width: 26px;
-    color: var(--action);
+    color: var(--ink);
     font-size: 11px;
     text-align: center;
     font-variant-numeric: tabular-nums;

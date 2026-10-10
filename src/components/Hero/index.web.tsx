@@ -25,10 +25,14 @@ const Hero = ({ onSearch }: HeroProps) => {
             <HalfTurnLogo id='hero-half-turn-logo' size={72} />
           </div>
         </div>
-        <p id='hero-eyebrow' className='hero-eyebrow' data-reveal='hero'>WORDS WORTH REPEATING</p>
+        <div id='palindrome-example' className='hero-eyebrow palindrome-example' data-reveal='hero' aria-label='Level reads the same forward and backward'>
+          <span id='palindrome-example-forward' className='example-word'>LEVEL</span>
+          <Icon name='repeat' size={12} color='var(--leaf)' />
+          <span id='palindrome-example-backward' className='example-word'>LEVEL</span>
+        </div>
         <HeroHeadline />
         <p id='hero-copy' className='hero-copy' data-reveal='hero'>
-          A simple collection of words, names, and phrases that read the same in reverse.
+          A simple collection of Palindromes: words, names, and phrases that read the same in reverse.
         </p>
         <form
           id='hero-search'
