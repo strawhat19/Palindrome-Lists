@@ -1,5 +1,5 @@
 .account-page {
-  --account-sidebar-width: 318px;
+  --account-sidebar-width: var(--account-brand-width, 220px);
   --account-header-height: 89px;
   --account-gutter: clamp(18px, 2.4vw, 40px);
   &--collapsed { --account-sidebar-width: 56px; }
@@ -11,7 +11,7 @@
   .account-nav-group { margin-bottom: 26px; }
   .account-group-toggle, .account-nav-link, .account-identity { display: flex; align-items: center; gap: 10px; color: var(--ink); border: 0; border-radius: 8px; background: transparent; padding: 11px 10px; text-decoration: none; font-size: 14px; }
   .account-group-toggle { width: 100%; cursor: pointer; text-align: left; span { flex: 1; } }
-  .account-group-links { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; margin: 8px 0 0 10px; border-left: 1px solid var(--line); padding: 4px 4px 4px 10px; &[hidden] { display: none; } }
+  .account-group-links { display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; margin: 8px 0 0 10px; border-left: 1px solid var(--line); padding: 4px 4px 4px 10px; &[hidden] { display: none; } }
   .account-nav-link { font-size: 12px; padding: 10px 8px; &[aria-current='page'], &:hover { background: var(--soft); color: var(--leaf); } }
   .account-sidebar-bottom { display: flex; align-items: center; min-height: 43px; gap: 8px; margin-top: auto; button { padding: 8px; color: var(--ink); border: 0; background: transparent; cursor: pointer; } }
   .account-identity { flex: 1; padding: 4px 8px; }
@@ -41,3 +41,4 @@
 @media (max-width: 1100px) { .account-page { .account-profile-grid { grid-template-columns: 1fr; } .account-profile-meta { position: static; } } }
 @media (max-width: 650px) { .account-page { .account-layout { display: block; padding-inline: var(--account-gutter); } .account-sidebar { position: static; width: 100%; border: 1px solid var(--line); border-radius: 12px; margin-top: 20px; } .account-main { padding: 24px 0 36px; } .account-sidebar-bottom { flex-direction: row; } .account-footer { margin-left: 0; } .account-connection { display: block; } &--collapsed .account-sidebar-body { display: none; } .account-stats { grid-template-columns: 1fr; } .account-field { grid-template-columns: 65px minmax(0, 1fr); gap: 12px; input, select { font-size: 16px; } } } }
 @media (prefers-reduced-motion: reduce) { .account-page *, .account-page *::before, .account-page *::after { transition: none !important; animation: none !important; } }
+.account-page .account-record-filters { display: flex; flex-wrap: wrap; align-items: end; gap: 12px; label { display: grid; gap: 6px; font-size: 12px; color: var(--muted); } input, select { min-height: 40px; border: 1px solid var(--line); border-radius: 8px; padding: 8px; background: var(--page); color: var(--muted); } }

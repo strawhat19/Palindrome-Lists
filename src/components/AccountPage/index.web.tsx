@@ -1,6 +1,7 @@
 import { Link, type Href } from 'expo-router';
 import { useEffect, useState } from 'react';
 import Icon from '../Icon';
+import AccountReports from '../AccountReports';
 import PageMetadata from '../PageMetadata';
 import Header from '../Header/index.web';
 import Footer from '../Footer/index.web';
@@ -27,7 +28,11 @@ const AccountPageView = ({ page }: { page: AccountPageKey }) => {
     } catch {}
     const header = document.getElementById(`site-header`);
     if (!header) return;
-    const measure = () => shell.rootRef.current?.style.setProperty(`--account-header-height`, `${header.getBoundingClientRect().height}px`);
+    const measure = () => {
+      shell.rootRef.current?.style.setProperty(`--account-header-height`, `${header.getBoundingClientRect().height}px`);
+      const brand = document.getElementById(`header-brand`);
+      if (brand) shell.rootRef.current?.style.setProperty(`--account-brand-width`, `${Math.max(220, brand.getBoundingClientRect().width)}px`);
+    };
     measure();
     const observer = new ResizeObserver(measure);
     observer.observe(header);
@@ -90,11 +95,11 @@ const AccountPageView = ({ page }: { page: AccountPageKey }) => {
                 <label className='account-field'>Profile visibility<select disabled defaultValue='private'><option value='private'>Private</option></select></label>
                 <button disabled className='account-button'>Save Profile · Not Connected</button>
               </section>
-              <aside className='account-panel account-profile-meta'><h2>Account</h2><dl><dt>Role</dt><dd>Not assigned</dd><dt>Status</dt><dd>Not signed in</dd><dt>Joined</dt><dd>Unavailable</dd></dl><h3>Appearance</h3><button type='button' className='account-button account-button--soft' onClick={toggleTheme}><Icon name={theme === `dark` ? `sun` : `moon`} />{theme === `dark` ? `Light` : `Dark`} Mode</button><p className='account-muted'>Theme is a device preference, not an account update.</p></aside>
+              <aside className='account-panel account-profile-meta'><h2>Account</h2><dl><dt>Role</dt><dd>Not assigned</dd><dt>Status</dt><dd>Not signed in</dd><dt>Joined</dt><dd>Unavailable</dd></dl><h3>Appearance</h3><button type='button' className='account-button account-button--soft' onClick={toggleTheme}><Icon name={theme === `dark` ? `sun` : `moon`} />{theme === `dark` ? `Light` : `Dark`} Mode</button><p className='account-muted'>Theme is a device preference, not an account update.</p><h3>Account data</h3><div className='account-actions'><button disabled className='account-button account-button--soft'>Export Data · Unavailable</button><button disabled className='account-button account-button--soft'>Delete Account · Unavailable</button></div><p className='account-muted'>No account exists in this preview. No deletion or export request is sent.</p></aside>
             </div> : page === `favorites` ? <section className='account-panel account-empty'><Icon name='save' size={32} /><h2>Your favorites will live here</h2><p>Saved items cannot load until sign-in and Firestore are connected. This is not an empty account result.</p><Link href='/palindromes'>Explore palindromes</Link></section>
             : page === `submissions` ? <section className='account-panel account-empty'><Icon name='quote' size={32} /><h2>From first draft to published palindrome</h2><p>Your future submissions will show Pending, Approved, or Needs Changes after a reviewer checks them.</p><Link href='/submit'>Try the local draft checker</Link><p>No draft is sent to moderation in this build.</p></section>
-            : page === `analytics` ? <section className='account-panel account-report'><h2>Website traffic & runtime health</h2><div className='account-stats'>{[`Visitors`, `Page views`, `Requests`].map((label) => <div key={label}><span>{label}</span><strong>—</strong><small>Not connected</small></div>)}</div><div className='account-report-empty'><Icon name='code' size={32} /><h3>Reporting unavailable</h3><p>No Vercel reporting source is connected. No sample activity or simulated chart is shown.</p></div><button disabled className='account-button'>Refresh · Not Connected</button></section>
-            : <><div className='account-stats'>{[`Users`, `Pending submissions`, `Published entries`].map((label) => <div className='account-panel' key={label}><span>{label}</span><strong>—</strong><small>Live data unavailable</small></div>)}</div><section className='account-panel'><h2>{page === `admin` ? `Submission review` : `Recent collection activity`}</h2><p className='account-muted'>Owner-only data will be loaded through authorized services after connection.</p><div className='account-table-wrap'><table><caption>Disconnected moderation table preview</caption><thead><tr>{[`No.`, `Palindrome`, `Category`, `Status`, `Actions`].map((label) => <th key={label} scope='col'>{label}</th>)}</tr></thead><tbody><tr><td colSpan={5}><span className='rowStatus'><span className='statusDotWrap'><span className='statusDot' /></span><span className='statusText'>Not connected. No records have been loaded.</span></span></td></tr></tbody></table></div><button disabled className='account-button'>Review Submissions · Not Connected</button></section></>}
+            : page === `analytics` ? <AccountReports />
+            : <>{page === `dashboard` && <AccountReports compact />}<div className='account-stats'>{[`Users`, `Pending submissions`, `Published entries`].map((label) => <div className='account-panel' key={label}><span>{label}</span><strong>—</strong><small>Live data unavailable</small></div>)}</div><section className='account-panel'><h2>{page === `admin` ? `Submission review` : `Recent collection activity`}</h2><p className='account-muted'>Owner-only data will be loaded through authorized services after connection.</p><div className='account-record-filters'><label>Search submissions<input disabled placeholder='Not connected' /></label><label>Status<select disabled><option>Unavailable</option></select></label><button disabled className='account-button'>Refresh · Not Connected</button></div><div className='account-table-wrap'><table><caption>Disconnected moderation table preview</caption><thead><tr>{[`No.`, `Palindrome`, `Category`, `Status`, `Actions`].map((label) => <th key={label} scope='col'>{label}</th>)}</tr></thead><tbody><tr><td colSpan={5}><span className='rowStatus'><span className='statusDotWrap'><span className='statusDot' /></span><span className='statusText'>Not connected. No records have been loaded.</span></span></td></tr></tbody></table></div><button disabled className='account-button'>Review Submissions · Not Connected</button></section></>}
           </section>}
         </main>
       </div>

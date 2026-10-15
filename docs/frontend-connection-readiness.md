@@ -12,6 +12,12 @@ This work does not connect Firebase, Vercel reporting, Stripe, AdSense, DNS, or 
 - The service worker now caches only allowlisted public pages/assets, excludes query URLs and private routes, and respects private/no-store response directives.
 - Appearance/collapse preferences are device-local. Preview state is not an authenticated account.
 
+## Account/reporting layout parity
+
+The account shell follows the reference sidebar and profile proportions while keeping Palindrome Lists colors, fonts, and wordplay labels. Website Traffic and Runtime Health have separate disconnected panels on web and native. Dashboard shows compact panels; Analytics offers a local report-layout switch. Report tabs, period/metric/filter fields, Chart/List, refresh and export are visibly unavailable until a trusted reporting source exists. They do not fetch data or simulate chart results. Moderation has a disabled search/status/review shell, with a native record-card explanation instead of an empty live table.
+
+Reference: Domains Database Account/Profile and AdminAnalytics source, plus the portable Admin layout guide. `$reverse-engineer-anything` was not available in the inspected skill catalog or repository, so no claim is made that it was run. This is source-level parity preparation, not visual/device validation.
+
 ## Later connection checklist
 
 1. Establish an approved Firebase project and billing choice. Do not reuse unrelated project credentials.
@@ -33,3 +39,7 @@ App stores: Expo native views are source preparation only, not a signed or revie
 ## Validation
 
 Per the repository AGENTS.md, no builds, automated tests, type checks, lint or UI checks were run without an explicit user request. Source review only. Suggested later checks: `npx tsc --noEmit`, `npm run export:web`, native device flows and browser navigation/accessibility checks.
+
+## Shared guidance synchronization
+
+AGENTS.md and the complete ai/ pack are synchronized from BengaliBlush main `7c26b2427ae7abeba3068a31661f4c18fbb20086`, cross-referenced with Domains Database `c08500922be6a78a305e9e00d71195c3d1b2e6a1`, plus the shared disconnected-account-frontend workflow. Licensed assets and notices are preserved. Optional shop/system guidance does not add a shop or enable services here. The current account sidebar uses measured header height, header-brand-width rail with a 220px fallback, single-column links and 56px collapsed width.

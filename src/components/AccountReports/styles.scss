@@ -1,0 +1,15 @@
+.account-reporting {
+  .account-report-switch, .account-report-actions, .account-report-toolbar, .account-report-filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .account-report-switch { margin-bottom: 18px; button[aria-pressed='true'] { outline: 2px solid var(--action); outline-offset: -2px; } }
+  .account-report-panel { padding: 20px; display: grid; gap: 12px; grid-template-rows: auto auto auto minmax(0, 1fr); &--compact { min-height: 470px; box-sizing: border-box; } }
+  .account-report-heading { display: flex; gap: 16px; flex-wrap: wrap; justify-content: space-between; align-items: center; h2 { display: flex; gap: 10px; align-items: center; margin: 0; } .account-button { min-height: 32px; padding: 5px 10px; } }
+  .account-report-tabs { display: flex; gap: 5px; overflow-x: auto; border-bottom: 1px solid var(--line); button { min-height: 32px; padding: 7px 10px; background: transparent; border: 0; color: var(--muted); } }
+  .account-report-toolbar { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 4px; label { display: grid; gap: 4px; font-size: 11px; color: var(--muted); } }
+  select, input, .account-report-toolbar button, .account-report-filters button { min-height: 34px; padding: 5px 7px; border: 1px solid var(--line); border-radius: 7px; color: var(--muted); background: var(--page); }
+  button:disabled, select:disabled, input:disabled { cursor: not-allowed; }
+  .account-report-viewport { min-width: 0; }
+  .account-report-filters { border: 1px solid var(--line); border-radius: 12px; margin: 0 0 20px; padding: 16px; legend { color: var(--muted); font-size: 12px; } label { display: grid; gap: 5px; font-size: 12px; } }
+  .account-report-empty { padding: 22px 8px; }
+}
+@media (max-width: 700px) { .account-reporting .account-report-panel--compact { min-height: 560px; } }
+@media (max-width: 460px) { .account-reporting .account-report-panel { padding: 15px; } }
