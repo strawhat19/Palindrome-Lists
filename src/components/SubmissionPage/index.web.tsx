@@ -21,4 +21,5 @@ const SubmissionPage = () => {
       <p>No submission has been sent, saved to an account, or published.</p><nav className='submission-actions'><Link href='/guidelines'>Submission guidelines</Link><Link href='/submissions'>Your submissions</Link><Link href='/palindromes'>Browse the collection</Link></nav>
     </main><Footer />
   </div>;
+};
 export default SubmissionPage;
