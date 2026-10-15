@@ -2,6 +2,7 @@ import { Link, type Href } from 'expo-router';
 import { useEffect, useState } from 'react';
 import Icon from '../Icon';
 import AccountReports from '../AccountReports';
+import DeviceCollection from '../DeviceCollection';
 import PageMetadata from '../PageMetadata';
 import Header from '../Header/index.web';
 import Footer from '../Footer/index.web';
@@ -80,6 +81,7 @@ const AccountPageView = ({ page }: { page: AccountPageKey }) => {
             <h1 id={`content-title-${page}`} tabIndex={-1}>{state.page.title}</h1>
             <p className='account-muted'>A familiar space for your details, discoveries, and collection.</p>
           </section>
+          <DeviceCollection page={page} />
           <section className='account-panel account-connection' aria-labelledby='account-connection-title'>
             <Icon name='shield' size={24} />
             <div><h2 id='account-connection-title'>Sign in to view this</h2><p>{state.account.status === `unconfigured` ? state.account.message : `Account access is unavailable in this frontend build.`}</p><p>Owner pages will require trusted server authorization. Previewing a layout does not sign you in or grant a role.</p>
@@ -96,7 +98,7 @@ const AccountPageView = ({ page }: { page: AccountPageKey }) => {
                 <button disabled className='account-button'>Save Profile · Not Connected</button>
               </section>
               <aside className='account-panel account-profile-meta'><h2>Account</h2><dl><dt>Role</dt><dd>Not assigned</dd><dt>Status</dt><dd>Not signed in</dd><dt>Joined</dt><dd>Unavailable</dd></dl><h3>Appearance</h3><button type='button' className='account-button account-button--soft' onClick={toggleTheme}><Icon name={theme === `dark` ? `sun` : `moon`} />{theme === `dark` ? `Light` : `Dark`} Mode</button><p className='account-muted'>Theme is a device preference, not an account update.</p><h3>Account data</h3><div className='account-actions'><button disabled className='account-button account-button--soft'>Export Data · Unavailable</button><button disabled className='account-button account-button--soft'>Delete Account · Unavailable</button></div><p className='account-muted'>No account exists in this preview. No deletion or export request is sent.</p></aside>
-            </div> : page === `favorites` ? <section className='account-panel account-empty'><Icon name='save' size={32} /><h2>Your favorites will live here</h2><p>Saved items cannot load until sign-in and Firestore are connected. This is not an empty account result.</p><Link href='/palindromes'>Explore palindromes</Link></section>
+            </div> : page === `favorites` ? <section className='account-panel account-empty'><Icon name='save' size={32} /><h2>Your favorites will live here</h2><p>Cloud-synced favorites are unavailable. Your working device collection is shown above.</p><Link href='/palindromes'>Explore palindromes</Link></section>
             : page === `submissions` ? <section className='account-panel account-empty'><Icon name='quote' size={32} /><h2>From first draft to published palindrome</h2><p>Your future submissions will show Pending, Approved, or Needs Changes after a reviewer checks them.</p><Link href='/submit'>Try the local draft checker</Link><p>No draft is sent to moderation in this build.</p></section>
             : page === `analytics` ? <AccountReports />
             : <>{page === `dashboard` && <AccountReports compact />}<div className='account-stats'>{[`Users`, `Pending submissions`, `Published entries`].map((label) => <div className='account-panel' key={label}><span>{label}</span><strong>—</strong><small>Live data unavailable</small></div>)}</div><section className='account-panel'><h2>{page === `admin` ? `Submission review` : `Recent collection activity`}</h2><p className='account-muted'>Owner-only data will be loaded through authorized services after connection.</p><div className='account-record-filters'><label>Search submissions<input disabled placeholder='Not connected' /></label><label>Status<select disabled><option>Unavailable</option></select></label><button disabled className='account-button'>Refresh · Not Connected</button></div><div className='account-table-wrap'><table><caption>Disconnected moderation table preview</caption><thead><tr>{[`No.`, `Palindrome`, `Category`, `Status`, `Actions`].map((label) => <th key={label} scope='col'>{label}</th>)}</tr></thead><tbody><tr><td colSpan={5}><span className='rowStatus'><span className='statusDotWrap'><span className='statusDot' /></span><span className='statusText'>Not connected. No records have been loaded.</span></span></td></tr></tbody></table></div><button disabled className='account-button'>Review Submissions · Not Connected</button></section></>}

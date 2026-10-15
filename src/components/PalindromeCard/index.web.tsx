@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useDeviceLibrary } from '../../shared/account/DeviceLibrary';
 import Icon from '../Icon';
 import FlipContent from '../FlipContent/index.web';
 import usePalindromeCard from './usePalindromeCard.web';
@@ -15,6 +16,8 @@ type PalindromeCardProps = {
 
 const PalindromeCard = ({ entry, tabbable = true, instanceId }: PalindromeCardProps) => {
   const cardId = instanceId ?? entry.id;
+  const local = useDeviceLibrary();
+  const saved = local.data.favorites.includes(entry.id);
   const [expanded, setExpanded] = useState(false);
   const { setNotice } = useLanding();
   const { copied, copying, dialogMode, closeDialog, copyPalindrome, sharePalindrome } = usePalindromeCard(entry);
@@ -64,13 +67,15 @@ const PalindromeCard = ({ entry, tabbable = true, instanceId }: PalindromeCardPr
             <button
               tabIndex={tabbable ? undefined : -1}
               type='button'
-              title='Save palindrome'
+              title={saved ? `Saved on this device` : `Save on this device`}
               className='icon-button save-button'
               id={`save-${cardId}`}
-              aria-label={`Save ${entry.text}`}
-              onClick={() => requestAction(`save palindromes to your collection`)}
+              aria-label={`${saved ? `Remove` : `Save`} ${entry.text} on this device`}
+              aria-pressed={saved}
+              disabled={!local.ready}
+              onClick={() => { if (!saved && local.data.favorites.length >= 200) { setNotice({ title: `Device Favorite Limit`, message: `You can save up to 200 favorites on this device. Remove an item first.` }); return; } local.update((data) => ({ ...data, favorites: saved ? data.favorites.filter((id) => id !== entry.id) : [...data.favorites, entry.id] })); setNotice({ title: saved ? `Removed From Device Favorites` : `Device Favorites Updated`, message: `Manage device-only favorites and lists on the Favorites page. Up to 200 entries; no account sync or publication. Storage availability is shown there.` }); }}
             >
-              <FlipContent id={`save-content-${cardId}`}><Icon name='save' size={17} /></FlipContent>
+              <FlipContent id={`save-content-${cardId}`}><Icon name={saved ? `check` : `save`} size={17} /></FlipContent>
             </button>
             <button
               tabIndex={tabbable ? undefined : -1}

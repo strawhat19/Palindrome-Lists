@@ -382,15 +382,15 @@ isPalindrome('...'); // false`,
         id: `privacy-current`,
         title: `The current app`,
         paragraphs: [
-          `Updated October 15, 2026. Palindrome Lists currently offers public educational pages, a bundled example collection, and a frontend contact form preview. Contact fields stay in page memory while you edit; no message is delivered, stored, or submitted to a server. There is no account registration, analytics integration, or advertising integration in this version of the app. Authentication fields are disabled. Account and admin layouts are public design previews with no private records. The draft checker keeps text only in page memory and does not send or save submissions.`,
-          `Searches, filters, and sorting run in your browser against the bundled examples. This application does not send that search text to an account service or a search provider. Preview controls for voting, comments, hearts, and saving do not submit community activity.`,
+          `Updated October 15, 2026. Palindrome Lists currently offers public educational pages, a bundled example collection, and a frontend contact form preview. Contact fields stay in page memory while you edit; no message is delivered, stored, or submitted to a server. There is no account registration, analytics integration, or advertising integration in this version of the app. Authentication fields are disabled. Account and admin layouts are public design previews with no private records. The draft checker saves one device-only draft in browser storage when available; it does not send or publish submissions.`,
+          `Searches, filters, and sorting run in your browser against the bundled examples. This application does not send that search text to an account service or a search provider. Voting, comments, and hearts do not submit community activity. Save controls store device favorites, not public activity.`,
         ],
       },
       {
         id: `privacy-device`,
         title: `Browser storage and caching`,
         paragraphs: [
-          `The web app stores your chosen light or dark theme and account-layout sidebar preferences in browser local storage so it can remember those preferences on that device. This preference is not an account profile and is not shared between devices by this app. You can remove it by clearing this website’s browser storage.`,
+          `The web app stores your theme, sidebar preferences, optional device nickname, up to 200 favorite IDs, up to 20 named lists of 200 IDs each, and one 500-character draft in browser localStorage. Anyone using that browser profile can see them. Device Library controls remove entries or clear that library; clearing browser site data also removes local preferences. If storage is blocked, invalid, or full, the library shows session-only mode rather than claiming a save. Native builds without a storage adapter are session-only. This preference is not an account profile and is not shared between devices by this app. You can remove it by clearing this website’s browser storage.`,
           `The progressive web app can use a service worker and browser cache to keep public app resources available. Your browser controls those caches and any installed app shortcut. Clearing site data can remove the saved theme and cached resources; removing a home-screen shortcut alone may not clear all browser data.`,
           `The current frontend does not set advertising or analytics cookies. A live hosting provider may process standard web requests, including an IP address, browser information, and requested URLs, to deliver and protect a hosted website. Hosting practices depend on the provider used for the published site.`,
         ],
@@ -442,7 +442,7 @@ isPalindrome('...'); // false`,
         title: `Sign-in is coming later`,
         paragraphs: [
           `There is no account registration or sign-in service in the current version of Palindrome Lists. This page does not collect an email address or password. Public browsing is available without an account.`,
-          `Saved collections, contributions, votes, and comments are planned account features. The landing page previews those controls, but they do not currently save information or publish activity.`,
+          `Device favorites, lists, and a draft work without sign-in in browser localStorage when available. They are not account-owned or synchronized. Community contributions, votes, and comments remain unavailable.`,
         ],
         links: [
           { href: `/words`, label: `Browse Words` },

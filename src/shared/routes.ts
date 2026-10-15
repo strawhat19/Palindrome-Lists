@@ -2,6 +2,7 @@ import type { IconName } from '../components/Icon';
 import type { PageKey } from './content/types';
 
 export const landingLinks = {
+  favorites: { pathname: `/favorites` },
   guidelines: { pathname: `/guidelines` },
   profile: { pathname: `/profile` },
   submit: { pathname: `/submit` },
@@ -21,13 +22,14 @@ export const landingLinks = {
 } as const;
 
 type NavigationItem = {
-  key: PageKey | `palindromes`;
+  key: PageKey | `palindromes` | `favorites`;
   label: string;
   icon: IconName;
   iconColor: `action` | `leaf`;
 };
 
 export const mainNavigation = [
+  { key: `favorites`, label: `Device Library`, icon: `save`, iconColor: `leaf` },
   { key: `about`, label: `About`, icon: `info`, iconColor: `action` },
   { key: `palindromes`, label: `Palindromes`, icon: `repeat`, iconColor: `leaf` },
   { key: `words`, label: `Words`, icon: `book`, iconColor: `action` },
@@ -40,6 +42,7 @@ export const mainNavigation = [
 ] as const satisfies readonly NavigationItem[];
 
 export const footerNavigation = [
+  { key: `favorites`, label: `Device Library`, icon: `save`, iconColor: `leaf` },
   { key: `guidelines`, label: `Submission Guidelines`, icon: `book`, iconColor: `leaf` },
   { key: `about`, label: `About`, icon: `info`, iconColor: `action` },
   { key: `pricing`, label: `Pricing`, icon: `tag`, iconColor: `leaf` },

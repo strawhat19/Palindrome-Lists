@@ -7,7 +7,7 @@ This work does not connect Firebase, Vercel reporting, Stripe, AdSense, DNS, or 
 - `shared/account/types.ts`: provider-independent session, profile whitelist, subscriptions, favorite, and submission contracts.
 - `shared/account/service.ts`: a disconnected adapter only. Reads return `unconfigured`; mutations reject. Replacing this adapter requires separate authorization and a real implementation, not a configuration toggle.
 - Profile/favorites/submissions and dashboard/admin/analytics routes are noindex. Unconfigured data is never shown as zero or a real empty account.
-- `/submit`: English A–Z local checker. Drafts stay in component memory; no submission, approval, or persistence.
+- `/submit`: English A–Z local checker. One bounded draft is stored on this browser when available; no cloud submission or approval.
 - `/guidelines`: public editorial guidance, linked in the footer and sitemap.
 - The service worker now caches only allowlisted public pages/assets, excludes query URLs and private routes, and respects private/no-store response directives.
 - Appearance/collapse preferences are device-local. Preview state is not an authenticated account.
@@ -43,3 +43,7 @@ Per the repository AGENTS.md, no builds, automated tests, type checks, lint or U
 ## Shared guidance synchronization
 
 AGENTS.md and the complete ai/ pack are synchronized from BengaliBlush main `7c26b2427ae7abeba3068a31661f4c18fbb20086`, cross-referenced with Domains Database `c08500922be6a78a305e9e00d71195c3d1b2e6a1`, plus the shared disconnected-account-frontend workflow. Licensed assets and notices are preserved. Optional shop/system guidance does not add a shop or enable services here. The current account sidebar uses measured header height, header-brand-width rail with a 220px fallback, single-column links and 56px collapsed width.
+
+## Device-local functionality
+
+The shared DeviceLibrary provider stores a versioned, bounded browser-local library: nickname (60 characters), favorite bundled IDs (200), named lists (20 lists, 60-character names, 200 entries each), and one draft (500 characters). Account screens expose this library outside the cloud-layout preview gate. Save buttons update it directly; local removal, list deletion, and confirmed clear controls are included. JSON version/shape/ID validation and storage error handling preserve invalid existing storage and switch changes to visibly session-only memory. No identity, passwords, email, cloud roles, account data, or private reports are persisted. Native currently uses session-only fallback because no persistent native storage dependency is installed. Browser storage events refresh other open tabs; concurrent writes remain last-write-wins, not transactional cross-tab merging or cross-device sync.

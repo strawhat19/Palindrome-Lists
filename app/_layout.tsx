@@ -1,4 +1,5 @@
 import '../src/styles/global.scss';
+import { DeviceLibraryProvider } from '../src/shared/account/DeviceLibrary';
 import { AccountProvider } from '../src/shared/account/AccountContext';
 import { Slot } from 'expo-router';
 import ThemeStatusBar from '../src/components/ThemeStatusBar';
@@ -10,10 +11,12 @@ const RootLayout = () => (
   <SafeAreaProvider>
     <ThemeProvider>
       <AccountProvider>
-        <LandingProvider>
-          <ThemeStatusBar />
-          <Slot />
-        </LandingProvider>
+        <DeviceLibraryProvider>
+          <LandingProvider>
+            <ThemeStatusBar />
+            <Slot />
+          </LandingProvider>
+        </DeviceLibraryProvider>
       </AccountProvider>
     </ThemeProvider>
   </SafeAreaProvider>
