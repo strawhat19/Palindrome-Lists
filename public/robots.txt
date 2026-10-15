@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /_sitemap
 
-Sitemap: https://palindromelists.com/sitemap.xml
+Sitemap: https://palindrome-lists.vercel.app/sitemap.xml

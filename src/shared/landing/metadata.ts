@@ -1,6 +1,8 @@
+import siteConfig from '../site/config.json';
 import type { PageKey } from '../content/types';
+import type { AccountPageKey } from '../account/navigation';
 
-export type MetadataPage = `home` | `signup` | PageKey | `palindromes` | `not-found`;
+export type MetadataPage = AccountPageKey | `submit` | `home` | `signup` | PageKey | `palindromes` | `not-found`;
 
 export type PageSeo = {
   path: string;
@@ -12,12 +14,20 @@ export type PageSeo = {
 
 export const siteMetadata = {
   name: `Palindrome Lists`,
-  url: `https://palindromelists.com`,
+  url: siteConfig.url,
   title: `Palindrome Lists - words, names, and phrases that read the same in reverse`,
   description: `Discover palindrome words, names, and phrases. Browse examples and learn how to check text that reads the same forward and backward.`,
 } as const;
 
 export const pageMetadata: Record<MetadataPage, PageSeo> = {
+  profile: { path: `/profile`, label: `Your Profile`, title: `Your Profile | Palindrome Lists`, noIndex: true, description: `Disconnected profile preview. Account services are not connected.` },
+  favorites: { path: `/favorites`, label: `Your Favorites`, title: `Your Favorites | Palindrome Lists`, noIndex: true, description: `Disconnected favorites preview. Account services are not connected.` },
+  submissions: { path: `/submissions`, label: `Your Submissions`, title: `Your Submissions | Palindrome Lists`, noIndex: true, description: `Disconnected submissions preview. Account services are not connected.` },
+  dashboard: { path: `/dashboard`, label: `Owner Dashboard`, title: `Owner Dashboard | Palindrome Lists`, noIndex: true, description: `Disconnected owner dashboard preview. Account services are not connected.` },
+  admin: { path: `/admin`, label: `Owner Administration`, title: `Owner Administration | Palindrome Lists`, noIndex: true, description: `Disconnected owner administration preview. Account services are not connected.` },
+  analytics: { path: `/analytics`, label: `Owner Analytics`, title: `Owner Analytics | Palindrome Lists`, noIndex: true, description: `Disconnected owner analytics preview. Account services are not connected.` },
+  submit: { path: `/submit`, label: `Palindrome Draft Checker`, title: `Palindrome Draft Checker | Palindrome Lists`, noIndex: true, description: `Disconnected palindrome draft checker preview. Account services are not connected.` },
+  guidelines: { path: `/guidelines`, label: `Submission Guidelines`, title: `How to Check & Submit a Palindrome | Palindrome Lists`, description: `Learn how to check English palindrome words, names, and phrases, credit original sources, and prepare a contribution for future editorial review.` },
   home: {
     path: `/`,
     label: `Home`,

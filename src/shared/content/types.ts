@@ -1,4 +1,5 @@
 export type PageKey =
+  | `guidelines`
   | `api`
   | `about`
   | `words`

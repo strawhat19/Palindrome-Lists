@@ -84,7 +84,7 @@ const OnboardingPageView = ({ mode }: OnboardingProps) => {
       <View nativeID={`onboarding-label-row-${field}`} style={styles.labelRow}>
         <Text nativeID={`onboarding-label-${field}`} style={styles.label}>{fieldLabels[field]}</Text>
         {field === `password` && !isSignup && (
-          <Pressable onPress={forgotPassword} accessibilityRole={`button`} nativeID={`onboarding-forgot-password`} style={({ pressed }) => [styles.textButton, pressed && styles.pressed]}>
+          <Pressable disabled accessibilityState={{ disabled: true }} onPress={forgotPassword} accessibilityRole={`button`} nativeID={`onboarding-forgot-password`} style={({ pressed }) => [styles.textButton, pressed && styles.pressed]}>
             <Icon name={`repeat`} size={12} color={palette.leaf} />
             <Text nativeID={`onboarding-forgot-label`} style={styles.linkText}>Forgot Password?</Text>
           </Pressable>
@@ -93,6 +93,7 @@ const OnboardingPageView = ({ mode }: OnboardingProps) => {
       <View nativeID={`onboarding-input-wrap-${field}`} style={[styles.inputWrap, Boolean(errors[field]) && styles.inputError]}>
         <Icon name={fieldIcons[field]} size={17} color={field === `email` ? palette.leaf : palette.action} />
         <TextInput
+          editable={false}
           value={values[field]}
           autoCorrect={false}
           style={styles.input}
@@ -280,16 +281,20 @@ const OnboardingPageView = ({ mode }: OnboardingProps) => {
                   </Pressable>
                 </Link>
               ) : (
-                <Pressable onPress={submit} accessibilityRole={`button`} nativeID={`onboarding-submit-button`} style={({ pressed }) => [styles.primaryButton, pressed && styles.pressed]}>
+                <>
+                <Text style={styles.linkText}>Firebase is not connected. Authentication is disabled.</Text>
+                <Link href='/profile'><Text style={styles.linkText}>Preview Profile &amp; Dashboard Layouts</Text></Link>
+                <Pressable disabled accessibilityState={{ disabled: true }} onPress={submit} accessibilityRole={`button`} nativeID={`onboarding-submit-button`} style={({ pressed }) => [styles.primaryButton, pressed && styles.pressed]}>
                   <Icon name={isSignup ? `right` : `login`} size={17} color={palette.searchInk} />
-                  <Text nativeID={`onboarding-submit-label`} style={styles.primaryButtonText}>{isSignup ? `Continue` : `Sign In`}</Text>
+                  <Text nativeID={`onboarding-submit-label`} style={styles.primaryButtonText}>{`Not Connected`}</Text>
                 </Pressable>
+                </>
               )}
             </View>
             {(!isSignup || step === 0) && (
               <>
                 <View nativeID={`onboarding-divider`} style={styles.divider}><View style={styles.dividerLine} /><Text style={styles.hint}>or</Text><View style={styles.dividerLine} /></View>
-                <Pressable onPress={continueWithGoogle} accessibilityRole={`button`} nativeID={`onboarding-google-button`} style={({ pressed }) => [styles.googleButton, pressed && styles.pressed]}>
+                <Pressable disabled accessibilityState={{ disabled: true }} onPress={continueWithGoogle} accessibilityRole={`button`} nativeID={`onboarding-google-button`} style={({ pressed }) => [styles.googleButton, pressed && styles.pressed]}>
                   <GoogleLogo />
                   <Text nativeID={`onboarding-google-label`} style={styles.googleButtonText}>Continue With Google</Text>
                 </Pressable>

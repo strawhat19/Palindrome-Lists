@@ -50,11 +50,11 @@ Web uses SCSS and GSAP with SplitText and ScrollTrigger; native uses React Nativ
 
 Each page has its own title, description, canonical URL, Open Graph tags, and Twitter summary metadata. Public pages include WebSite/WebPage and breadcrumb JSON-LD matching the visible content. The home page retains “Palindrome Lists — Words Worth Repeating.” Titles are also set on navigation for local development. Expo Router Head supplies metadata in the static HTML; the document shell avoids duplicate home-page metadata on interior pages.
 
-`public/robots.txt` and `public/sitemap.xml` point to the public canonical pages on `https://palindromelists.com`. The sign-in status and 404 pages have `noindex, follow` metadata and are omitted from the sitemap. Crawlers may still access those pages to read the directive.
+`public/robots.txt` and `public/sitemap.xml` point to the public canonical pages on `https://palindrome-lists.vercel.app`. The sign-in status and 404 pages have `noindex, follow` metadata and are omitted from the sitemap. Crawlers may still access those pages to read the directive.
 
 ## Publishing later
 
-`npm run export:web` is the configured static export command for hosting on `palindromelists.com`. Serve each exported page at its matching URL over HTTPS, rather than serving the home HTML for every route. Configure real HTTP redirects for aliases and an HTTP 404 status for missing pages where the host supports them. Keep the sitemap and canonical domain aligned if the production domain changes. Submit the sitemap in Google Search Console after publishing.
+`npm run export:web` is the configured static export command for hosting on `palindrome-lists.vercel.app`. Serve each exported page at its matching URL over HTTPS, rather than serving the home HTML for every route. Configure real HTTP redirects for aliases and an HTTP 404 status for missing pages where the host supports them. Keep the sitemap and canonical domain aligned if the production domain changes. Submit the sitemap in Google Search Console after publishing.
 
 The frontend now includes About, Terms, Contact, and Privacy Policy pages, readable original content, and crawlable navigation. This follows [Google’s SEO guidance](https://developers.google.com/search/docs/fundamentals/seo-starter-guide) and [AdSense site-readiness guidance](https://support.google.com/adsense/answer/7299563?hl=en); neither rankings nor AdSense approval can be guaranteed.
 
@@ -63,3 +63,9 @@ AdSense is not connected and ads are not enabled. Before applying or serving ads
 When connecting an actual AdSense account, use the publisher identifier and site-verification method issued by Google, publish the matching ads.txt record when required, and configure the appropriate privacy/consent controls. Google requires a [certified CMP integrated with TCF](https://support.google.com/adsense/answer/13554116?hl=en) for personalized ads in the EEA, UK, and Switzerland. The current [privacy disclosures](https://support.google.com/publisherpolicies/answer/10437794?hl=en) describe local storage, offline caching, external sites, and advertising as a future feature; update them to match the real integration before ads go live. Future comments or submissions will need moderation before being placed alongside ads.
 
 No tests, builds, dev servers, UI checks, commits, or deployments were run during implementation, per the project instructions. Review the changes and run the app when ready.
+
+### Frontend account preparation
+
+See `docs/frontend-connection-readiness.md`. Firebase and reporting remain disconnected.
+
+The canonical origin is configured in `src/shared/site/config.json` and currently uses the known Vercel deployment, not the unconnected custom domain. Change this one source only after confirming the primary domain. The `preexport:web` script regenerates robots and sitemap URLs before a future authorized export. No DNS changes are made by this script.

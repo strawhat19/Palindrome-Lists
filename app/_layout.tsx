@@ -1,4 +1,5 @@
 import '../src/styles/global.scss';
+import { AccountProvider } from '../src/shared/account/AccountContext';
 import { Slot } from 'expo-router';
 import ThemeStatusBar from '../src/components/ThemeStatusBar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -8,10 +9,12 @@ import { ThemeProvider } from '../src/shared/themeContext/ThemeContext';
 const RootLayout = () => (
   <SafeAreaProvider>
     <ThemeProvider>
-      <LandingProvider>
-        <ThemeStatusBar />
-        <Slot />
-      </LandingProvider>
+      <AccountProvider>
+        <LandingProvider>
+          <ThemeStatusBar />
+          <Slot />
+        </LandingProvider>
+      </AccountProvider>
     </ThemeProvider>
   </SafeAreaProvider>
 );

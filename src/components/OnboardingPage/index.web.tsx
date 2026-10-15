@@ -45,14 +45,14 @@ const OnboardingPageView = ({ mode }: OnboardingProps) => {
         <div id={`${prefix}-${field}-label-row`} className='onboarding-label-row'>
           <label id={`${prefix}-${field}-label`} className='onboarding-label' htmlFor={`${prefix}-${field}`}>{label}</label>
           {isPassword && !isSignup && (
-            <button id={`${prefix}-forgot-password`} type='button' className='onboarding-forgot' onClick={form.forgotPassword}>
+            <button disabled id={`${prefix}-forgot-password`} type='button' className='onboarding-forgot' onClick={form.forgotPassword}>
               <Icon name='mail' size={13} /><span>Forgot password?</span>
             </button>
           )}
         </div>
         <div id={`${prefix}-${field}-input-wrap`} className='onboarding-input-wrap'>
           <input
-            required
+            disabled
             name={field}
             value={values[field]}
             id={`${prefix}-${field}`}
@@ -212,7 +212,7 @@ const OnboardingPageView = ({ mode }: OnboardingProps) => {
                       {renderField(`password`, `Password`)}
                     </div>
                   )}
-                  <button id={`${prefix}-submit`} type='submit' className='onboarding-submit'>
+                  <button disabled id={`${prefix}-submit`} type='submit' className='onboarding-submit'>
                     <Icon size={17} name={isSignup ? `right` : `login`} color={theme === `dark` ? palette.searchInk : palette.lime} /><span>{isSignup ? `Continue` : `Sign in`}</span>
                   </button>
                 </form>
@@ -220,16 +220,17 @@ const OnboardingPageView = ({ mode }: OnboardingProps) => {
               {(!isSignup || step === 0) && (
                 <>
                   <div id={`${prefix}-provider-divider`} className='onboarding-provider-divider'><span>or {isSignup ? `sign up` : `sign in`} with</span></div>
-                  <button id={`${prefix}-google`} type='button' className='onboarding-provider' onClick={form.continueWithGoogle}><GoogleLogo /><span>{isSignup ? `Sign up` : `Sign in`} with Google</span></button>
+                  <button id={`${prefix}-google`} disabled type='button' className='onboarding-provider' onClick={form.continueWithGoogle}><GoogleLogo /><span>{isSignup ? `Sign up` : `Sign in`} with Google</span></button>
                 </>
               )}
+              <Link href='/profile' asChild><WebAnchor className='onboarding-mode-switch-link' id={`${prefix}-profile-preview`}>Preview Profile &amp; Dashboard Layouts</WebAnchor></Link>
               <p id={`${prefix}-mode-switch`} className='onboarding-mode-switch'>
                 <span>{isSignup ? `Already part of the collection?` : `New to Palindrome Lists?`}</span>
                 <Link href={isSignup ? landingLinks.signin : landingLinks.signup} asChild>
                   <WebAnchor id={`${prefix}-mode-switch-link`} className='onboarding-mode-switch-link'><Icon name={isSignup ? `login` : `user`} size={14} /><span>{isSignup ? `Sign in` : `Sign up`}</span></WebAnchor>
                 </Link>
               </p>
-              {step < 2 && <p id={`${prefix}-preview-note`} className='onboarding-preview-note'>Accounts are coming soon. Your details stay on this page for this preview.</p>}
+              {step < 2 && <p id={`${prefix}-preview-note`} className='onboarding-preview-note'>Firebase is not connected. Sign-in, sign-up, and password reset are disabled; do not enter credentials.</p>}
               <p id={`${prefix}-notice`} role='status' aria-live='polite' aria-atomic='true' className='onboarding-notice'>{notice}</p>
             </div>
           </div>

@@ -1,6 +1,19 @@
 import type { ContentPageData, PageKey } from './types';
 
 export const contentPages: Record<PageKey, ContentPageData> = {
+  guidelines: {
+    key: `guidelines`,
+    eyebrow: `Carefully checked. Both ways.`,
+    title: `A good palindrome deserves a good source.`,
+    description: `How to check a palindrome, credit its source, and prepare an original contribution for future editorial review. Submissions are not open yet.`,
+    sections: [
+      { id: `check`, title: `Start with the letters`, paragraphs: [`Read the letters from both ends toward the middle. In level, the outside l matches l and the next e matches e. For Never odd or even, removing spaces produces neveroddoreven, which has the same sequence in reverse.`, `Our draft checker supports English A–Z letters. It ignores case, spaces, and common punctuation, but rejects unsupported characters rather than silently dropping them. Other languages need language-aware rules before we can review them reliably.`], links: [{ href: `/submit`, label: `Try the Draft Checker` }] },
+      { id: `meaning`, title: `A matching pattern is only the beginning`, paragraphs: [`Choose a real word or name, or a phrase that readers can understand. A matching sequence alone does not establish a dictionary meaning, a name’s origin, or a phrase’s historical importance. Explain any unusual wording, and do not invent a definition to make the entry seem authoritative.`] },
+      { id: `attribution`, title: `Credit what you can verify`, paragraphs: [`For an existing phrase, prepare the author’s name where known and a reliable source link. A repost is not proof of authorship or a first publication date. If the origin is uncertain, say so. If you wrote the phrase yourself, describe it as your original contribution rather than claiming that nobody has ever written it before.`] },
+      { id: `review`, title: `What future review will consider`, paragraphs: [`When submissions open, entries will be reviewed before public publication. Review will consider the letter pattern, duplicates, meaning, attribution, relevance, and suitability for a general audience. Review may ask for changes or decline an entry.`, `Do not include personal contact details, targeted harassment, hateful content, sexual content involving minors, spam, or copied material you do not have permission to contribute. A successful draft check is not acceptance or publication.`], links: [{ href: `/terms`, label: `Terms of Use` }, { href: `/contact`, label: `Contact & Corrections` }] },
+      { id: `status`, title: `What works today`, paragraphs: [`You can browse, search, copy, share, and check a draft without creating an account. Draft checking runs locally and does not send a submission. Accounts, saved favorites, moderation queues, and realtime sync are not connected yet.`], links: [{ href: `/words`, label: `Explore Words` }, { href: `/names`, label: `Explore Names` }, { href: `/phrases`, label: `Explore Phrases` }] },
+    ],
+  },
   pricing: {
     key: `pricing`,
     eyebrow: `Plans & possibilities`,
@@ -332,7 +345,7 @@ isPalindrome('...'); // false`,
         id: `terms-scope`,
         title: `Using the current site`,
         paragraphs: [
-          `Updated October 6, 2026. These terms describe the current public Palindrome Lists website. You can browse its educational guides and example collection without creating an account. Use the site lawfully and do not attempt to disrupt it or gain access to systems that are not offered for public use.`,
+          `Updated October 15, 2026. These terms describe the current public Palindrome Lists website. You can browse its educational guides and example collection without creating an account. Use the site lawfully and do not attempt to disrupt it or gain access to systems that are not offered for public use.`,
           `The site currently provides a frontend collection, local search and filtering, a theme preference, and tools to copy or share individual examples. It does not provide account registration, a public HTTP API, or a live community contribution service. Preview controls for those features do not establish a service agreement or reserve access.`,
         ],
       },
@@ -369,7 +382,7 @@ isPalindrome('...'); // false`,
         id: `privacy-current`,
         title: `The current app`,
         paragraphs: [
-          `Updated October 6, 2026. Palindrome Lists currently offers public educational pages, a bundled example collection, and a frontend contact form preview. Contact fields stay in page memory while you edit; no message is delivered, stored, or submitted to a server. There is no account registration, analytics integration, or advertising integration in this version of the app.`,
+          `Updated October 15, 2026. Palindrome Lists currently offers public educational pages, a bundled example collection, and a frontend contact form preview. Contact fields stay in page memory while you edit; no message is delivered, stored, or submitted to a server. There is no account registration, analytics integration, or advertising integration in this version of the app. Authentication fields are disabled. Account and admin layouts are public design previews with no private records. The draft checker keeps text only in page memory and does not send or save submissions.`,
           `Searches, filters, and sorting run in your browser against the bundled examples. This application does not send that search text to an account service or a search provider. Preview controls for voting, comments, hearts, and saving do not submit community activity.`,
         ],
       },
@@ -377,7 +390,7 @@ isPalindrome('...'); // false`,
         id: `privacy-device`,
         title: `Browser storage and caching`,
         paragraphs: [
-          `The web app stores your chosen light or dark theme in browser local storage so it can remember your preference on that device. This preference is not an account profile and is not shared between devices by this app. You can remove it by clearing this website’s browser storage.`,
+          `The web app stores your chosen light or dark theme and account-layout sidebar preferences in browser local storage so it can remember those preferences on that device. This preference is not an account profile and is not shared between devices by this app. You can remove it by clearing this website’s browser storage.`,
           `The progressive web app can use a service worker and browser cache to keep public app resources available. Your browser controls those caches and any installed app shortcut. Clearing site data can remove the saved theme and cached resources; removing a home-screen shortcut alone may not clear all browser data.`,
           `The current frontend does not set advertising or analytics cookies. A live hosting provider may process standard web requests, including an IP address, browser information, and requested URLs, to deliver and protect a hosted website. Hosting practices depend on the provider used for the published site.`,
         ],

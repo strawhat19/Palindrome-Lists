@@ -25,29 +25,8 @@ const useOnboarding = (mode: OnboardingMode) => {
   };
 
   const submit = () => {
-    setNotice(``);
-    if (isSignup && step === 1) {
-      if (!interests.length) {
-        setErrors({ interests: `Choose At Least One Collection` });
-        return;
-      }
-      setErrors({});
-      setValues((current) => ({ ...current, password: `` }));
-      setStep(2);
-      return;
-    }
-    const nextErrors: OnboardingErrors = {};
-    if (isSignup && !values.name.trim()) nextErrors.name = `Enter Your Name`;
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email.trim())) nextErrors.email = `Enter A Valid Email Address`;
-    if (!values.password) nextErrors.password = `Enter Your Password`;
-    else if (isSignup && values.password.length < 8) nextErrors.password = `Use At Least 8 Characters`;
-    setErrors(nextErrors);
-    if (Object.keys(nextErrors).length) return;
-    if (isSignup) setStep(1);
-    else {
-      setValues((current) => ({ ...current, password: `` }));
-      setNotice(`Sign In Is Coming Soon — You Can Explore Without An Account`);
-    }
+    setValues({ name: ``, email: ``, password: `` });
+    setNotice(`Firebase Is Not Connected — No Account Was Created Or Signed In`);
   };
 
   return {

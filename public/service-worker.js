@@ -1,4 +1,4 @@
-const cacheName = `palindrome-lists-v1`;
+const cacheName = `palindrome-lists-v2`;
 const offlineFiles = [`/`, `/favicon.svg`, `/manifest.webmanifest`, `/brand/half-turn-pink-lime.svg`];
 
 self.addEventListener(`install`, (event) => {
@@ -17,9 +17,16 @@ self.addEventListener(`activate`, (event) => {
 self.addEventListener(`fetch`, (event) => {
   if (event.request.method !== `GET` || new URL(event.request.url).origin !== self.location.origin) return;
 
+  const url = new URL(event.request.url);
+  const publicPages = [`/`, `/about`, `/words`, `/names`, `/phrases`, `/palindromes`, `/guidelines`, `/terms`, `/privacy`, `/pricing`, `/contact`, `/api`];
+  const path = url.pathname.replace(/\/$/, ``) || `/`;
+  const publicAsset = /^\/(?:_expo\/static|assets|brand)\//.test(path) || [`/favicon.svg`, `/manifest.webmanifest`].includes(path);
+  // Never cache future private account/API responses or auth/query URLs.
+  if (url.search || (!publicPages.includes(path) && !publicAsset)) return;
+
   event.respondWith(
     fetch(event.request).then((response) => {
-      if (response.ok) {
+      if (response.ok && (publicAsset || /text\/html/i.test(response.headers.get(`content-type`) || ``)) && !/no-store|private/i.test(response.headers.get(`cache-control`) || ``)) {
         const snapshot = response.clone();
         event.waitUntil(caches.open(cacheName).then((cache) => cache.put(event.request, snapshot)));
       }

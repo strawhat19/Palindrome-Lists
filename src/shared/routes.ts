@@ -2,6 +2,9 @@ import type { IconName } from '../components/Icon';
 import type { PageKey } from './content/types';
 
 export const landingLinks = {
+  guidelines: { pathname: `/guidelines` },
+  profile: { pathname: `/profile` },
+  submit: { pathname: `/submit` },
   home: { pathname: `/` },
   api: { pathname: `/api` },
   about: { pathname: `/about` },
@@ -37,6 +40,7 @@ export const mainNavigation = [
 ] as const satisfies readonly NavigationItem[];
 
 export const footerNavigation = [
+  { key: `guidelines`, label: `Submission Guidelines`, icon: `book`, iconColor: `leaf` },
   { key: `about`, label: `About`, icon: `info`, iconColor: `action` },
   { key: `pricing`, label: `Pricing`, icon: `tag`, iconColor: `leaf` },
   { key: `terms`, label: `Terms`, icon: `file`, iconColor: `action` },

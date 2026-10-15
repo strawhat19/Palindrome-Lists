@@ -8,7 +8,8 @@
     "web": "expo start --web",
     "ios": "expo start --ios",
     "android": "expo start --android",
-    "export:web": "expo export --platform web"
+    "export:web": "expo export --platform web",
+    "preexport:web": "node scripts/generate-seo.mjs"
   },
   "engines": {
     "node": "^22.13.0 || ^24.3.0 || >=25.0.0"
